@@ -14,15 +14,17 @@ import PlatformCTA from "@/components/longitudinal/PlatformCTA";
 export default function LongitudinalDataEnablementPage(): JSX.Element {
   return (
     <div className="min-h-screen bg-[#F7F3EF]">
-      <Navbar />
-      <LongitudinalHero />
-      <ProblemSection />
-      <HowWorks/>
-      <SixDomains />
-      <ActivationCards />
-      <ComplianceStandards />
-      <PlatformCTA />
-      <Footer />
+      <div className="max-w-[1280px] mx-auto border-x border-[#E5DECF] overflow-hidden bg-[#F4EFE8]">
+        <Navbar />
+        <LongitudinalHero />
+        <ProblemSection />
+        <HowWorks />
+        <SixDomains />
+        <ActivationCards />
+        <ComplianceStandards />
+        <PlatformCTA />
+        <Footer />
+      </div>
     </div>
   );
 }

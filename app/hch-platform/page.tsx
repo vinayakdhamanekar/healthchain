@@ -12,15 +12,17 @@ import PlatformCTA from "@/components/platform/PlatformCTA";
 export default function HCHPlatformPage(): JSX.Element {
   return (
     <div className="min-h-screen bg-[#F7F3EF]">
-      <Navbar />
-      <PlatformHero />
-      <TrustedData />
-      <EnterpriseSuccess />
-      <MiddlewareSlot />
-      <DataFoundation />
-      <ComplianceStandards />
-      <PlatformCTA />
-      <Footer />
+      <div className="max-w-[1280px] mx-auto border-x border-[#E5DECF] overflow-hidden bg-[#F4EFE8]">
+        <Navbar />
+        <PlatformHero />
+        <TrustedData />
+        <EnterpriseSuccess />
+        <MiddlewareSlot />
+        <DataFoundation />
+        <ComplianceStandards />
+        <PlatformCTA />
+        <Footer />
+      </div>
     </div>
   );
 }

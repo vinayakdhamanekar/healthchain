@@ -307,11 +307,10 @@ export default function Navbar(): JSX.Element {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-7 pt-4 pb-1.5">
-      {/* Pill container */}
-      <div className="bg-[#FBF9F4] rounded-[44px] shadow-[0_14px_34px_rgba(60,45,30,0.07)] flex items-center justify-between py-3 pl-6 pr-3.5">
-
-        {/* Logo */}
+     <header className="fixed top-0 left-0 right-0 z-50 px-7 pt-4 pb-1.5">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-8">
+        <div className="bg-[#FBF9F4] rounded-[44px] shadow-[0_14px_34px_rgba(60,45,30,0.07)] flex items-center justify-between py-3 pl-6 pr-3.5">
+         {/* Logo */}
         <div className="flex items-center gap-[5px]">
           <Image
             src="/logo.png"
@@ -326,8 +325,9 @@ export default function Navbar(): JSX.Element {
         </div>
 
         {/* Desktop nav links */}
-        <nav className="hidden md:flex items-center gap-[34px]" aria-label="Main navigation">
-          {NAV_LINKS.map((link) => (
+        <div className="hidden md:flex items-center gap-8">
+            <nav className="flex items-center gap-[34px]" aria-label="Main navigation">
+               {NAV_LINKS.map((link) => (
             <NavDropdown key={link.label} link={link} />
           ))}
         </nav>
@@ -367,6 +367,7 @@ export default function Navbar(): JSX.Element {
           </svg>
         </button>
       </div>
+      </div>
 
       {/* Mobile dropdown */}
       <AnimatePresence>
@@ -390,6 +391,7 @@ export default function Navbar(): JSX.Element {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </header>
   );
 }
