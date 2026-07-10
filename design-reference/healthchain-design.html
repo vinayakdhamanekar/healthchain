@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:#F1ECE4;}
+@keyframes hcfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+</style>
+</helmet>
+<div style="width:100%;max-width:1280px;margin:0 auto;background:#F4EFE8;color:#292621;font-family:'Schibsted Grotesk',sans-serif;border-left:1px solid #E5DECF;border-right:1px solid #E5DECF;overflow:hidden;">
+
+  <!-- ===================== NAV ===================== -->
+  <header style="position:sticky;top:0;z-index:50;padding:16px 28px 6px;">
+    <div style="background:#FBF9F4;border-radius:44px;box-shadow:0 14px 34px rgba(60,45,30,0.07);display:flex;align-items:center;justify-content:space-between;padding:12px 14px 12px 26px;">
+      <div style="display:flex;align-items:center;gap:11px;">
+        <svg width="26" height="26" viewBox="0 0 100 100"><path d="M50,2 L56.9,33.4 L83.9,16.1 L66.6,43.1 L98,50 L66.6,56.9 L83.9,83.9 L56.9,66.6 L50,98 L43.1,66.6 L16.1,83.9 L33.4,56.9 L2,50 L33.4,43.1 L16.1,16.1 L43.1,33.4 Z" fill="#A8543C"/></svg>
+        <span style="font-size:20px;font-weight:600;letter-spacing:-0.01em;">Health Chain</span>
+      </div>
+      <nav style="display:flex;align-items:center;gap:34px;font-size:15px;color:#3A352E;">
+        <span style="cursor:pointer;">Platform</span>
+        <span style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;">Solutions <span style="font-size:10px;opacity:0.5;">▾</span></span>
+        <span style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;">Resources <span style="font-size:10px;opacity:0.5;">▾</span></span>
+        <span style="cursor:pointer;display:inline-flex;align-items:center;gap:5px;">Company <span style="font-size:10px;opacity:0.5;">▾</span></span>
+      </nav>
+      <a href="#" style="display:inline-flex;align-items:center;gap:12px;background:#A8543C;color:#FBF9F4;text-decoration:none;font-size:15px;font-weight:500;padding:11px 11px 11px 22px;border-radius:40px;">Request a Demo <span style="width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.45);display:inline-flex;align-items:center;justify-content:center;font-size:13px;">→</span></a>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section style="padding:34px 56px 70px;">
+    <div style="display:grid;grid-template-columns:1.04fr 0.96fr;gap:48px;align-items:center;">
+      <div>
+        <div style="line-height:1.04;">
+          <span style="display:inline-block;white-space:nowrap;background:#F1D9D1;color:#AE5740;padding:1px 15px 5px;border-radius:9px;font-size:51px;font-weight:600;letter-spacing:-0.025em;">Your data,</span>
+          <div style="font-size:51px;font-weight:600;letter-spacing:-0.025em;color:#292621;margin-top:8px;">made ready for action.</div>
+        </div>
+        <p style="max-width:466px;font-size:19px;line-height:1.55;color:#57534C;margin:30px 0 0;">Health Chain captures, curates, and delivers clean longitudinal member data, so payers can act on it, not wrestle with it.</p>
+        <div style="display:flex;gap:14px;margin-top:42px;">
+          <a href="#" style="display:inline-flex;align-items:center;gap:14px;background:#A8543C;color:#FBF9F4;text-decoration:none;font-size:16px;font-weight:500;padding:15px 15px 15px 26px;border-radius:42px;">Request a Demo <span style="width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.45);display:inline-flex;align-items:center;justify-content:center;font-size:14px;">→</span></a>
+          <a href="#" style="display:inline-flex;align-items:center;background:transparent;border:1px solid #CFC7B8;color:#292621;text-decoration:none;font-size:16px;padding:15px 28px;border-radius:42px;">Explore Platform</a>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <div style="position:absolute;inset:-22px -30px -10px 30px;border-radius:18px;background:linear-gradient(100deg,#7d5a78 0%,#cdbf9a 14%,#e9e1cf 26%,#8a9a7a 40%,#e7ddc8 54%,#9d96c4 70%,#b7c9c2 84%,#6fa89a 100%);filter:blur(14px);opacity:0.92;"></div>
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="100%,486px" id="hero-portrait" shape="rounded" radius="14" placeholder="Drop hero portrait" style="position:relative;display:block;width:100%;height:486px;"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CREDENTIALS ===================== -->
+  <section style="border-top:1px solid #E5DECF;border-bottom:1px solid #E5DECF;">
+    <div style="display:flex;align-items:center;padding:24px 56px;gap:0;">
+      <div style="font-size:16px;font-weight:500;color:#3A352E;padding-right:38px;border-right:1px solid #E5DECF;">Credentials</div>
+      <div style="display:flex;align-items:center;gap:46px;padding-left:38px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:12px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;background:#D2E3AC;color:#51602F;padding:5px 11px;border-radius:6px;">HIPAA</span><span style="font-size:15px;color:#3A352E;">Fully Compliant</span></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;background:#E9C5BC;color:#9C4A37;padding:5px 11px;border-radius:6px;">CMS-0057-F</span><span style="font-size:15px;color:#3A352E;">Jan 2027 Ready</span></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;background:#CBCDF1;color:#3C3E8C;padding:5px 11px;border-radius:6px;">NCQA</span><span style="font-size:15px;color:#3A352E;">Certified Data Aggregator</span></div>
+        <div style="display:flex;align-items:center;gap:12px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;background:#E9C5BC;color:#9C4A37;padding:5px 11px;border-radius:6px;">VINCI</span><span style="font-size:15px;color:#3A352E;">Certified Data Partner</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INGEST VIZ ===================== -->
+  <section style="position:relative;padding:48px 0 30px;">
+    <div style="position:relative;width:1100px;max-width:100%;height:1010px;margin:0 auto;">
+      <svg viewBox="0 0 1100 1010" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;">
+        <g fill="none" stroke="#C7BFB0" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="1.5 7">
+          <path d="M175,100 C 330,190 430,300 548,392"/>
+          <path d="M295,170 C 390,240 470,330 550,390"/>
+          <path d="M235,290 C 350,335 460,368 549,396"/>
+          <path d="M868,90 C 760,190 650,300 552,392"/>
+          <path d="M900,238 C 800,300 655,360 555,396"/>
+          <path d="M905,308 C 815,352 660,382 554,400"/>
+          <path d="M550,405 L550,632"/>
+        </g>
+      </svg>
+
+      <!-- top heading -->
+      <div style="position:absolute;top:34px;left:50%;transform:translateX(-50%);width:600px;text-align:center;">
+        <h2 style="font-size:45px;font-weight:600;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#292621;">Ingest from 50+ sources into one normalized model</h2>
+        <p style="font-size:17px;line-height:1.5;color:#6B665D;margin:18px auto 0;max-width:430px;">Claims, clinical, pharmacy, and SDOH data—captured from any source, transformed into a single longitudinal record.</p>
+      </div>
+
+      <!-- source tags -->
+      <div style="position:absolute;left:110px;top:64px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 14px;box-shadow:0 3px 9px rgba(60,45,30,0.05);">CLAIMS DATA</div>
+      <div style="position:absolute;left:228px;top:140px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 14px;box-shadow:0 3px 9px rgba(60,45,30,0.05);">FLAT FILES</div>
+      <div style="position:absolute;left:128px;top:262px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 14px;box-shadow:0 3px 9px rgba(60,45,30,0.05);">SDOH SOURCES</div>
+      <div style="position:absolute;left:806px;top:42px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 14px;box-shadow:0 3px 9px rgba(60,45,30,0.05);">PHARMACY DATA</div>
+      <div style="position:absolute;left:842px;top:212px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 14px;box-shadow:0 3px 9px rgba(60,45,30,0.05);">LAB RESULTS</div>
+      <div style="position:absolute;left:858px;top:300px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 14px;box-shadow:0 3px 9px rgba(60,45,30,0.05);">EHR / HIE</div>
+
+      <!-- floating squares -->
+      <div style="position:absolute;left:528px;top:372px;width:36px;height:36px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:7px;box-shadow:0 5px 12px rgba(60,45,30,0.06);animation:hcfloat 5s ease-in-out infinite;"></div>
+      <div style="position:absolute;left:560px;top:402px;width:25px;height:25px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:6px;box-shadow:0 5px 12px rgba(60,45,30,0.06);"></div>
+      <div style="position:absolute;left:540px;top:444px;width:30px;height:30px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:7px;box-shadow:0 5px 12px rgba(60,45,30,0.06);animation:hcfloat 6s ease-in-out infinite;"></div>
+      <div style="position:absolute;left:528px;top:540px;width:30px;height:30px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:7px;box-shadow:0 5px 12px rgba(60,45,30,0.06);"></div>
+      <div style="position:absolute;left:948px;top:104px;width:30px;height:30px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:7px;box-shadow:0 5px 12px rgba(60,45,30,0.06);animation:hcfloat 7s ease-in-out infinite;"></div>
+      <div style="position:absolute;left:531px;top:614px;width:36px;height:36px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:7px;box-shadow:0 5px 12px rgba(60,45,30,0.06);"></div>
+
+      <!-- row of squares -->
+      <div style="position:absolute;left:140px;top:648px;width:980px;max-width:none;display:flex;justify-content:space-between;width:820px;">
+        <div style="width:84px;height:46px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:9px;box-shadow:0 5px 12px rgba(60,45,30,0.05);"></div>
+        <div style="width:84px;height:46px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:9px;box-shadow:0 5px 12px rgba(60,45,30,0.05);"></div>
+        <div style="width:84px;height:46px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:9px;box-shadow:0 5px 12px rgba(60,45,30,0.05);"></div>
+        <div style="width:84px;height:46px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:9px;box-shadow:0 5px 12px rgba(60,45,30,0.05);"></div>
+        <div style="width:84px;height:46px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:9px;box-shadow:0 5px 12px rgba(60,45,30,0.05);"></div>
+        <div style="width:84px;height:46px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:9px;box-shadow:0 5px 12px rgba(60,45,30,0.05);"></div>
+        <div style="width:84px;height:46px;background:#FCFAF6;border:1px solid #EAE3D5;border-radius:9px;box-shadow:0 5px 12px rgba(60,45,30,0.05);"></div>
+      </div>
+
+      <!-- bottom heading -->
+      <div style="position:absolute;top:716px;left:50%;transform:translateX(-50%);width:560px;text-align:center;">
+        <h2 style="font-size:45px;font-weight:600;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#292621;">Deliver clean data to every downstream initiative</h2>
+        <p style="font-size:17px;line-height:1.5;color:#6B665D;margin:20px auto 0;max-width:430px;">Analytics-ready and AI-ready output to every system in your stack—powering every payer initiative</p>
+      </div>
+    </div>
+
+    <!-- tag cloud -->
+    <div style="width:100%;overflow:hidden;margin-top:6px;padding-bottom:6px;">
+      <div style="display:flex;flex-wrap:nowrap;justify-content:center;gap:12px;margin-bottom:12px;white-space:nowrap;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Directories</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Risk Adjustment</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Quality Measures</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">HEDIS Reporting</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Care Gap Closure</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Population Health</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Member Adequacy</div>
+      </div>
+      <div style="display:flex;flex-wrap:nowrap;justify-content:center;gap:12px;margin-bottom:12px;white-space:nowrap;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Network Adequacy</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Star Ratings</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">SDOH Screening</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Prior Authorization</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Credentialing</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Claims Analytics</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Utilization Mgmt</div>
+      </div>
+      <div style="display:flex;flex-wrap:nowrap;justify-content:center;gap:12px;white-space:nowrap;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Predictive Analytics</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Value-Based Contracts</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Member Experience</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Regulatory Filing</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Benefit Design</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Cost Modeling</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#4A463F;background:#FBF9F4;border:1px solid #E4DED0;border-radius:8px;padding:9px 16px;">Fraud Detection</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PLATFORM ===================== -->
+  <section style="background:#EFEAE1;padding:64px 56px 70px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1.5px;color:#A8543C;text-transform:uppercase;margin-bottom:18px;">Platform</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:48px;">
+      <div style="max-width:520px;">
+        <h2 style="font-size:42px;font-weight:600;line-height:1.08;letter-spacing:-0.02em;margin:0;color:#292621;">Three steps to data you can use (and trust).</h2>
+        <p style="font-size:17px;line-height:1.5;color:#6B665D;margin:22px 0 0;max-width:440px;">A three-stage pipeline that transforms fragmented payer data into clean, actionable intelligence—in days, not months.</p>
+      </div>
+      <a href="#" style="white-space:nowrap;display:inline-flex;align-items:center;background:transparent;border:1px solid #CFC7B8;color:#292621;text-decoration:none;font-size:15px;padding:13px 24px;border-radius:40px;">Explore Documentation</a>
+    </div>
+
+    <!-- progress -->
+    <div style="height:3px;background:#E0D9C9;border-radius:3px;margin-bottom:34px;overflow:hidden;"><div style="width:34%;height:100%;background:linear-gradient(90deg,#E9B6A6,#E3A18C);border-radius:3px;"></div></div>
+
+    <div style="display:flex;align-items:stretch;gap:0;">
+      <!-- card 1 -->
+      <div style="flex:1 1 0;min-width:0;background:#F7F3EB;border:1px solid #E1DACB;border-radius:16px;padding:24px 26px 28px;display:flex;flex-direction:column;">
+        <div style="width:28px;height:28px;border-radius:50%;background:#6E7A3A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;margin-bottom:20px;">1</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2B27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="12" r="2"/><path d="M6 8v8M8 6h4a4 4 0 0 1 4 4M8 18h4a4 4 0 0 0 4-4"/></svg>
+          <span style="font-size:25px;font-weight:600;letter-spacing:-0.01em;">Capture</span>
+        </div>
+        <p style="font-size:15px;line-height:1.55;color:#5E594F;margin:0 0 26px;">50+ pre-built connectors ingest claims, clinical, pharmacy, and SDOH data from any source including EHR, HIE, Databricks, flat file, and direct database connection, without rip-and-replace.</p>
+        <div style="margin-top:auto;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:#6E6A60;margin-bottom:12px;">PULL</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;">
+            <span style="background:#D2E3AC;color:#51602F;padding:5px 11px;border-radius:6px;">EHR</span>
+            <span style="background:#D2E3AC;color:#51602F;padding:5px 11px;border-radius:6px;">HIE</span>
+            <span style="background:#D2E3AC;color:#51602F;padding:5px 11px;border-radius:6px;">Claims</span>
+            <span style="background:#D2E3AC;color:#51602F;padding:5px 11px;border-radius:6px;">Pharmacy</span>
+            <span style="background:#D2E3AC;color:#51602F;padding:5px 11px;border-radius:6px;">SDOH</span>
+            <span style="background:#D2E3AC;color:#51602F;padding:5px 11px;border-radius:6px;">Flat Files</span>
+          </div>
+        </div>
+      </div>
+      <div style="flex:0 0 44px;display:flex;align-items:center;justify-content:center;color:#9FB06E;font-size:18px;">⇢</div>
+      <!-- card 2 -->
+      <div style="flex:1 1 0;min-width:0;background:#F7F3EB;border:1px solid #E1DACB;border-radius:16px;padding:24px 26px 28px;display:flex;flex-direction:column;">
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #C9C1B1;color:#8A857A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;margin-bottom:20px;">2</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2B27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 11l10-4M7 13l10 4"/></svg>
+          <span style="font-size:25px;font-weight:600;letter-spacing:-0.01em;">Curate</span>
+        </div>
+        <p style="font-size:15px;line-height:1.55;color:#5E594F;margin:0 0 26px;">AI-powered FHIR transformation normalizes, deduplicates, and enriches messy payer data into a single longitudinal health record.</p>
+        <div style="margin-top:auto;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:#6E6A60;margin-bottom:12px;">TRANSFORM</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;">
+            <span style="background:#CBCDF1;color:#3C3E8C;padding:5px 11px;border-radius:6px;">Normalize</span>
+            <span style="background:#CBCDF1;color:#3C3E8C;padding:5px 11px;border-radius:6px;">Deduplicate</span>
+            <span style="background:#CBCDF1;color:#3C3E8C;padding:5px 11px;border-radius:6px;">Enrich</span>
+            <span style="background:#CBCDF1;color:#3C3E8C;padding:5px 11px;border-radius:6px;">FHIR Map</span>
+          </div>
+        </div>
+      </div>
+      <div style="flex:0 0 44px;display:flex;align-items:center;justify-content:center;color:#C2BBAC;font-size:18px;">⇢</div>
+      <!-- card 3 -->
+      <div style="flex:1 1 0;min-width:0;background:#F7F3EB;border:1px solid #E1DACB;border-radius:16px;padding:24px 26px 28px;display:flex;flex-direction:column;">
+        <div style="width:28px;height:28px;border-radius:50%;border:1px solid #C9C1B1;color:#8A857A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;margin-bottom:20px;">3</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2B2B27" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M8 11l8-5M8 13l8 5"/></svg>
+          <span style="font-size:25px;font-weight:600;letter-spacing:-0.01em;">Consume</span>
+        </div>
+        <p style="font-size:15px;line-height:1.55;color:#5E594F;margin:0 0 26px;">Deliver analytics and AI-ready data into any downstream system, powering use cases from risk adjustment to quality measures to predictive modeling.</p>
+        <div style="margin-top:auto;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:#6E6A60;margin-bottom:12px;">INTEGRATE</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;">
+            <span style="background:#E9C5BC;color:#9C4A37;padding:5px 11px;border-radius:6px;">Snowflake</span>
+            <span style="background:#E9C5BC;color:#9C4A37;padding:5px 11px;border-radius:6px;">Databricks</span>
+            <span style="background:#E9C5BC;color:#9C4A37;padding:5px 11px;border-radius:6px;">Cotiviti</span>
+            <span style="background:#E9C5BC;color:#9C4A37;padding:5px 11px;border-radius:6px;">APIs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROVEN (DARK) ===================== -->
+  <section style="position:relative;padding:0 56px;background:linear-gradient(180deg,rgba(36,40,34,0.72),rgba(30,34,30,0.78)),linear-gradient(95deg,#3f5a4a 0%,#6b7a5e 18%,#94977c 34%,#cdb78f 50%,#8b9389 64%,#5e6f78 80%,#454a5e 100%);color:#F4F1EA;overflow:hidden;">
+    <div style="border-left:1px solid rgba(244,241,234,0.18);border-right:1px solid rgba(244,241,234,0.18);">
+      <div style="padding:44px 44px 52px;border-bottom:1px solid rgba(244,241,234,0.18);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:2px;color:rgba(244,241,234,0.72);text-transform:uppercase;margin-bottom:28px;">Proven in Production</div>
+        <div style="display:grid;grid-template-columns:1.32fr 0.68fr;gap:48px;align-items:center;">
+          <h2 style="font-size:64px;font-weight:600;line-height:1.02;letter-spacing:-0.025em;margin:0;color:#F7F4EE;">What used to take months now takes days.</h2>
+          <p style="font-size:18px;line-height:1.55;color:rgba(244,241,234,0.82);margin:0;">A Regional Blue Plan went live with Health Chain, transforming 12–18 month integrations into days, not months.</p>
+        </div>
+      </div>
+      <div style="padding:50px 44px 54px;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;">
+          <div>
+            <div style="font-size:90px;font-weight:600;letter-spacing:-0.03em;line-height:1;color:#F7F4EE;display:flex;align-items:center;gap:6px;">95%<span style="font-size:62px;font-weight:400;">↓</span></div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:rgba(244,241,234,0.7);margin-top:22px;">in launch timeline from 12-18 months to days</div>
+          </div>
+          <div>
+            <div style="font-size:90px;font-weight:600;letter-spacing:-0.03em;line-height:1;color:#F7F4EE;">50+</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:rgba(244,241,234,0.7);margin-top:22px;">data sources unified</div>
+          </div>
+          <div>
+            <div style="font-size:90px;font-weight:600;letter-spacing:-0.03em;line-height:1;color:#F7F4EE;">FHIR</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.5px;color:rgba(244,241,234,0.7);margin-top:22px;">-ready data output</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOLUTIONS ===================== -->
+  <section style="padding:66px 56px 30px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1.5px;color:#A8543C;text-transform:uppercase;margin-bottom:18px;">Solutions</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:24px;">
+      <h2 style="font-size:42px;font-weight:600;line-height:1.08;letter-spacing:-0.02em;margin:0;color:#292621;">One partner. Every payer<br>initiative. Solved.</h2>
+      <a href="#" style="white-space:nowrap;display:inline-flex;align-items:center;background:transparent;border:1px solid #CFC7B8;color:#292621;text-decoration:none;font-size:15px;padding:13px 24px;border-radius:40px;">Explore Platform</a>
+    </div>
+
+    <!-- row 01 -->
+    <div style="display:grid;grid-template-columns:170px 1fr auto;gap:0;align-items:start;border-top:1px solid #E5DECF;padding:40px 0;">
+      <div style="font-size:88px;font-weight:500;color:#E3DCCD;line-height:0.8;letter-spacing:-0.02em;">01</div>
+      <div style="max-width:560px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1.2px;color:#6E7A3A;text-transform:uppercase;margin-bottom:14px;">Interoperability &amp; Compliance</div>
+        <h3 style="font-size:30px;font-weight:600;letter-spacing:-0.01em;margin:0 0 16px;color:#292621;">Connect every system. Meet every mandate.</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5E594F;margin:0 0 22px;">Automate FHIR, HL7, and X12 data exchange across your network with built-in compliance for TEFCA, CMS-0057-F, and state-level regulations—so you're ready for Jan 2027 deadlines.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;">
+          <span style="background:#D2E3AC;color:#51602F;padding:6px 12px;border-radius:6px;">FHIR R4</span>
+          <span style="background:#D2E3AC;color:#51602F;padding:6px 12px;border-radius:6px;">HL7 / X12</span>
+          <span style="background:#D2E3AC;color:#51602F;padding:6px 12px;border-radius:6px;">TEFCA</span>
+          <span style="background:#D2E3AC;color:#51602F;padding:6px 12px;border-radius:6px;">CMS-0057-F</span>
+        </div>
+      </div>
+      <a href="#" style="font-size:15px;color:#292621;text-decoration:none;white-space:nowrap;">Explore →</a>
+    </div>
+
+    <!-- row 02 -->
+    <div style="display:grid;grid-template-columns:170px 1fr auto;gap:0;align-items:start;border-top:1px solid #E5DECF;padding:40px 0;">
+      <div style="font-size:88px;font-weight:500;color:#E3DCCD;line-height:0.8;letter-spacing:-0.02em;">02</div>
+      <div style="max-width:560px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1.2px;color:#4346A0;text-transform:uppercase;margin-bottom:14px;">Longitudinal Data Enablement</div>
+        <h3 style="font-size:30px;font-weight:600;letter-spacing:-0.01em;margin:0 0 16px;color:#292621;">From fragments to full member stories.</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5E594F;margin:0 0 22px;">Aggregate clinical, claims, pharmacy, and SDOH data into a single longitudinal record—powering population health, risk adjustment, and care coordination at scale.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;">
+          <span style="background:#CBCDF1;color:#3C3E8C;padding:6px 12px;border-radius:6px;">Clinical</span>
+          <span style="background:#CBCDF1;color:#3C3E8C;padding:6px 12px;border-radius:6px;">Claims</span>
+          <span style="background:#CBCDF1;color:#3C3E8C;padding:6px 12px;border-radius:6px;">Pharmacy</span>
+          <span style="background:#CBCDF1;color:#3C3E8C;padding:6px 12px;border-radius:6px;">SDOH</span>
+        </div>
+      </div>
+      <a href="#" style="font-size:15px;color:#292621;text-decoration:none;white-space:nowrap;">Explore →</a>
+    </div>
+
+    <!-- row 03 -->
+    <div style="display:grid;grid-template-columns:170px 1fr auto;gap:0;align-items:start;border-top:1px solid #E5DECF;border-bottom:1px solid #E5DECF;padding:40px 0;">
+      <div style="font-size:88px;font-weight:500;color:#E3DCCD;line-height:0.8;letter-spacing:-0.02em;">03</div>
+      <div style="max-width:560px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1.2px;color:#A8543C;text-transform:uppercase;margin-bottom:14px;">Benefit Design &amp; Intelligence</div>
+        <h3 style="font-size:30px;font-weight:600;letter-spacing:-0.01em;margin:0 0 16px;color:#292621;">Smarter benefits, powered by real data.</h3>
+        <p style="font-size:16px;line-height:1.55;color:#5E594F;margin:0 0 22px;">Leverage real-world utilization patterns and outcomes data to design, price, and optimize benefit structures that reduce waste and improve member health outcomes.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;">
+          <span style="background:#E9C5BC;color:#9C4A37;padding:6px 12px;border-radius:6px;">Utilization</span>
+          <span style="background:#E9C5BC;color:#9C4A37;padding:6px 12px;border-radius:6px;">Outcomes</span>
+          <span style="background:#E9C5BC;color:#9C4A37;padding:6px 12px;border-radius:6px;">Cost Modeling</span>
+          <span style="background:#E9C5BC;color:#9C4A37;padding:6px 12px;border-radius:6px;">Optimization</span>
+        </div>
+      </div>
+      <a href="#" style="font-size:15px;color:#292621;text-decoration:none;white-space:nowrap;">Explore →</a>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIAL ===================== -->
+  <section style="position:relative;padding:60px 56px;background:linear-gradient(120deg,#2f8076 0%,#3f8a7c 12%,#6f7a8e 26%,#9a6a55 42%,#b0703f 54%,#9a6450 66%,#566f6e 80%,#3c6f6a 100%);overflow:hidden;">
+    <div style="max-width:560px;margin-left:auto;margin-right:60px;background:rgba(30,32,30,0.26);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.28);border-radius:16px;padding:28px 30px 30px;color:#F4F1EA;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
+        <div style="display:flex;align-items:center;gap:13px;">
+          <div style="width:46px;height:46px;border-radius:50%;flex:0 0 46px;background:linear-gradient(135deg,#9aa0a8,#6f7680);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;border:1px solid rgba(255,255,255,0.4);"><svg width="30" height="30" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+          <div>
+            <div style="font-size:15px;font-weight:500;color:#F7F4EE;">[First &amp; Last Name]</div>
+            <div style="font-size:13px;color:rgba(244,241,234,0.78);">VP of Data &amp; Analytics at Regional Blue Plan</div>
+          </div>
+        </div>
+        <svg width="30" height="30" viewBox="0 0 100 100"><path d="M50,2 L56.9,33.4 L83.9,16.1 L66.6,43.1 L98,50 L66.6,56.9 L83.9,83.9 L56.9,66.6 L50,98 L43.1,66.6 L16.1,83.9 L33.4,56.9 L2,50 L33.4,43.1 L16.1,16.1 L43.1,33.4 Z" fill="rgba(255,255,255,0.85)"/></svg>
+      </div>
+      <p style="font-size:23px;line-height:1.4;font-weight:500;margin:0;color:#F8F5EF;">"Health Chain took integrations that used to take 12–18 months and delivered them in days. We finally have a single source of truth for our member data."</p>
+    </div>
+  </section>
+
+  <!-- ===================== RESOURCES ===================== -->
+  <section style="padding:66px 56px 70px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1.5px;color:#A8543C;text-transform:uppercase;margin-bottom:18px;">Resources</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:40px;">
+      <h2 style="font-size:42px;font-weight:600;line-height:1.08;letter-spacing:-0.02em;margin:0;color:#292621;">Latest thinking.</h2>
+      <a href="#" style="white-space:nowrap;display:inline-flex;align-items:center;background:transparent;border:1px solid #CFC7B8;color:#292621;text-decoration:none;font-size:15px;padding:13px 24px;border-radius:40px;">View All Resources</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #E5DECF;">
+      <div style="padding:30px 30px 30px 0;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:#8A857A;text-transform:uppercase;margin-bottom:16px;">Regulatory Brief</div>
+        <h3 style="font-size:23px;font-weight:600;line-height:1.18;letter-spacing:-0.01em;margin:0 0 14px;color:#292621;">CMS-0057-F: What payers need to know before Jan 2027.</h3>
+        <p style="font-size:14px;line-height:1.55;color:#6B665D;margin:0 0 24px;">A practical breakdown of the new interoperability mandate and how to prepare your data infrastructure.</p>
+        <a href="#" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#292621;text-decoration:none;">Read More →</a>
+      </div>
+      <div style="padding:30px;border-left:1px solid #E5DECF;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:#8A857A;text-transform:uppercase;margin-bottom:16px;">Case Study</div>
+        <h3 style="font-size:23px;font-weight:600;line-height:1.18;letter-spacing:-0.01em;margin:0 0 14px;color:#292621;">How a Regional Blue Plan unified member data in days.</h3>
+        <p style="font-size:14px;line-height:1.55;color:#6B665D;margin:0 0 24px;">From 12-18 month integration timelines to production-ready pipelines—without rip-and-replace.</p>
+        <a href="#" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#292621;text-decoration:none;">Read More →</a>
+      </div>
+      <div style="padding:30px;border-left:1px solid #E5DECF;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:#8A857A;text-transform:uppercase;margin-bottom:16px;">Whitepaper</div>
+        <h3 style="font-size:23px;font-weight:600;line-height:1.18;letter-spacing:-0.01em;margin:0 0 14px;color:#292621;">The payer CTO's guide to data readiness</h3>
+        <p style="font-size:14px;line-height:1.55;color:#6B665D;margin:0 0 24px;">Why clean longitudinal data is the foundation for AI, analytics, and value-based care.</p>
+        <a href="#" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#292621;text-decoration:none;">Read More →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FINAL CTA ===================== -->
+  <section style="display:grid;grid-template-columns:1fr 1fr;min-height:430px;border-top:1px solid #E5DECF;">
+    <div style="position:relative;background:linear-gradient(120deg,#cdbf9a,#e7ddc8 40%,#d9b9c2 80%,#bcaecb);">
+      <x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="100%,100%" id="cta-photo" shape="rect" placeholder="Drop photo" style="display:block;width:100%;height:100%;"></x-import>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:60px 70px;">
+      <h2 style="font-size:48px;font-weight:600;letter-spacing:-0.02em;line-height:1.05;margin:0;color:#292621;">Your data is ready.</h2>
+      <div style="margin-top:10px;"><span style="display:inline-block;background:#F1D9D1;color:#AE5740;padding:1px 16px 5px;border-radius:9px;font-size:48px;font-weight:600;letter-spacing:-0.02em;line-height:1.1;">Are you?</span></div>
+      <p style="font-size:18px;line-height:1.55;color:#57534C;margin:26px 0 0;max-width:420px;">See how Health Chain turns fragmented payer data into clean, actionable intelligence—in days, not months.</p>
+      <div style="margin-top:34px;">
+        <a href="#" style="display:inline-flex;align-items:center;gap:13px;background:#A8543C;color:#FBF9F4;text-decoration:none;font-size:16px;font-weight:500;padding:14px 14px 14px 24px;border-radius:42px;">Request a Demo <span style="width:29px;height:29px;border-radius:50%;border:1px solid rgba(255,255,255,0.45);display:inline-flex;align-items:center;justify-content:center;font-size:13px;">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="padding:60px 56px 56px;border-top:1px solid #E5DECF;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:54px;">
+      <div style="display:flex;align-items:center;gap:22px;">
+        <svg width="62" height="62" viewBox="0 0 100 100"><path d="M50,2 L56.9,33.4 L83.9,16.1 L66.6,43.1 L98,50 L66.6,56.9 L83.9,83.9 L56.9,66.6 L50,98 L43.1,66.6 L16.1,83.9 L33.4,56.9 L2,50 L33.4,43.1 L16.1,16.1 L43.1,33.4 Z" fill="#A8543C"/></svg>
+        <span style="font-size:62px;font-weight:400;letter-spacing:-0.02em;color:#292621;">Health Chain</span>
+      </div>
+      <p style="font-size:18px;line-height:1.45;color:#57534C;margin:0;text-align:right;max-width:280px;">The data readiness layer healthcare has been missing.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:32px;">
+      <div>
+        <div style="font-size:13px;color:#6B665D;margin-bottom:18px;">© 2026 Health Chain. All rights reserved.</div>
+        <div style="display:flex;gap:26px;font-size:15px;color:#3A352E;">
+          <a href="#" style="color:#3A352E;text-decoration:none;">Privacy</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Terms</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Security</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1px;color:#A8543C;margin-bottom:18px;">PLATFORM</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;">
+          <a href="#" style="color:#3A352E;text-decoration:none;">Capture</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Curate</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Consume</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1px;color:#A8543C;margin-bottom:18px;">SOLUTIONS</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;">
+          <a href="#" style="color:#3A352E;text-decoration:none;">Interoperability &amp; Compliance</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Longitudinal Data Enablement</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Benefit Design &amp; Intelligence</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1px;color:#A8543C;margin-bottom:18px;">RESOURCES</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;">
+          <a href="#" style="color:#3A352E;text-decoration:none;">Regulatory Briefs</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Case Studies</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Whitepapers</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Documentation</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:1px;color:#A8543C;margin-bottom:18px;">COMPANY</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:15px;">
+          <a href="#" style="color:#3A352E;text-decoration:none;">About</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Careers</a>
+          <a href="#" style="color:#3A352E;text-decoration:none;">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
