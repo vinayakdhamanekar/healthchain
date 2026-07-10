@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LongitudinalHero from "@/components/longitudinal/LongitudinalHero";
 import ProblemSection from "@/components/longitudinal/ProblemSection";
-import HowItWorks from "@/components/longitudinal/HowItworks"
+import HowWorks from "@/components/longitudinal/HowWorks";
 import SixDomains from "@/components/longitudinal/SixDomains";
 import ActivationCards from "@/components/longitudinal/ActivationCards";
 import ComplianceStandards from "@/components/longitudinal/ComplianceStandards";
@@ -17,7 +17,7 @@ export default function LongitudinalDataEnablementPage(): JSX.Element {
       <Navbar />
       <LongitudinalHero />
       <ProblemSection />
-      <HowItWorks/>
+      <HowWorks/>
       <SixDomains />
       <ActivationCards />
       <ComplianceStandards />
