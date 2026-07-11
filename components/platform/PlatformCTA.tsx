@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function PlatformCTA(): JSX.Element {
   return (
-    <section className="px-7 md:px-14 py-[90px] border-t border-[#F7F3EF]">
+    <section className="px-7 md:px-14 py-[90px] border-t border-[#928b86] bg-[#F7F3EF]">
       <div className="max-w-[900px] mx-auto text-center">
 
         {/* Headline */}

@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState, type JSX } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "framer-motion";
+import { useLayoutEffect, useRef, type JSX } from "react";
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface Step {
   number: string;
@@ -97,38 +98,77 @@ function StepContent({ step }: { step: Step }): JSX.Element {
 }
 
 function PinnedSteps(): JSX.Element {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const pinRef = useRef<HTMLDivElement>(null); // the element ScrollTrigger pins directly
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  // Scroll distance (px) dedicated to EACH crossfade transition between two
+  // steps. With N steps there are (N - 1) transitions, so the pin holds for
+  // TRANSITION_SCROLL * (N - 1) px total — GSAP's `pin: true` inserts its own
+  // spacer sized to exactly that, so no manual height math is needed.
+  const TRANSITION_SCROLL = 700;
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const nextIndex = Math.min(
-      steps.length - 1,
-      Math.floor(latest * steps.length)
-    );
-    setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
-  });
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia();
+
+    // Scoped to md+ only — mobile uses the separate whileInView list below.
+    mm.add("(min-width: 768px)", () => {
+      const ctx = gsap.context(() => {
+        const panels = panelRefs.current;
+
+        // Baseline: step 0 visible, the rest hidden and offset down slightly
+        // (mirrors the old AnimatePresence `initial`/`exit` y offsets).
+        gsap.set(panels[0], { opacity: 1, y: 0 });
+        gsap.set(panels.slice(1), { opacity: 0, y: 24 });
+
+        const totalTransitions = steps.length - 1;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinRef.current,
+            // Pin when the (content-height) stack reaches viewport center, so
+            // the crossfade plays out mid-screen instead of jammed under the
+            // navbar. GSAP inserts its own spacer for the scroll distance.
+            start: "center center",
+            end: `+=${TRANSITION_SCROLL * totalTransitions}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // One crossfade per pair of adjacent steps, evenly spaced across the
+        // timeline (position `i` to `i + 1`) — outgoing step fades down/out
+        // while the incoming one fades up/in, at the same scroll position.
+        for (let i = 0; i < totalTransitions; i++) {
+          tl.to(panels[i], { opacity: 0, y: -24, duration: 1, ease: "power1.inOut" }, i);
+          tl.to(panels[i + 1], { opacity: 1, y: 0, duration: 1, ease: "power1.inOut" }, i);
+        }
+      }, pinRef);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
-    <div ref={containerRef} className="hidden md:block relative h-[300vh]">
-      <div className="sticky top-0 h-screen flex items-center -mt-40 -mb-40 pt-6 md:pt-10 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="w-full"
-          >
-            <StepContent step={steps[activeIndex]} />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+    // Grid stack: every step occupies the same cell (grid-area 1/1) so they
+    // overlap for the crossfade while the container sizes itself to the
+    // tallest step — no `h-screen`/sticky-offset hacks needed. `md:grid` (not
+    // `md:block`) is what actually enables the stacking layout.
+    <div ref={pinRef} className="hidden md:grid relative">
+      {steps.map((step, idx) => (
+        <div
+          key={step.number}
+          ref={(el) => {
+            panelRefs.current[idx] = el;
+          }}
+          className="[grid-area:1/1] will-change-transform"
+        >
+          <StepContent step={step} />
+        </div>
+      ))}
     </div>
   );
 }

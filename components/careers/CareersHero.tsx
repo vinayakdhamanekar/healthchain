@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function CareersHero(): JSX.Element {
   return (
     <>
-    <section className="relative min-h-screen px-7 md:px-14 pt-[100px] md:pt-[110px] pb-[20px] bg-[#F5F0E8]">
+    <section className="relative min-h-screen px-7 md:px-14 pt-[100px] md:pt-[110px] pb-[20px] bg-[#F7F3EF]">
           <div className="grid grid-cols-1 md:grid-cols-[0.82fr_1.08fr] gap-8 items-start">
             {/* Left: portrait with blurred glow */}
     

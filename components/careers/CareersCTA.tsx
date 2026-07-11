@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function ContactCTA(): JSX.Element {
   return (
-    <section className="bg-[#F5F0E8] px-7 md:px-14 py-[90px] border-t border-[#E5DECF]">
+    <section className="bg-[#F7F3EF] px-7 md:px-14 py-[90px] border-t border-[#E5DECF]">
       <div className="max-w-[900px] mx-auto text-center">
 
         {/* Headline */}

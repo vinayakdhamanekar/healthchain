@@ -1,13 +1,14 @@
 "use client";
 
-import { useRef, useState, type JSX } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "framer-motion";
+import { useLayoutEffect, useRef, type JSX } from "react";
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface SolutionRow {
   number: string;
@@ -129,38 +130,77 @@ function RowMobileContent({ row, isLast }: { row: SolutionRow; isLast: boolean }
 }
 
 function PinnedRows(): JSX.Element {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const pinRef = useRef<HTMLDivElement>(null); // the element ScrollTrigger pins directly
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  // Scroll distance (px) dedicated to EACH crossfade transition between two
+  // rows. With N rows there are (N - 1) transitions, so the pin holds for
+  // TRANSITION_SCROLL * (N - 1) px total — GSAP's `pin: true` inserts its own
+  // spacer sized to exactly that, so no manual height math is needed.
+  const TRANSITION_SCROLL = 700;
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const nextIndex = Math.min(
-      ROWS.length - 1,
-      Math.floor(latest * ROWS.length)
-    );
-    setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
-  });
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia();
+
+    // Scoped to md+ only — mobile uses the separate whileInView list below.
+    mm.add("(min-width: 768px)", () => {
+      const ctx = gsap.context(() => {
+        const panels = panelRefs.current;
+
+        // Baseline: row 0 visible, the rest hidden and offset down slightly
+        // (mirrors the old AnimatePresence `initial`/`exit` y offsets).
+        gsap.set(panels[0], { opacity: 1, y: 0 });
+        gsap.set(panels.slice(1), { opacity: 0, y: 24 });
+
+        const totalTransitions = ROWS.length - 1;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinRef.current,
+            // Pin when the (content-height) stack reaches viewport center, so
+            // the crossfade plays out mid-screen instead of jammed under the
+            // navbar. GSAP inserts its own spacer for the scroll distance.
+            start: "center center",
+            end: `+=${TRANSITION_SCROLL * totalTransitions}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // One crossfade per pair of adjacent rows, evenly spaced across the
+        // timeline (position `i` to `i + 1`) — outgoing row fades down/out
+        // while the incoming one fades up/in, at the same scroll position.
+        for (let i = 0; i < totalTransitions; i++) {
+          tl.to(panels[i], { opacity: 0, y: -24, duration: 1, ease: "power1.inOut" }, i);
+          tl.to(panels[i + 1], { opacity: 1, y: 0, duration: 1, ease: "power1.inOut" }, i);
+        }
+      }, pinRef);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
-    <div ref={containerRef} className="hidden md:block relative h-[300vh]">
-      <div className="sticky top-0 h-screen flex items-center -mt-40 -mb-40 pt-6 md:pt-10 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="w-full"
-          >
-            <RowDesktopContent row={ROWS[activeIndex]} />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+    // Grid stack: every row occupies the same cell (grid-area 1/1) so they
+    // overlap for the crossfade while the container sizes itself to the
+    // tallest row — no `h-screen`/sticky-offset hacks needed. `md:grid` (not
+    // `md:block`) is what actually enables the stacking layout.
+    <div ref={pinRef} className="hidden md:grid relative">
+      {ROWS.map((row, idx) => (
+        <div
+          key={row.number}
+          ref={(el) => {
+            panelRefs.current[idx] = el;
+          }}
+          className="[grid-area:1/1] will-change-transform"
+        >
+          <RowDesktopContent row={row} />
+        </div>
+      ))}
     </div>
   );
 }
@@ -185,8 +225,8 @@ function MobileRowsList(): JSX.Element {
 
 export default function EnterpriseSuccess(): JSX.Element {
   return (
-    <section className="bg-[#F7F3EF] px-7 md:px-14 pt-[66px] pb-[30px]">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-6">
+    <section className="bg-[#F7F3EF] px-7 md:px-14 pt-[66px] pb-[30px] -mt-5">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-10">
         <div>
           <div className="font-mono font-semibold text-[13px] tracking-[1.5px] text-[#A8543C] uppercase mb-3">
             Buildable Solutions

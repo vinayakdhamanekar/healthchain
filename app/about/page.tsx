@@ -10,7 +10,7 @@ import AboutCTA from "@/components/about/AboutCTA";
 
 export default function AboutPage(): JSX.Element {
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[#F7F3EF]">
       <div className="max-w-[1280px] mx-auto border-x border-[#E5DECF] overflow-hidden bg-[#F4EFE8]">
         <Navbar />
         <AboutHero />

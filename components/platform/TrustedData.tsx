@@ -68,19 +68,18 @@ function LayerSection({
 }): JSX.Element {
   return (
     <div className="mb-5">
-     
+
       <div className="grid lg:grid-cols-[340px_1fr] gap-10 items-start">
 
         {/* LEFT COLUMN */}
         <div>
           <div
-            className={`font-mono font-semibold text-[13px] tracking-[1.5px] uppercase mb-3 ${
-              layer.label === "CAPTURE"
+            className={`font-mono font-semibold text-[13px] tracking-[1.5px] uppercase mb-3 ${layer.label === "CAPTURE"
                 ? "text-[#76834B]"
                 : layer.label === "CURATE"
-                ? "text-[#4D56C0]"
-                : "text-[#B35C46]"
-            }`}
+                  ? "text-[#4D56C0]"
+                  : "text-[#B35C46]"
+              }`}
           >
             {layer.label}
           </div>
@@ -147,15 +146,15 @@ export default function TrustedData(): JSX.Element {
           <div className="font-mono font-semibold text-[13px] tracking-[1.5px] text-[#A8543C] uppercase mb-2">
             Architecture
           </div>
-       
-        <h2 className="mb-1 text-[32px] md:text-[42px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#34332C] max-w-[720px]">
-          Trusted data for every initiative.
-        </h2>
-         <p className="max-w-[600px] text-[17px] md:text-[19px] leading-[1.55] text-[#57534C] mt-[20px]">
+
+          <h2 className="mb-1 text-[32px] md:text-[42px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#34332C] max-w-[720px]">
+            Trusted data for every initiative.
+          </h2>
+          <p className="max-w-[600px] text-[17px] md:text-[19px] leading-[1.55] text-[#57534C] mt-[20px]">
             Our approach to data readiness fills the gap between data access and usability. We normalize at the platform level for 50+ pre-built data sources—including clinical, claims, administrative, and SDOHs.
           </p>
-         </div>
-        
+        </div>
+
       </div>
       {LAYERS.map((layer) => (
         <LayerSection

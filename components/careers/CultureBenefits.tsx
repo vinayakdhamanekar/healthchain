@@ -66,7 +66,7 @@ function BenefitIcon({ color, stroke }: { color: string; stroke: string }): JSX.
 
 export default function CultureBenefits(): JSX.Element {
   return (
-    <section className="bg-[#F5F0E8] border-t border-gray-200">
+    <section className="bg-[#F7F3EF] border-t border-gray-200">
       {/* Header */}
       <div className="px-7 md:px-14 pt-[72px] pb-[56px]">
         <p className="font-mono font-semibold text-[13px] tracking-[0.16em] uppercase text-[#A8543C] mb-5">

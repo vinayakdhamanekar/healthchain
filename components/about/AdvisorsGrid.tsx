@@ -91,18 +91,18 @@ export default function AdvisorsGrid(): JSX.Element {
                     alt={advisor.name}
                     width={88}
                     height={88}
-                    className="w-[88px] h-[88px] rounded-full object-cover border border-[#E5DECF]"
+                    className="w-[88px] h-[88px] ml-10 rounded-full object-cover border border-[#E5DECF]"
                   />
                 <LinkedInBadge href={advisor.linkedin} name={advisor.name} />
               </div>
 
               {/* Name */}
-              <p className="text-[16px] font-semibold text-[#1A1A1A] leading-tight mb-1">
+              <p className="text-[16px] ml-10 font-semibold text-[#1A1A1A] leading-tight mb-1">
                 {advisor.name}
               </p>
 
               {/* Title */}
-              <p className="text-[13px] text-[#6B6B6B]">Strategic Advisor</p>
+              <p className="text-[13px] ml-10 text-[#6B6B6B]">Strategic Advisor</p>
             </div>
           ))}
         </div>
