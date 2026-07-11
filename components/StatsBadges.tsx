@@ -68,13 +68,13 @@ function BadgePill({ badge }: { badge: Badge }): JSX.Element {
 
 export default function StatsBadges(): JSX.Element {
   return (
-    <section className="bg-white border-y border-[#E5DECF]">
-  <div className="flex flex-col md:flex-row md:items-center md:justify-center px-7 md:px-14 py-6 gap-4 md:gap-10">
+    <section className="bg-[#f7f3EF] border-y border-[#E5DECF]">
+  <div className="flex flex-col md:flex-row md:items-center md:justify-center px-7 md:px-7 py-6 gap-4 md:gap-10">
     <div className="text-[16px] font-medium text-[#3A352E] md:pr-[38px] md:border-r md:border-[#E5DECF]">
       Credentials
     </div>
 
-    <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
+    <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
       {BADGES.map((badge) => (
         <BadgePill key={badge.code} badge={badge} />
       ))}

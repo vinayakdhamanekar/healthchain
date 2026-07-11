@@ -1,7 +1,14 @@
 "use client";
 import type { JSX } from "react";
-import { useEffect, useRef, useState } from "react";
-import { cubicBezier, motion, useInView, useScroll, useTransform } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface SourceTagProps {
   label: string;
@@ -16,7 +23,7 @@ function SourceTag({ label, delay = 0, fromX = 0 }: SourceTagProps): JSX.Element
       whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.65, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="font-mono text-[12px] tracking-[0.5px] text-[#4A463F] bg-[#FBF9F4] border border-[#E4DED0] rounded-[8px] py-[9px] px-[14px] shadow-[0_3px_9px_rgba(60,45,30,0.05)] whitespace-nowrap"
+      className="font-mono text-[12px] tracking-[0.5px] text-[#4A463F] bg-[#FBF9F4] border border-[#E4DED0] rounded-[8px] py-[9px] px-[14px] shadow-[0_3px_9px_rgba(60,45,30,0.05)] whitespace-nowrap transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-[3px] hover:border-[#C7BFB0] hover:shadow-[0_10px_22px_rgba(60,45,30,0.12)]"
     >
       {label}
     </motion.div>
@@ -25,7 +32,7 @@ function SourceTag({ label, delay = 0, fromX = 0 }: SourceTagProps): JSX.Element
 
 function UseCaseTag({ label }: { label: string }): JSX.Element {
   return (
-    <div className="font-mono text-[13px] text-[#4A463F] bg-[#FBF9F4] border border-[#E4DED0] rounded-[8px] py-[9px] px-[16px] whitespace-nowrap">
+    <div className="font-mono text-[13px] text-[#4A463F] bg-[#FBF9F4] border border-[#E4DED0] rounded-[8px] py-[9px] px-[16px] whitespace-nowrap transition-[transform,box-shadow,border-color] duration-300 ease-out hover:-translate-y-[2px] hover:border-[#C7BFB0] hover:shadow-[0_8px_18px_rgba(60,45,30,0.10)]">
       {label}
     </div>
   );
@@ -129,106 +136,144 @@ function RevealHeading({ title, description, className = "", baseDelay = 0 }: Re
 }
 
 export default function IngestSection(): JSX.Element {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const boxRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null); // gsap.context scope, and matchMedia boundary
+  const pinRef = useRef<HTMLDivElement>(null); // the element ScrollTrigger pins directly — no manual height math needed
+  const leftGroupRef = useRef<HTMLDivElement>(null);
+  const rightGroupRef = useRef<HTMLDivElement>(null);
+  const centerGroupRef = useRef<HTMLDivElement>(null);
+  const linesRef = useRef<SVGSVGElement>(null); // dotted connector lines — faded separately, see note below
+  const section2Ref = useRef<HTMLDivElement>(null);
 
-  // The pinned box's height is fluid (aspect-ratio, clamped by max-width) so it
-  // varies with viewport width — it has to be measured, not hardcoded. Native
-  // `position: sticky` releases once the track can no longer contain
-  // `TOP_OFFSET + content height`; that release point has nothing to do with
-  // scrollYProgress unless we derive the offsets from the same measurement.
-  const TOP_OFFSET = 110; // matches `sticky top-[110px]` below
-  const EXTRA_SCROLL = 700; // scroll distance (px) dedicated to driving the pinned animation
-  const [contentHeight, setContentHeight] = useState(1010); // fallback ≈ aspect-ratio height at max-width
+  // EXTRA_SCROLL is the scroll distance (px) the whole pin+stack+reveal plays
+  // out over. Unlike native `position: sticky`, GSAP's `pin: true` inserts its
+  // own spacer to hold this exact distance — so there's no need to measure
+  // content height or derive a release offset; ScrollTrigger handles it.
+  const EXTRA_SCROLL = 900;
 
-  useEffect(() => {
-    const el = boxRef.current;
-    if (!el) return;
+  useLayoutEffect(() => {
+    // gsap.matchMedia scopes the whole pin/timeline to md+ viewports (the
+    // desktop visualization below is `hidden md:block`), and automatically
+    // reverts/rebuilds the timeline on breakpoint changes for responsiveness.
+    const mm = gsap.matchMedia();
 
-    // Debounce via rAF: ResizeObserver can fire on every sub-pixel tick during
-    // layout/animation. Without the guard, rapid setState calls can cause the
-    // derived scroll offsets (trackHeight/releaseOffset) to jitter mid-scroll
-    // on some browsers (notably mobile Safari). Coalescing to one update per
-    // frame keeps the scroll range stable while still tracking real resizes.
-    let frame: number;
-    const observer = new ResizeObserver(([entry]) => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        setContentHeight(entry.contentRect.height);
+    mm.add("(min-width: 768px)", () => {
+      // Lenis smooths the raw scroll input into inertia-based motion before
+      // ScrollTrigger ever sees it — this is what removes the last bit of
+      // "trackpad notch" jitter from the scrub and gives the stack that
+      // continuous, premium glide rather than stepping frame-to-frame with
+      // the browser's native scroll. Scoped to md+ only: on touch devices,
+      // native momentum scrolling already feels right, and layering Lenis on
+      // top of touch input tends to fight it rather than help.
+      const lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // smooth expo-out
       });
+      const syncScrollTrigger = (time: number) => lenis.raf(time * 1000);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(syncScrollTrigger);
+      gsap.ticker.lagSmoothing(0); // Lenis already smooths; GSAP's own lag smoothing would double up and stutter
+
+      const ctx = gsap.context(() => {
+        // Explicit baseline: guarantees GSAP is animating opacity from a known
+        // value of 1, rather than reading whatever the browser's current
+        // computed style happens to be at mount time.
+        gsap.set(linesRef.current, { opacity: 1 });
+
+        // Section 2 starts hidden — set immediately so there's no flash of
+        // visible content before the timeline reaches that point.
+        gsap.set(section2Ref.current, { opacity: 0, y: 24 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinRef.current,
+            start: "top 110px",
+            end: `+=${EXTRA_SCROLL}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            // markers: true, // ← uncomment temporarily to see the start/end
+            // trigger points drawn on the page. If you don't see them at all,
+            // or the pin never engages, ScrollTrigger isn't attaching to this
+            // element — check the console for a "gsap/ScrollTrigger" import
+            // error first.
+          },
+        });
+
+        // Dotted connector lines fade out first, before the tag clusters have
+        // visibly moved — they're static SVG paths anchored to the tags'
+        // *original* positions, so once the left/right groups start sliding
+        // and scaling away (from 0), the lines would otherwise keep pointing
+        // at empty space instead of following the tags. Fading them out fast
+        // and early avoids that mismatch entirely.
+        tl.to(linesRef.current, { opacity: 0, ease: "power1.out", duration: 0.16 }, 0);
+
+        // Left tags cluster — recedes first, converges right/up toward center.
+        // Rotation + progressive blur give the collapse a physical, fanned-deck
+        // feel instead of three flat layers sliding to the same point.
+        tl.to(
+          leftGroupRef.current,
+          { x: 90, y: -60, scale: 0.55, rotate: -3, filter: "blur(3px)", ease: "power3.out", duration: 0.3 },
+          0
+        );
+
+        // Right tags cluster — starts receding slightly after left, overlapping it.
+        tl.to(
+          rightGroupRef.current,
+          { x: -90, y: -60, scale: 0.55, rotate: 3, filter: "blur(3px)", ease: "power3.out", duration: 0.3 },
+          0.1
+        );
+
+        // Both clusters settle into a dimmed, compacted layer (not fully gone)
+        // until the stack is complete, then dissolve fully.
+        tl.to([leftGroupRef.current, rightGroupRef.current], { opacity: 0.35, duration: 0.001 }, 0.3);
+        tl.to([leftGroupRef.current, rightGroupRef.current], { opacity: 0, duration: 0.13, ease: "power1.in" }, 0.55);
+
+        // Center heading + diagram — recedes last, sits on top of the compacted
+        // stack, and only dissolves once the two clusters are fully gone.
+        tl.to(centerGroupRef.current, { y: -40, scale: 0.82, ease: "power3.out", duration: 0.33 }, 0.22);
+        tl.to(centerGroupRef.current, { opacity: 0, duration: 0.13, ease: "power1.in" }, 0.55);
+
+        // Section 2 (downstream delivery) fades/rises in with a short overlap
+        // against the stack's dissolve, so the handoff reads as continuous.
+        tl.to(section2Ref.current, { opacity: 1, y: 0, ease: "power2.out", duration: 0.34 }, 0.58);
+      }, sectionRef);
+
+      return () => {
+        ctx.revert();
+        gsap.ticker.remove(syncScrollTrigger);
+        lenis.destroy();
+      };
     });
-    observer.observe(el);
-    return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-    };
+
+    return () => mm.revert();
   }, []);
 
-  const trackHeight = TOP_OFFSET + contentHeight + EXTRA_SCROLL;
-  const releaseOffset = TOP_OFFSET + contentHeight;
-
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start 110px", `end ${releaseOffset}px`],
-  });
-
-  // Section 1 items recede in a staggered, overlapping stack (deepjudge.ai-style
-  // pinned scroll-stack): each cluster gets its own progress slice, converges
-  // toward the center, scales down, and dims — but never drops straight to 0 —
-  // so it reads as a compacted layer sitting behind the next one, not a hard
-  // cutout. z-index increases per item so later items sit visually on top.
-  const STACK3_END = 0.55; // point by which the whole stack has fully compacted
-  const RELEASE_END = 0.68; // point by which the compacted stack has fully dissolved
-  const REVEAL_START = 0.58; // Section 2 begins fading in with a bit more overlap
-  const REVEAL_END = 0.92;
-
-  const stackEase = cubicBezier(0.22, 1, 0.36, 1);
-
-  // Left tags cluster — recedes first, converges right/up toward center.
-  const leftX = useTransform(scrollYProgress, [0, 0.3], [0, 90], { ease: stackEase });
-  const leftY = useTransform(scrollYProgress, [0, 0.3], [0, -60], { ease: stackEase });
-  const leftScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.55], { ease: stackEase });
-  const leftOpacity = useTransform(scrollYProgress, [0, 0.3, STACK3_END, RELEASE_END], [1, 0.35, 0.35, 0]);
-
-  // Right tags cluster — starts receding slightly after left, overlapping it.
-  const rightX = useTransform(scrollYProgress, [0.1, 0.4], [0, -90], { ease: stackEase });
-  const rightY = useTransform(scrollYProgress, [0.1, 0.4], [0, -60], { ease: stackEase });
-  const rightScale = useTransform(scrollYProgress, [0.1, 0.4], [1, 0.55], { ease: stackEase });
-  const rightOpacity = useTransform(scrollYProgress, [0.1, 0.4, STACK3_END, RELEASE_END], [1, 0.35, 0.35, 0]);
-
-  // Center heading + diagram — recedes last, ends up as the topmost compacted
-  // layer (stays fully opaque while shrinking, only dissolves at the very end).
-  const centerY = useTransform(scrollYProgress, [0.22, STACK3_END], [0, -40], { ease: stackEase });
-  const centerScale = useTransform(scrollYProgress, [0.22, STACK3_END], [1, 0.82], { ease: stackEase });
-  const centerOpacity = useTransform(scrollYProgress, [0.22, STACK3_END, RELEASE_END], [1, 1, 0]);
-
-  // Section 2 (downstream delivery) reveals as the compacted stack dissolves,
-  // with a short overlap so the transition feels continuous rather than blank.
-  const enterOpacity = useTransform(scrollYProgress, [REVEAL_START, REVEAL_END], [0, 1]);
-  const enterY = useTransform(scrollYProgress, [REVEAL_START, REVEAL_END], [24, 0]);
-
   return (
-    <section className="pt-12 pb-8 bg-[#f7f3EF]">
+    <section ref={sectionRef} className="pt-12 pb-8 bg-[#f7f3EF]">
 
-      {/* ── DESKTOP VISUALIZATION (md+) — pinned scroll track ──
+      {/* ── DESKTOP VISUALIZATION (md+) — GSAP-pinned scroll track ──
            NOTE: no overflow-hidden on this <section> or any ancestor of the
-           `sticky` frame below — overflow other than visible on an ancestor
-           silently breaks position:sticky. Overflow containment instead
-           happens on the aspect-ratio box itself (a descendant of the sticky
-           element, which is safe). */}
-      <div ref={trackRef} className="hidden md:block relative" style={{ height: trackHeight }}>
-        <div className="sticky top-[110px]">
-          <div ref={boxRef} className="relative w-full max-w-[1100px] mx-auto aspect-[1100/1010] overflow-hidden">
+           `pinRef` element below — ScrollTrigger's `pin: true` still relies on
+           the pinned element being able to sit fixed relative to the viewport,
+           and clipping an ancestor causes the same class of bugs as it would
+           with native `position: sticky`. Overflow containment instead happens
+           on the aspect-ratio box itself (a descendant of the pinned element,
+           which is safe). */}
+      <div className="hidden md:block relative">
+        <div ref={pinRef} className="relative w-full max-w-[1100px] mx-auto aspect-[1100/1010] overflow-hidden">
 
             {/* Section 1 — center group: heading, connector lines, floating squares.
                  Recedes last, so it sits on top of the two tag clusters (z-20) as
                  they converge and compact beneath it. */}
-            <motion.div
-              className="absolute inset-0 z-20"
-              style={{ opacity: centerOpacity, scale: centerScale, y: centerY, willChange: "transform, opacity" }}
+            <div
+              ref={centerGroupRef}
+              className="absolute inset-0 z-20 will-change-transform"
             >
-              {/* SVG dashed connection lines — fade in as section enters view */}
+              {/* SVG dashed connection lines — fade in as section enters view,
+                   fade out on scroll via linesRef (see timeline comment above) */}
               <svg
+                ref={linesRef}
                 viewBox="0 0 1100 1010"
                 className="absolute inset-0 w-full h-full"
                 fill="none"
@@ -335,14 +380,11 @@ export default function IngestSection(): JSX.Element {
                 floatY={6}
                 floatDuration={3.6}
               />
-            </motion.div>
+            </div>
 
             {/* Section 1 — left source tags: fly in from left on entry, then stack-recede
                  (converge right, move up, scale down, dim) first on exit */}
-            <motion.div
-              className="absolute inset-0 z-10"
-              style={{ opacity: leftOpacity, scale: leftScale, x: leftX, y: leftY, willChange: "transform, opacity" }}
-            >
+            <div ref={leftGroupRef} className="absolute inset-0 z-10 will-change-transform">
               <div className="absolute left-[10%] top-[6.3%]">
                 <SourceTag label="CLAIMS DATA" delay={0.3} fromX={-44} />
               </div>
@@ -352,14 +394,11 @@ export default function IngestSection(): JSX.Element {
               <div className="absolute left-[11.6%] top-[26%]">
                 <SourceTag label="SDOH SOURCES" delay={0.54} fromX={-44} />
               </div>
-            </motion.div>
+            </div>
 
             {/* Section 1 — right source tags: fly in from right on entry, then stack-recede
                  (converge left, move up, scale down, dim) shortly after the left cluster */}
-            <motion.div
-              className="absolute inset-0 z-10"
-              style={{ opacity: rightOpacity, scale: rightScale, x: rightX, y: rightY, willChange: "transform, opacity" }}
-            >
+            <div ref={rightGroupRef} className="absolute inset-0 z-10 will-change-transform">
               <div className="absolute left-[73.3%] top-[4.2%]">
                 <SourceTag label="PHARMACY DATA" delay={0.3} fromX={44} />
               </div>
@@ -369,26 +408,27 @@ export default function IngestSection(): JSX.Element {
               <div className="absolute left-[78%] top-[29.7%]">
                 <SourceTag label="EHR / HIE" delay={0.54} fromX={44} />
               </div>
-            </motion.div>
+            </div>
 
             {/* Section 2 — heading only: reveals in the SAME screen zone Section 1
                  occupied, overlapping the tail end of the stack's dissolve (z-30, on top)
-                 so the handoff reads as continuous rather than a hard cut. Vertically
-                 centered (instead of top-anchored like Section 1) so it sits in the
-                 middle of the box with no leftover blank space beneath it. */}
-            <motion.div
-              className="absolute inset-0 z-30"
-              style={{ opacity: enterOpacity, y: enterY, willChange: "transform, opacity" }}
-            >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[54%] text-center pointer-events-none">
+                 so the handoff reads as continuous rather than a hard cut. Top-anchored
+                 at the exact same `top-[3.4%]` slot as Section 1's heading (not vertically
+                 centered) — the box stays 1010px tall throughout (Section 1's diagram
+                 needs that height), so centering here just pushed the heading down into
+                 the middle and left a large blank gap below it once the pin released.
+                 Matching Section 1's anchor keeps the leftover box height in the same
+                 place both times, which is what the marquee's overlap margin below is
+                 actually calibrated against. */}
+            <div ref={section2Ref} className="absolute inset-0 z-30 will-change-transform">
+              <div className="absolute top-[3.4%] left-1/2 -translate-x-1/2 w-[54%] text-center pointer-events-none">
                 <RevealHeading
                   title="Deliver clean data to every downstream initiative"
                   description="Analytics-ready and AI-ready output to every system in your stack—powering every payer initiative"
                 />
               </div>
-            </motion.div>
+            </div>
 
-          </div>
         </div>
       </div>
 
@@ -412,7 +452,7 @@ export default function IngestSection(): JSX.Element {
       </div>
 
       {/* ── TAG CLOUD (all screens) — marquee rows ── */}
-      <div className="mt-6 overflow-hidden -mt-[24%]">
+      <div className="overflow-hidden -mt-[55%]">
         {TAG_ROWS.map((row, rowIdx) => {
           const animation = rowIdx % 2 === 0 ? "animate-marquee" : "animate-marqueeReverse";
           return (

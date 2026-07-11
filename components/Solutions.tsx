@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState, type JSX } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "framer-motion";
+import { useLayoutEffect, useRef, type JSX } from "react";
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface Solution {
   number: string;
@@ -89,12 +90,12 @@ function SolutionDesktopContent({
       </div>
 
       {/* Explore link */}
-     <a
-  href="#"
-  className="inline-block text-[15px] text-[#34332C] no-underline whitespace-nowrap border-b border-dotted border-transparent hover:border-[#34332C] transition-all duration-300"
->
-  Explore →
-</a>
+      <a
+        href="#"
+        className="inline-block text-[15px] text-[#34332C] no-underline whitespace-nowrap border-b border-dotted border-transparent hover:border-[#34332C] transition-all duration-300"
+      >
+        Explore →
+      </a>
     </div>
   );
 }
@@ -147,38 +148,77 @@ function SolutionMobileContent({
 }
 
 function PinnedSolutions(): JSX.Element {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const pinRef = useRef<HTMLDivElement>(null); // the element ScrollTrigger pins directly
+  const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  // Scroll distance (px) dedicated to EACH crossfade transition between two
+  // panels. With N panels there are (N - 1) transitions, so the pin holds for
+  // TRANSITION_SCROLL * (N - 1) px total — same "GSAP pin reserves its own
+  // spacer" approach used in IngestSection, no manual height math needed.
+  const TRANSITION_SCROLL = 700;
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const nextIndex = Math.min(
-      SOLUTIONS.length - 1,
-      Math.floor(latest * SOLUTIONS.length)
-    );
-    setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
-  });
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia();
+
+    // Scoped to md+ only — mobile uses the separate whileInView list below.
+    mm.add("(min-width: 768px)", () => {
+      const ctx = gsap.context(() => {
+        const panels = panelRefs.current;
+
+        // Baseline: panel 0 visible, the rest hidden and offset down slightly
+        // (mirrors the old AnimatePresence `initial`/`exit` y offsets).
+        gsap.set(panels[0], { opacity: 1, y: 0 });
+        gsap.set(panels.slice(1), { opacity: 0, y: 24 });
+
+        const totalTransitions = SOLUTIONS.length - 1;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinRef.current,
+            // Pin when the (now content-height) stack reaches viewport center,
+            // so the crossfade plays out mid-screen instead of jammed under the
+            // navbar. GSAP inserts its own spacer for the scroll distance.
+            start: "center center",
+            end: `+=${TRANSITION_SCROLL * totalTransitions}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // One crossfade per pair of adjacent panels, evenly spaced across the
+        // timeline (position `i` to `i + 1`) — outgoing panel fades down/out
+        // while the incoming one fades up/in, at the same scroll position.
+        for (let i = 0; i < totalTransitions; i++) {
+          tl.to(panels[i], { opacity: 0, y: -24, duration: 1, ease: "power1.inOut" }, i);
+          tl.to(panels[i + 1], { opacity: 1, y: 0, duration: 1, ease: "power1.inOut" }, i);
+        }
+      }, pinRef);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
-    <div ref={containerRef} className="hidden md:block relative h-[250vh]">
-      <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="w-full"
-          >
-            <SolutionDesktopContent solution={SOLUTIONS[activeIndex]} />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+    // Grid stack: every panel occupies the same cell (grid-area 1/1) so they
+    // overlap for the crossfade while the container sizes itself to the tallest
+    // panel — no `h-screen`, so no empty band above/below the content. `md:grid`
+    // (not `md:block`) is what actually enables the stacking layout.
+    <div ref={pinRef} className="hidden md:grid relative">
+      {SOLUTIONS.map((solution, idx) => (
+        <div
+          key={solution.number}
+          ref={(el) => {
+            panelRefs.current[idx] = el;
+          }}
+          className="[grid-area:1/1] will-change-transform"
+        >
+          <SolutionDesktopContent solution={solution} />
+        </div>
+      ))}
     </div>
   );
 }

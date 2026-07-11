@@ -195,7 +195,7 @@ function NavDropdown({ link }: { link: NavItemProps }): JSX.Element {
                 ))}
               </div>
 
-              
+
             </div>
           </motion.div>
         )}
@@ -307,90 +307,99 @@ export default function Navbar(): JSX.Element {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-     <header className="fixed top-0 left-0 right-0 z-50 px-7 pt-4 pb-1.5">
+    <header className="fixed top-0 left-0 right-0 z-50 px-7 pt-4 pb-1.5">
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         <div className="bg-[#FBF9F4] rounded-[44px] shadow-[0_14px_34px_rgba(60,45,30,0.07)] flex items-center justify-between py-3 pl-6 pr-3.5">
-         {/* Logo */}
-        <div className="flex items-center gap-[5px]">
-          <Image
-            src="/logo.png"
-            alt="Health Chain Logo"
-            width={32}
-            height={32}
-            className="object-contain"
-          />
-          <span className="text-[20px] font-semibold tracking-[-0.01em] text-[#34332C]">
-            Health Chain
-          </span>
-        </div>
+          {/* Logo */}
+          <Link
+            href="/" >
+            <div className="flex items-center gap-[5px]">
 
-        {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-8">
+              <Image
+                src="/logo.png"
+                alt="Health Chain Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+              <span className="text-[20px] font-semibold tracking-[-0.01em] text-[#34332C]">
+                Health Chain
+              </span>
+
+            </div>
+          </Link>
+          {/* Desktop nav links */}
+          <div className="hidden md:flex items-center gap-8">
             <nav className="flex items-center gap-[34px]" aria-label="Main navigation">
-               {NAV_LINKS.map((link) => (
-            <NavDropdown key={link.label} link={link} />
-          ))}
-        </nav>
+              {NAV_LINKS.map((link) => (
+                <NavDropdown key={link.label} link={link} />
+              ))}
+            </nav>
 
-        {/* Desktop CTA */}
-        <a
-          href="#"
-          className="hidden md:inline-flex items-center gap-3 bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-[11px] pl-[22px] pr-[11px] rounded-[40px] hover:bg-[#97492F] transition-colors"
-        >
-          Request a Demo
-          <span className="w-7 h-7 rounded-full border border-white/45 flex items-center justify-center text-[13px] shrink-0">
-            →
-          </span>
-        </a>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden p-2 mr-1 rounded-full hover:bg-black/5 transition-colors"
-          onClick={() => setMobileOpen((prev) => !prev)}
-          aria-label="Toggle navigation menu"
-          aria-expanded={mobileOpen}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#34332C"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
-            {mobileOpen ? (
-              <path d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </div>
-      </div>
-
-      {/* Mobile dropdown */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="md:hidden mt-2 bg-[#FBF9F4] rounded-2xl shadow-[0_14px_34px_rgba(60,45,30,0.07)] p-5 flex flex-col gap-1"
-          >
-            {NAV_LINKS.map((link) => (
-              <MobileNavRow key={link.label} link={link} onNavigate={() => setMobileOpen(false)} />
-            ))}
-            <a
-              href="#"
-              className="flex items-center justify-center gap-3 bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-3 px-6 rounded-[40px] mt-3"
+            {/* Desktop CTA */}
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-[14px] bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-[11px] pl-[22px] pr-[11px] rounded-[40px] transition-colors duration-300"
             >
               Request a Demo
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+              <span className="w-7 h-5 rounded-full border border-white/40 inline-flex items-center justify-center text-[14px] shrink-0 transition-colors duration-300 group-hover:bg-white group-hover:text-[#A8543C] group-hover:border-[#A8543C]">
+                →
+              </span>
+            </Link>
+
+            {/* Mobile hamburger */}
+            <button
+              className="md:hidden p-2 mr-1 rounded-full hover:bg-black/5 transition-colors"
+              onClick={() => setMobileOpen((prev) => !prev)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileOpen}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#34332C"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                {mobileOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile dropdown */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="md:hidden mt-2 bg-[#FBF9F4] rounded-2xl shadow-[0_14px_34px_rgba(60,45,30,0.07)] p-5 flex flex-col gap-1"
+            >
+              {NAV_LINKS.map((link) => (
+                <MobileNavRow key={link.label} link={link} onNavigate={() => setMobileOpen(false)} />
+              ))}
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-[14px] bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-[11px] pl-[22px] pr-[11px] rounded-[40px] transition-colors duration-300"
+              >
+                Request a Demo
+
+                <span className="w-7 h-5 rounded-full border border-white/40 inline-flex items-center justify-center text-[14px] shrink-0 transition-colors duration-300 group-hover:bg-white group-hover:text-[#A8543C] group-hover:border-[#A8543C]">
+                  →
+                </span>
+              </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
