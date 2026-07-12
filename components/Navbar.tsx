@@ -169,7 +169,7 @@ function NavDropdown({ link }: { link: NavItemProps }): JSX.Element {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.18, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+18px)] w-[400px] origin-top"
+            className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+18px)] w-[min(400px,90vw)] origin-top"
           >
             <div className="bg-[#FBF9F4] rounded-[24px] shadow-[0_20px_44px_rgba(60,45,30,0.12)] border border-[#EAE3D5]/70 p-2.5">
               <div className="flex flex-col">
@@ -194,8 +194,6 @@ function NavDropdown({ link }: { link: NavItemProps }): JSX.Element {
                   </Link>
                 ))}
               </div>
-
-
             </div>
           </motion.div>
         )}
@@ -307,14 +305,12 @@ export default function Navbar(): JSX.Element {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-7 pt-4 pb-1.5">
+    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-5 md:px-7 pt-4 pb-1.5">
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
-        <div className="bg-[#FBF9F4] rounded-[44px] shadow-[0_14px_34px_rgba(60,45,30,0.07)] flex items-center justify-between py-3 pl-6 pr-3.5">
+        <div className="bg-[#FBF9F4] rounded-[44px] shadow-[0_14px_34px_rgba(60,45,30,0.07)] flex items-center justify-between py-3 pl-4 sm:pl-6 pr-3">
           {/* Logo */}
-          <Link
-            href="/" >
+          <Link href="/">
             <div className="flex items-center gap-[5px]">
-
               <Image
                 src="/logo.png"
                 alt="Health Chain Logo"
@@ -322,34 +318,36 @@ export default function Navbar(): JSX.Element {
                 height={32}
                 className="object-contain"
               />
-              <span className="text-[20px] font-semibold tracking-[-0.01em] text-[#34332C]">
+              <span className="text-[17px] sm:text-[20px] font-semibold tracking-[-0.01em] text-[#34332C]">
                 Health Chain
               </span>
-
             </div>
           </Link>
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-8">
-            <nav className="flex items-center gap-[34px]" aria-label="Main navigation">
-              {NAV_LINKS.map((link) => (
-                <NavDropdown key={link.label} link={link} />
-              ))}
-            </nav>
 
-            {/* Desktop CTA */}
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-[14px] bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-[11px] pl-[22px] pr-[11px] rounded-[40px] transition-colors duration-300"
-            >
-              Request a Demo
+          {/* Right-hand cluster: desktop nav + CTA (hidden on mobile) and hamburger (hidden on desktop) */}
+          <div className="flex items-center gap-3 md:gap-8">
+            {/* Desktop nav links + CTA — hidden below md */}
+            <div className="hidden md:flex items-center gap-8">
+              <nav className="flex items-center gap-[34px]" aria-label="Main navigation">
+                {NAV_LINKS.map((link) => (
+                  <NavDropdown key={link.label} link={link} />
+                ))}
+              </nav>
 
-              <span className="w-7 h-5 rounded-full border border-white/40 inline-flex items-center justify-center text-[14px] shrink-0 transition-colors duration-300 group-hover:bg-white group-hover:text-[#A8543C] group-hover:border-[#A8543C]">
-                →
-              </span>
-            </Link>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-[14px] bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-[11px] pl-[22px] pr-[11px] rounded-[40px] transition-colors duration-300"
+              >
+                Request a Demo
+                <span className="w-7 h-5 rounded-full border border-white/40 inline-flex items-center justify-center text-[14px] shrink-0 transition-colors duration-300 group-hover:bg-white group-hover:text-[#A8543C] group-hover:border-[#A8543C]">
+                  →
+                </span>
+              </Link>
+            </div>
 
-            {/* Mobile hamburger */}
+            {/* Mobile hamburger — visible only below md; now a sibling, not nested in the hidden div */}
             <button
+              type="button"
               className="md:hidden p-2 mr-1 rounded-full hover:bg-black/5 transition-colors"
               onClick={() => setMobileOpen((prev) => !prev)}
               aria-label="Toggle navigation menu"
@@ -389,10 +387,10 @@ export default function Navbar(): JSX.Element {
               ))}
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-[14px] bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-[11px] pl-[22px] pr-[11px] rounded-[40px] transition-colors duration-300"
+                onClick={() => setMobileOpen(false)}
+                className="group inline-flex items-center gap-[14px] bg-[#A8543C] text-[#FBF9F4] text-[15px] font-medium py-[11px] pl-[22px] pr-[11px] rounded-[40px] transition-colors duration-300 mt-2 justify-center"
               >
                 Request a Demo
-
                 <span className="w-7 h-5 rounded-full border border-white/40 inline-flex items-center justify-center text-[14px] shrink-0 transition-colors duration-300 group-hover:bg-white group-hover:text-[#A8543C] group-hover:border-[#A8543C]">
                   →
                 </span>
