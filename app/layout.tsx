@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import type { JSX } from "react";
 import { Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
+
 import "./globals.css";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted",
@@ -30,7 +32,9 @@ export default function RootLayout({
       lang="en"
       className={`${schibstedGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased">
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+      </body>
     </html>
   );
 }

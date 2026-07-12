@@ -66,7 +66,7 @@ function Card({ card, idx }: { card: BlogCard; idx: number }): JSX.Element {
 
 export default function BlogCards(): JSX.Element {
   return (
-    <section className="px-7 mt-20 md:px-14 pb-[0px] bg-[#F7F3EF]">
+    <section className="px-7 pt-20 md:px-14 pb-[0px] bg-[#F7F3EF]">
 
       {/* Label */}
       <div className="font-mono font-semibold text-[13px] tracking-[1.5px] text-[#A8543C] uppercase mb-[18px]">

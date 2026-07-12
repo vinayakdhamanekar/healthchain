@@ -45,15 +45,15 @@ const GRADIENT =
 
 function FrostedCard({ testimonial }: { testimonial: TestimonialData }): JSX.Element {
   return (
-    <div className="bg-[rgba(30,32,30,0.26)] backdrop-blur-lg border border-white/[.28] rounded-2xl pt-[28px] px-[30px] pb-[30px] text-[#F4F1EA]">
+    <div className="bg-[rgba(30,32,30,0.30)] backdrop-blur-xl border border-white/[.32] rounded-[22px] pt-9 px-9 md:pt-10 md:px-10 pb-10 text-[#F4F1EA]">
       {/* Header: attribution left, logo right */}
-      <div className="flex items-center justify-between mb-[22px]">
+      <div className="flex items-center justify-between mb-7">
         {/* Avatar + name/title */}
-        <div className="flex items-center gap-[13px]">
-          <div className="w-[46px] h-[46px] shrink-0 rounded-full bg-[linear-gradient(135deg,#9aa0a8,#6f7680)] flex items-end justify-center overflow-hidden border border-white/40">
+        <div className="flex items-center gap-[14px]">
+          <div className="w-[52px] h-[52px] shrink-0 rounded-full bg-[linear-gradient(135deg,#9aa0a8,#6f7680)] flex items-end justify-center overflow-hidden border border-white/40">
             <svg
-              width="30"
-              height="30"
+              width="34"
+              height="34"
               viewBox="0 0 24 24"
               fill="rgba(255,255,255,0.85)"
               aria-hidden="true"
@@ -63,7 +63,7 @@ function FrostedCard({ testimonial }: { testimonial: TestimonialData }): JSX.Ele
             </svg>
           </div>
           <div>
-            <div className="text-[15px] font-medium text-[#F7F4EE]">
+            <div className="text-[16px] font-medium text-[#F7F4EE]">
               {testimonial.name}
             </div>
             <div className="text-[13px] text-[rgba(244,241,234,0.78)]">
@@ -88,7 +88,7 @@ function FrostedCard({ testimonial }: { testimonial: TestimonialData }): JSX.Ele
       </div>
 
       {/* Quote */}
-      <p className="text-[19px] md:text-[23px] leading-[1.4] font-medium text-[#F8F5EF] m-0">
+      <p className="text-[21px] md:text-[27px] leading-[1.42] font-medium tracking-[-0.01em] text-[#F8F5EF] m-0">
         &ldquo;{testimonial.quote}&rdquo;
       </p>
     </div>
@@ -97,12 +97,9 @@ function FrostedCard({ testimonial }: { testimonial: TestimonialData }): JSX.Ele
 
 export default function Testimonial(): JSX.Element {
   const pinRef = useRef<HTMLDivElement>(null); // element ScrollTrigger pins (holds the fixed gradient)
-  const windowRef = useRef<HTMLDivElement>(null); // the clipped "viewport" — sized to 1 card + a peek of the next
+  const windowRef = useRef<HTMLDivElement>(null); // the clipped "viewport" — a plain, fixed height (see JSX)
   const columnRef = useRef<HTMLDivElement>(null); // the card list that actually moves
-  const firstCardRef = useRef<HTMLDivElement>(null); // used to measure a representative card height
-
-  // Fraction of the next card left visible below the current one.
-  const PEEK = 0.5;
+  const firstCardRef = useRef<HTMLDivElement>(null); // first card — gets its own one-time entrance fade
 
   useLayoutEffect(() => {
     // Scoped to md+ (mobile uses the static list below). GSAP pins with
@@ -113,27 +110,36 @@ export default function Testimonial(): JSX.Element {
 
     mm.add("(min-width: 768px)", () => {
       const ctx = gsap.context(() => {
-        const cardEl = firstCardRef.current;
         const windowEl = windowRef.current;
         const columnEl = columnRef.current;
-        if (!cardEl || !windowEl || !columnEl) return;
+        if (!windowEl || !columnEl) return;
 
-        // The visible window is sized to exactly one card plus a partial "peek"
-        // of the next one — never the whole list — so only one testimonial (and
-        // half of the next) is on screen at a time. Measured live (card height +
-        // real flex gap) rather than hard-coded, so it stays correct at any
-        // screen size or font-driven card height.
-        const syncWindowHeight = () => {
-          const cardHeight = cardEl.offsetHeight;
-          const gap = parseFloat(getComputedStyle(columnEl).rowGap || "0") || 0;
-          windowEl.style.height = `${cardHeight + gap + PEEK * cardHeight}px`;
-        };
-        syncWindowHeight();
+        // First card fades/rises in as the section approaches the viewport —
+        // plays ONCE, before the pin ever engages. The pin's own trigger
+        // starts at "top top" (section's top hits the viewport's top); this
+        // trigger fires earlier, at "top 85%" (section's top is 85% down the
+        // viewport, i.e. just starting to enter from below), so the fade-in
+        // is fully finished by the time scrolling reaches the pin/crossfade.
+        if (firstCardRef.current) {
+          gsap.set(firstCardRef.current, { opacity: 0, y: 30 });
+          gsap.to(firstCardRef.current, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: pinRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          });
+        }
 
         // How far the list must travel = how much taller it is than the
-        // (now much shorter) visible window — still fully scroll-driven, 1:1
-        // with page scroll, so each card slides fully into place before the
-        // next one starts peeking in.
+        // window's fixed height (set directly in CSS below — no JS sizing
+        // math to get wrong). Still fully scroll-driven, 1:1 with page
+        // scroll, so each card slides fully into place before the next one
+        // starts peeking in.
         const distance = () => Math.max(0, columnEl.scrollHeight - windowEl.offsetHeight);
 
         gsap.to(columnEl, {
@@ -150,21 +156,23 @@ export default function Testimonial(): JSX.Element {
           },
         });
 
-        // Re-measure on resize/font-load — recomputing window height mid-scroll
-        // would fight the scrub, so this only runs for genuine size changes.
+        // Re-measure if card content reflows (font load, text change) —
+        // scrollHeight can change even though the window's own height never
+        // does now. Debounced via rAF so a burst of resize events doesn't
+        // fight the scrub mid-scroll.
         let frame: number;
-        const observer = new ResizeObserver(() => {
+        const resync = () => {
           cancelAnimationFrame(frame);
-          frame = requestAnimationFrame(() => {
-            syncWindowHeight();
-            ScrollTrigger.refresh();
-          });
-        });
-        observer.observe(cardEl);
+          frame = requestAnimationFrame(() => ScrollTrigger.refresh());
+        };
+        const observer = new ResizeObserver(resync);
+        observer.observe(columnEl);
+        window.addEventListener("resize", resync);
 
         return () => {
           cancelAnimationFrame(frame);
           observer.disconnect();
+          window.removeEventListener("resize", resync);
         };
       }, pinRef);
 
@@ -185,15 +193,18 @@ export default function Testimonial(): JSX.Element {
         ref={pinRef}
         className={`hidden md:flex relative h-screen w-full items-center justify-center overflow-hidden px-7 ${GRADIENT}`}
       >
-        {/* The clipped "peek window" — height is set in px by the effect above
-             (1 card + gap + half of the next card). Bottom edge fades softly so
-             the peeking card dissolves into the backdrop instead of hard-cutting. */}
+        {/* The clipped "peek window" — a plain, fixed height (80% of the
+             viewport) so the card area reliably fills most of the pinned
+             screen, with no JS math involved in sizing it. Bottom edge fades
+             softly so the peeking card dissolves into the backdrop instead
+             of hard-cutting. Tune the 80vh value directly if you want the
+             card area larger or smaller relative to the gradient margin. */}
         <div
           ref={windowRef}
-          className="relative w-full max-w-[600px] overflow-hidden"
+          className="relative w-full max-w-[600px] h-[70vh] overflow-hidden"
           style={{
-            maskImage: "linear-gradient(to bottom, black 0%, black 82%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 82%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, black 0%, black 88%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 88%, transparent 100%)",
           }}
         >
           <div ref={columnRef} className="flex flex-col gap-8 lg:gap-10 will-change-transform">

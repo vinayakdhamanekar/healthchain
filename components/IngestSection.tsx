@@ -1,7 +1,7 @@
 "use client";
 import type { JSX } from "react";
-import { useLayoutEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { forwardRef, useLayoutEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -40,39 +40,31 @@ function UseCaseTag({ label }: { label: string }): JSX.Element {
 
 interface FloatingSquareProps {
   className: string;
-  delay?: number;
-  floatY?: number;
-  floatDuration?: number;
 }
 
-function FloatingSquare({ className, delay = 0, floatY = 8, floatDuration = 3.5 }: FloatingSquareProps): JSX.Element {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-
+// Visibility/opacity/scale are owned entirely by the GSAP scrub timeline (see
+// squareRefs in IngestSection) — nothing here animates on its own. That's what
+// guarantees the square is invisible on first paint and that only one of the
+// five is ever showing at a given scroll position, rather than each firing
+// independently the moment it enters the viewport.
+const FloatingSquare = forwardRef<HTMLDivElement, FloatingSquareProps>(function FloatingSquare(
+  { className },
+  ref
+) {
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={
-        isInView
-          ? { opacity: 1, scale: 1, y: [0, -floatY, 0] }
-          : { opacity: 0, scale: 0.5 }
-      }
-      transition={{
-        opacity: { duration: 0.5, delay },
-        scale: { duration: 0.5, delay, ease: "easeOut" },
-        y: {
-          duration: floatDuration,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: delay + 0.6,
-        },
-      }}
       className={className}
-      style={{ willChange: "transform, opacity" }}
+      style={{
+        opacity: 0,
+        willChange: "transform, opacity",
+        background: "linear-gradient(180deg, #FFFFFF 0%, #FBF7EF 100%)",
+        boxShadow:
+          "0 14px 28px -10px rgba(60,45,30,0.16), 0 3px 8px rgba(60,45,30,0.07), inset 0 1px 0 rgba(255,255,255,0.9)",
+      }}
     />
   );
-}
+});
 
 const TAG_ROWS = [
   ["Directories", "Risk Adjustment", "Quality Measures", "HEDIS Reporting", "Care Gap Closure", "Population Health", "Member Adequacy"],
@@ -143,12 +135,17 @@ export default function IngestSection(): JSX.Element {
   const centerGroupRef = useRef<HTMLDivElement>(null);
   const linesRef = useRef<SVGSVGElement>(null); // dotted connector lines — faded separately, see note below
   const section2Ref = useRef<HTMLDivElement>(null);
+  // One ref per FloatingSquare, in the order they sit along the merge → output
+  // path. The timeline below reveals these strictly one-at-a-time.
+  const squareRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // EXTRA_SCROLL is the scroll distance (px) the whole pin+stack+reveal plays
   // out over. Unlike native `position: sticky`, GSAP's `pin: true` inserts its
   // own spacer to hold this exact distance — so there's no need to measure
   // content height or derive a release offset; ScrollTrigger handles it.
-  const EXTRA_SCROLL = 900;
+  // Bumped from 900 → 1250 to make room for the square-relay phase (below)
+  // without rushing the existing recede/handoff choreography.
+  const EXTRA_SCROLL = 1250;
 
   useLayoutEffect(() => {
     // gsap.matchMedia scopes the whole pin/timeline to md+ viewports (the
@@ -179,6 +176,14 @@ export default function IngestSection(): JSX.Element {
         // computed style happens to be at mount time.
         gsap.set(linesRef.current, { opacity: 1 });
 
+        // Squares start fully hidden and scaled down. This is the fix for
+        // "visible on load": previously each square animated in the moment it
+        // scrolled into the viewport (via framer's useInView), independent of
+        // the pin timeline, so several were showing before the user had
+        // scrolled at all. Now nothing shows until the scrub timeline below
+        // explicitly reveals it.
+        gsap.set(squareRefs.current, { opacity: 0, scale: 0.4 });
+
         // Section 2 starts hidden — set immediately so there's no flash of
         // visible content before the timeline reaches that point.
         gsap.set(section2Ref.current, { opacity: 0, y: 24 });
@@ -200,13 +205,42 @@ export default function IngestSection(): JSX.Element {
           },
         });
 
+        // ── Phase 1: square relay ─────────────────────────────────────────
+        // The five squares sit along the merge → output path, each already
+        // offset a few px left/right of center (see their JSX positions) so
+        // the sequence reads as one thing drifting down a gentle S-curve
+        // rather than static pops. Every square drifts in from slightly above
+        // its resting spot, settles with a soft overshoot, holds briefly,
+        // then continues drifting down and out as it fades — implying
+        // continuous downward motion rather than a hard on/off blink. Each
+        // window is fully closed before the next opens, so exactly one square
+        // (or a brief gap between them) is ever visible.
+        const STEP = 0.16;
+        squareRefs.current.forEach((sq, i) => {
+          const start = i * STEP;
+          tl.fromTo(
+            sq,
+            { opacity: 0, scale: 0.4 },
+            { opacity: 1, scale: 1, ease: "power2.out", duration: STEP * 0.4 },
+            start
+          );
+          tl.to(sq, { opacity: 0, scale: 0.7, ease: "power1.in", duration: STEP * 0.35 }, start + STEP * 0.6);
+        });
+        const relayEnd = squareRefs.current.length * STEP; // 0.8
+
+        // ── Phase 2: recede / dissolve ──────────────────────────────────
+        // Everything below is the original stack-recede choreography,
+        // unchanged in relative shape, just shifted to start once the relay
+        // has finished so the two phases never compete for attention.
+        const recede = relayEnd + 0.02; // ≈0.82
+
         // Dotted connector lines fade out first, before the tag clusters have
         // visibly moved — they're static SVG paths anchored to the tags'
         // *original* positions, so once the left/right groups start sliding
         // and scaling away (from 0), the lines would otherwise keep pointing
         // at empty space instead of following the tags. Fading them out fast
         // and early avoids that mismatch entirely.
-        tl.to(linesRef.current, { opacity: 0, ease: "power1.out", duration: 0.16 }, 0);
+        tl.to(linesRef.current, { opacity: 0, ease: "power1.out", duration: 0.16 }, recede);
 
         // Left tags cluster — recedes first, converges right/up toward center.
         // Rotation + progressive blur give the collapse a physical, fanned-deck
@@ -214,29 +248,36 @@ export default function IngestSection(): JSX.Element {
         tl.to(
           leftGroupRef.current,
           { x: 90, y: -60, scale: 0.55, rotate: -3, filter: "blur(3px)", ease: "power3.out", duration: 0.3 },
-          0
+          recede
         );
 
         // Right tags cluster — starts receding slightly after left, overlapping it.
         tl.to(
           rightGroupRef.current,
           { x: -90, y: -60, scale: 0.55, rotate: 3, filter: "blur(3px)", ease: "power3.out", duration: 0.3 },
-          0.1
+          recede + 0.1
         );
 
         // Both clusters settle into a dimmed, compacted layer (not fully gone)
         // until the stack is complete, then dissolve fully.
-        tl.to([leftGroupRef.current, rightGroupRef.current], { opacity: 0.35, duration: 0.001 }, 0.3);
-        tl.to([leftGroupRef.current, rightGroupRef.current], { opacity: 0, duration: 0.13, ease: "power1.in" }, 0.55);
+        tl.to([leftGroupRef.current, rightGroupRef.current], { opacity: 0.35, duration: 0.001 }, recede + 0.3);
+        tl.to(
+          [leftGroupRef.current, rightGroupRef.current],
+          { opacity: 0, duration: 0.13, ease: "power1.in" },
+          recede + 0.55
+        );
 
         // Center heading + diagram — recedes last, sits on top of the compacted
         // stack, and only dissolves once the two clusters are fully gone.
-        tl.to(centerGroupRef.current, { y: -40, scale: 0.82, ease: "power3.out", duration: 0.33 }, 0.22);
-        tl.to(centerGroupRef.current, { opacity: 0, duration: 0.13, ease: "power1.in" }, 0.55);
+        tl.to(centerGroupRef.current, { y: -40, scale: 0.82, ease: "power3.out", duration: 0.33 }, recede + 0.22);
+        tl.to(centerGroupRef.current, { opacity: 0, duration: 0.13, ease: "power1.in" }, recede + 0.55);
 
+        // ── Phase 3: reveal ────────────────────────────────────────────
         // Section 2 (downstream delivery) fades/rises in with a short overlap
-        // against the stack's dissolve, so the handoff reads as continuous.
-        tl.to(section2Ref.current, { opacity: 1, y: 0, ease: "power2.out", duration: 0.34 }, 0.58);
+        // against the stack's dissolve, so the handoff reads as continuous,
+        // and finishes with the timeline — this is the "final RevealHeading
+        // eases in once the animation completes" moment.
+        tl.to(section2Ref.current, { opacity: 1, y: 0, ease: "power2.out", duration: 0.34 }, recede + 0.58);
       }, sectionRef);
 
       return () => {
@@ -286,57 +327,52 @@ export default function IngestSection(): JSX.Element {
                   strokeLinecap="round"
                   strokeDasharray="1.5 7"
                 >
-                  {/* Left sources → center */}
+                  {/* Left sources → center. Anchors match the repositioned
+                       SourceTags below (left group now sits further out, clear
+                       of the heading) and each curve leans into a soft S so it
+                       reads as a flowing arc rather than a straight diagonal. */}
                   <motion.path
-                    d="M175,100 C 330,190 430,300 548,392"
+                    d="M150,112 C 260,150 430,280 546,393"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.9, delay: 0.55 }}
                   />
                   <motion.path
-                    d="M295,170 C 390,240 470,330 550,390"
+                    d="M195,212 C 300,232 450,320 548,395"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.9, delay: 0.65 }}
                   />
                   <motion.path
-                    d="M235,290 C 350,335 460,368 549,396"
+                    d="M140,322 C 260,340 450,378 549,397"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.9, delay: 0.75 }}
                   />
-                  {/* Right sources → center */}
+                  {/* Right sources → center — mirrored treatment */}
                   <motion.path
-                    d="M868,90 C 760,190 650,300 552,392"
+                    d="M898,90 C 790,130 640,270 552,392"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.9, delay: 0.55 }}
                   />
                   <motion.path
-                    d="M900,238 C 800,300 655,360 555,396"
+                    d="M933,220 C 830,250 650,320 555,396"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.9, delay: 0.65 }}
                   />
                   <motion.path
-                    d="M905,308 C 815,352 660,382 554,400"
+                    d="M953,330 C 840,352 650,380 554,400"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.9, delay: 0.75 }}
-                  />
-                  {/* Center → output row */}
-                  <motion.path
-                    d="M550,405 L550,632"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, delay: 1.05 }}
                   />
                 </g>
               </svg>
@@ -349,49 +385,41 @@ export default function IngestSection(): JSX.Element {
                 />
               </div>
 
-              {/* Floating decorative squares — converging center, each with unique float timing */}
+              {/* Floating relay squares — converge along the merge → output
+                   path. Only one is ever visible; see the "square relay"
+                   phase of the GSAP timeline above for the sequencing. */}
               <FloatingSquare
-                className="absolute left-[48%] top-[36.8%] w-9 h-9 bg-[#FCFAF6] border border-[#EAE3D5] rounded-[7px] shadow-[0_5px_12px_rgba(60,45,30,0.06)]"
-                delay={0.80}
-                floatY={6}
-                floatDuration={3.2}
+                ref={(el) => { squareRefs.current[0] = el; }}
+                className="absolute left-1/2 top-[38%] -translate-x-1/2 w-10 h-10 bg-[#FCFAF6] border border-[#E4DED0] rounded-[9px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
+              />
+              {/* <FloatingSquare
+                ref={(el) => { squareRefs.current[1] = el; }}
+                className="absolute left-1/2 top-[45.5%] -translate-x-1/2 w-8 h-8 bg-[#FCFAF6] border border-[#E4DED0] rounded-[8px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
               />
               <FloatingSquare
-                className="absolute left-[50.9%] top-[39.8%] w-[25px] h-[25px] bg-[#FCFAF6] border border-[#EAE3D5] rounded-[6px] shadow-[0_5px_12px_rgba(60,45,30,0.06)]"
-                delay={0.90}
-                floatY={9}
-                floatDuration={4.1}
+                ref={(el) => { squareRefs.current[2] = el; }}
+                className="absolute left-1/2 top-[53%] -translate-x-1/2 w-9 h-9 bg-[#FCFAF6] border border-[#E4DED0] rounded-[8px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
               />
               <FloatingSquare
-                className="absolute left-[49.1%] top-[44%] w-[30px] h-[30px] bg-[#FCFAF6] border border-[#EAE3D5] rounded-[7px] shadow-[0_5px_12px_rgba(60,45,30,0.06)]"
-                delay={1.00}
-                floatY={5}
-                floatDuration={3.7}
+                ref={(el) => { squareRefs.current[3] = el; }}
+                className="absolute left-1/2 top-[60.5%] -translate-x-1/2 w-8 h-8 bg-[#FCFAF6] border border-[#E4DED0] rounded-[8px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
               />
               <FloatingSquare
-                className="absolute left-[48%] top-[53.5%] w-[30px] h-[30px] bg-[#FCFAF6] border border-[#EAE3D5] rounded-[7px] shadow-[0_5px_12px_rgba(60,45,30,0.06)]"
-                delay={1.10}
-                floatY={7}
-                floatDuration={4.4}
-              />
-              <FloatingSquare
-                className="absolute left-[48.3%] top-[60.8%] w-9 h-9 bg-[#FCFAF6] border border-[#EAE3D5] rounded-[7px] shadow-[0_5px_12px_rgba(60,45,30,0.06)]"
-                delay={1.20}
-                floatY={6}
-                floatDuration={3.6}
-              />
+                ref={(el) => { squareRefs.current[4] = el; }}
+                className="absolute left-1/2 top-[68%] -translate-x-1/2 w-10 h-10 bg-[#FCFAF6] border border-[#E4DED0] rounded-[9px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
+              /> */}
             </div>
 
             {/* Section 1 — left source tags: fly in from left on entry, then stack-recede
                  (converge right, move up, scale down, dim) first on exit */}
             <div ref={leftGroupRef} className="absolute inset-0 z-10 will-change-transform">
-              <div className="absolute left-[10%] top-[6.3%]">
+              <div className="absolute left-[4.5%] top-[7.5%]">
                 <SourceTag label="CLAIMS DATA" delay={0.3} fromX={-44} />
               </div>
-              <div className="absolute left-[20.7%] top-[13.9%]">
+              <div className="absolute left-[8.5%] top-[17.8%]">
                 <SourceTag label="FLAT FILES" delay={0.42} fromX={-44} />
               </div>
-              <div className="absolute left-[11.6%] top-[26%]">
+              <div className="absolute left-[3%] top-[28.8%]">
                 <SourceTag label="SDOH SOURCES" delay={0.54} fromX={-44} />
               </div>
             </div>
@@ -399,13 +427,13 @@ export default function IngestSection(): JSX.Element {
             {/* Section 1 — right source tags: fly in from right on entry, then stack-recede
                  (converge left, move up, scale down, dim) shortly after the left cluster */}
             <div ref={rightGroupRef} className="absolute inset-0 z-10 will-change-transform">
-              <div className="absolute left-[73.3%] top-[4.2%]">
+              <div className="absolute left-[81%] top-[5.2%]">
                 <SourceTag label="PHARMACY DATA" delay={0.3} fromX={44} />
               </div>
-              <div className="absolute left-[76.5%] top-[21%]">
+              <div className="absolute left-[84.5%] top-[21.8%]">
                 <SourceTag label="LAB RESULTS" delay={0.42} fromX={44} />
               </div>
-              <div className="absolute left-[78%] top-[29.7%]">
+              <div className="absolute left-[86.5%] top-[32.7%]">
                 <SourceTag label="EHR / HIE" delay={0.54} fromX={44} />
               </div>
             </div>

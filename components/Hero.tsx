@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero(): JSX.Element {
   return (
-    <section className="relative min-h-screen px-7 md:px-14 pt-[100px] md:pt-[110px] pb-[40px] bg-[#f7f3EF]">
+    <section className="relative px-7 md:px-14 pt-[100px] md:pt-[110px] pb-[40px] bg-[#f7f3EF]">
       <div className="grid grid-cols-1 md:grid-cols-[1.04fr_0.96fr] gap-12 items-center h-full">
 
         {/* Left: headline + subtext + CTAs */}
