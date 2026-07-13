@@ -20,7 +20,7 @@ export default function PlatformHero(): JSX.Element {
           </div>
 
           {/* Spacer so the grid keeps its height */}
-          <div className="aspect-[3/4]" />
+          <div className="" />
 
         </div>
 
