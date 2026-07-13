@@ -13,9 +13,9 @@ export default function SolutionsHero(): JSX.Element {
       }}
     >
       {/* Category breadcrumb tag */}
-      <div className="mt-28 inline-flex items-center gap-2 text-[13px] font-semibold tracking-[0.1em] uppercase text-[#fff] mb-6">
+      <div className="mt-16 md:mt-16 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] font-semibold tracking-[0.1em] uppercase text-white mb-6">
         <span>Solution</span>
-        <span className="text-[#fff]">→</span>
+        <span>→</span>
         <span>Interoperability &amp; Compliance</span>
       </div>
 

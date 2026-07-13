@@ -141,7 +141,7 @@ export default function SixDomains(): JSX.Element {
   const rightDomains = DOMAINS.filter((_, i) => i % 2 !== 0);
 
   return (
-    <section className="bg-[#F7F3EF] px-7 md:px-14 py-[72px] text-center">
+    <section className="bg-[#F7F3EF] px-7 md:px-14 md:py-[72px] text-center">
       {/* Label */}
       <div className="font-mono font-semibold text-[13px] tracking-[1.5px] text-[#A8543C] uppercase mb-5">
             The Record

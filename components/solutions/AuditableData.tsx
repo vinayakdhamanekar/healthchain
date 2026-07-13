@@ -36,7 +36,7 @@ const FEATURES: DataFeature[] = [
 
 export default function AuditableData(): JSX.Element {
   return (
-    <section className="bg-[#F7F3EF] px-7 md:px-14 py-[72px]">
+    <section className="bg-[#F7F3EF] px-7 md:px-14 md:py-[72px]">
       {/* Centered header */}
       <div className="text-center max-w-[680px] mx-auto mb-14">
         <p className="text-[13px] font-bold tracking-[0.16em] uppercase text-[#C05A3A] mb-4">

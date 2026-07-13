@@ -140,7 +140,7 @@ function LayerSection({
 
 export default function TrustedData(): JSX.Element {
   return (
-    <section className="px-6 md:px-12 lg:px-16 bg-[#F7F3EF]">
+    <section className="px-6 md:px-12 sm:pt-[10%] lg:px-16 bg-[#F7F3EF]">
       <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-16">
         <div>
           <div className="font-mono font-semibold text-[13px] tracking-[1.5px] text-[#A8543C] uppercase mb-2">

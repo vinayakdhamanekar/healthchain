@@ -141,43 +141,39 @@ interface CardProps {
 function Card({ step, active }: CardProps): JSX.Element {
   return (
     <div
-      className={`flex-1 min-w-0 rounded-lg border p-[24px_26px_28px] flex flex-col transition-all duration-700 ease-out ${
-        active
+      className={`flex-1 min-w-0 rounded-lg border p-[24px_26px_28px] sm:mb-[15%] flex flex-col transition-all duration-700 ease-out ${active
           ? "bg-[#f7f3EF] border-[#E1DACB] opacity-100 scale-100 shadow-sm"
           : "bg-[#F3EFE7] border-[#E6DFD1] opacity-60 scale-[0.97]"
-      }`}
+        }`}
     >
       {/* Step Number */}
       <div
-  className={`absolute -top-4 left-6 w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-semibold transition-all duration-500 ${
-    active
-      ? "bg-[#6E7A3A] text-white border-4 border-[#EFEAE1]"
-      : "bg-[#F7F3EB] border border-[#C9C1B1] text-[#8A857A]"
-  }`}
->
-  {step.number}
-</div>
+        className={`absolute -top-4 left-6 w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-semibold transition-all duration-500 ${active
+            ? "bg-[#6E7A3A] text-white border-4 border-[#EFEAE1]"
+            : "bg-[#F7F3EB] border border-[#C9C1B1] text-[#8A857A]"
+          }`}
+      >
+        {step.number}
+      </div>
 
       {/* Icon + Title */}
       <div className="flex items-center bg-[#f7f3EF] gap-[10px] mb-[14px]">
         <div
-          className={`transition-all duration-700 ${
-            active ? "opacity-100" : "opacity-50"
-          }`}
+          className={`transition-all duration-700 ${active ? "opacity-100" : "opacity-50"
+            }`}
         >
           <Image
-  src={step.icon}
-  alt={step.title}
-  width={24}
-  height={24}
-  className="shrink-0"
-/>
+            src={step.icon}
+            alt={step.title}
+            width={24}
+            height={24}
+            className="shrink-0"
+          />
         </div>
 
         <h3
-          className={`text-[25px] font-semibold tracking-[-0.01em] transition-all duration-700 ${
-            active ? "text-[#34332C]" : "text-[#7A746A]"
-          }`}
+          className={`text-[25px] font-semibold tracking-[-0.01em] transition-all duration-700 ${active ? "text-[#34332C]" : "text-[#7A746A]"
+            }`}
         >
           {step.title}
         </h3>
@@ -185,9 +181,8 @@ function Card({ step, active }: CardProps): JSX.Element {
 
       {/* Description */}
       <p
-        className={`text-[15px] leading-[1.55] mb-[26px] transition-all duration-700 ${
-          active ? "text-[#5E594F]" : "text-[#9A948A]"
-        }`}
+        className={`text-[15px] leading-[1.55] mb-[26px] transition-all duration-700 ${active ? "text-[#5E594F]" : "text-[#9A948A]"
+          }`}
       >
         {step.description}
       </p>
@@ -202,11 +197,10 @@ function Card({ step, active }: CardProps): JSX.Element {
           {step.chips.map((chip, index) => (
             <span
               key={chip}
-              className={`font-mono text-[12px] py-[5px] px-[11px] rounded-md transition-all duration-700 ${step.chipClass} ${
-                active
+              className={`font-mono text-[12px] py-[5px] px-[11px] rounded-md transition-all duration-700 ${step.chipClass} ${active
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-2"
-              }`}
+                }`}
               style={{
                 transitionDelay: `${index * 70}ms`,
               }}
@@ -233,13 +227,12 @@ function Connector({ active }: ConnectorProps): JSX.Element {
 
         {/* Completed Line */}
         <div
-          className={`absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#9FB06E] transition-all duration-700 ${
-            active ? "w-full" : "w-0"
-          }`}
+          className={`absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-[#9FB06E] transition-all duration-700 ${active ? "w-full" : "w-0"
+            }`}
         />
 
         {/* Moving Dots */}
-        
+
       </div>
     </div>
   );
@@ -293,7 +286,7 @@ export default function PlatformSteps(): JSX.Element {
   }, [activeCards]);
 
   return (
-    <section className="bg-[#f7f3EF] pt-16 px-7 md:px-14 pb-[70px]">
+    <section className="bg-[#f7f3EF] md:pt-16 px-7 md:px-14 pb-[70px]">
       <style jsx>{`
   @keyframes dotFlow {
     0% {
@@ -352,7 +345,7 @@ export default function PlatformSteps(): JSX.Element {
           />
         </div>
       </div>
-            {/* Cards */}
+      {/* Cards */}
       <div className="flex flex-col md:flex-row items-stretch">
         {STEPS.map((step, idx) => (
           <Fragment key={step.title}>

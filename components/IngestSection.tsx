@@ -304,95 +304,95 @@ export default function IngestSection(): JSX.Element {
       <div className="hidden md:block relative">
         <div ref={pinRef} className="relative w-full max-w-[1100px] mx-auto aspect-[1100/1010] overflow-hidden">
 
-            {/* Section 1 — center group: heading, connector lines, floating squares.
+          {/* Section 1 — center group: heading, connector lines, floating squares.
                  Recedes last, so it sits on top of the two tag clusters (z-20) as
                  they converge and compact beneath it. */}
-            <div
-              ref={centerGroupRef}
-              className="absolute inset-0 z-20 will-change-transform"
-            >
-              {/* SVG dashed connection lines — fade in as section enters view,
+          <div
+            ref={centerGroupRef}
+            className="absolute inset-0 z-20 will-change-transform"
+          >
+            {/* SVG dashed connection lines — fade in as section enters view,
                    fade out on scroll via linesRef (see timeline comment above) */}
-              <svg
-                ref={linesRef}
-                viewBox="0 0 1100 1010"
-                className="absolute inset-0 w-full h-full"
-                fill="none"
-                preserveAspectRatio="xMidYMid meet"
-                aria-hidden="true"
+            <svg
+              ref={linesRef}
+              viewBox="0 0 1100 1010"
+              className="absolute inset-0 w-full h-full"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <g
+                stroke="#C7BFB0"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeDasharray="1.5 7"
               >
-                <g
-                  stroke="#C7BFB0"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeDasharray="1.5 7"
-                >
-                  {/* Left sources → center. Anchors match the repositioned
+                {/* Left sources → center. Anchors match the repositioned
                        SourceTags below (left group now sits further out, clear
                        of the heading) and each curve leans into a soft S so it
                        reads as a flowing arc rather than a straight diagonal. */}
-                  <motion.path
-                    d="M150,112 C 260,150 430,280 546,393"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.9, delay: 0.55 }}
-                  />
-                  <motion.path
-                    d="M195,212 C 300,232 450,320 548,395"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.9, delay: 0.65 }}
-                  />
-                  <motion.path
-                    d="M140,322 C 260,340 450,378 549,397"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.9, delay: 0.75 }}
-                  />
-                  {/* Right sources → center — mirrored treatment */}
-                  <motion.path
-                    d="M898,90 C 790,130 640,270 552,392"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.9, delay: 0.55 }}
-                  />
-                  <motion.path
-                    d="M933,220 C 830,250 650,320 555,396"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.9, delay: 0.65 }}
-                  />
-                  <motion.path
-                    d="M953,330 C 840,352 650,380 554,400"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.9, delay: 0.75 }}
-                  />
-                </g>
-              </svg>
-
-              {/* Top heading — centered, word-by-word blur reveal */}
-              <div className="absolute top-[3.4%] left-1/2 -translate-x-1/2 w-[54%] text-center pointer-events-none">
-                <RevealHeading
-                  title="Ingest from 50+ sources into one normalized model"
-                  description="Claims, clinical, pharmacy, and SDOH data—captured from any source, transformed into a single longitudinal record."
+                <motion.path
+                  d="M150,112 C 260,150 430,280 546,393"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.9, delay: 0.55 }}
                 />
-              </div>
+                <motion.path
+                  d="M195,212 C 300,232 450,320 548,395"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.9, delay: 0.65 }}
+                />
+                <motion.path
+                  d="M140,322 C 260,340 450,378 549,397"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.9, delay: 0.75 }}
+                />
+                {/* Right sources → center — mirrored treatment */}
+                <motion.path
+                  d="M898,90 C 790,130 640,270 552,392"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.9, delay: 0.55 }}
+                />
+                <motion.path
+                  d="M933,220 C 830,250 650,320 555,396"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.9, delay: 0.65 }}
+                />
+                <motion.path
+                  d="M953,330 C 840,352 650,380 554,400"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.9, delay: 0.75 }}
+                />
+              </g>
+            </svg>
 
-              {/* Floating relay squares — converge along the merge → output
+            {/* Top heading — centered, word-by-word blur reveal */}
+            <div className="absolute top-[3.4%] left-1/2 -translate-x-1/2 w-[54%] text-center pointer-events-none">
+              <RevealHeading
+                title="Ingest from 50+ sources into one normalized model"
+                description="Claims, clinical, pharmacy, and SDOH data—captured from any source, transformed into a single longitudinal record."
+              />
+            </div>
+
+            {/* Floating relay squares — converge along the merge → output
                    path. Only one is ever visible; see the "square relay"
                    phase of the GSAP timeline above for the sequencing. */}
-              <FloatingSquare
-                ref={(el) => { squareRefs.current[0] = el; }}
-                className="absolute left-1/2 top-[38%] -translate-x-1/2 w-10 h-10 bg-[#FCFAF6] border border-[#E4DED0] rounded-[9px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
-              />
-              {/* <FloatingSquare
+            <FloatingSquare
+              ref={(el) => { squareRefs.current[0] = el; }}
+              className="absolute left-1/2 top-[38%] -translate-x-1/2 w-10 h-10 bg-[#FCFAF6] border border-[#E4DED0] rounded-[9px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
+            />
+            {/* <FloatingSquare
                 ref={(el) => { squareRefs.current[1] = el; }}
                 className="absolute left-1/2 top-[45.5%] -translate-x-1/2 w-8 h-8 bg-[#FCFAF6] border border-[#E4DED0] rounded-[8px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
               />
@@ -408,37 +408,37 @@ export default function IngestSection(): JSX.Element {
                 ref={(el) => { squareRefs.current[4] = el; }}
                 className="absolute left-1/2 top-[68%] -translate-x-1/2 w-10 h-10 bg-[#FCFAF6] border border-[#E4DED0] rounded-[9px] shadow-[0_8px_20px_rgba(60,45,30,0.10)]"
               /> */}
-            </div>
+          </div>
 
-            {/* Section 1 — left source tags: fly in from left on entry, then stack-recede
+          {/* Section 1 — left source tags: fly in from left on entry, then stack-recede
                  (converge right, move up, scale down, dim) first on exit */}
-            <div ref={leftGroupRef} className="absolute inset-0 z-10 will-change-transform">
-              <div className="absolute left-[4.5%] top-[7.5%]">
-                <SourceTag label="CLAIMS DATA" delay={0.3} fromX={-44} />
-              </div>
-              <div className="absolute left-[8.5%] top-[17.8%]">
-                <SourceTag label="FLAT FILES" delay={0.42} fromX={-44} />
-              </div>
-              <div className="absolute left-[3%] top-[28.8%]">
-                <SourceTag label="SDOH SOURCES" delay={0.54} fromX={-44} />
-              </div>
+          <div ref={leftGroupRef} className="absolute inset-0 z-10 will-change-transform">
+            <div className="absolute left-[4.5%] top-[7.5%]">
+              <SourceTag label="CLAIMS DATA" delay={0.3} fromX={-44} />
             </div>
+            <div className="absolute left-[8.5%] top-[17.8%]">
+              <SourceTag label="FLAT FILES" delay={0.42} fromX={-44} />
+            </div>
+            <div className="absolute left-[3%] top-[28.8%]">
+              <SourceTag label="SDOH SOURCES" delay={0.54} fromX={-44} />
+            </div>
+          </div>
 
-            {/* Section 1 — right source tags: fly in from right on entry, then stack-recede
+          {/* Section 1 — right source tags: fly in from right on entry, then stack-recede
                  (converge left, move up, scale down, dim) shortly after the left cluster */}
-            <div ref={rightGroupRef} className="absolute inset-0 z-10 will-change-transform">
-              <div className="absolute left-[81%] top-[5.2%]">
-                <SourceTag label="PHARMACY DATA" delay={0.3} fromX={44} />
-              </div>
-              <div className="absolute left-[84.5%] top-[21.8%]">
-                <SourceTag label="LAB RESULTS" delay={0.42} fromX={44} />
-              </div>
-              <div className="absolute left-[86.5%] top-[32.7%]">
-                <SourceTag label="EHR / HIE" delay={0.54} fromX={44} />
-              </div>
+          <div ref={rightGroupRef} className="absolute inset-0 z-10 will-change-transform">
+            <div className="absolute left-[81%] top-[5.2%]">
+              <SourceTag label="PHARMACY DATA" delay={0.3} fromX={44} />
             </div>
+            <div className="absolute left-[84.5%] top-[21.8%]">
+              <SourceTag label="LAB RESULTS" delay={0.42} fromX={44} />
+            </div>
+            <div className="absolute left-[86.5%] top-[32.7%]">
+              <SourceTag label="EHR / HIE" delay={0.54} fromX={44} />
+            </div>
+          </div>
 
-            {/* Section 2 — heading only: reveals in the SAME screen zone Section 1
+          {/* Section 2 — heading only: reveals in the SAME screen zone Section 1
                  occupied, overlapping the tail end of the stack's dissolve (z-30, on top)
                  so the handoff reads as continuous rather than a hard cut. Top-anchored
                  at the exact same `top-[3.4%]` slot as Section 1's heading (not vertically
@@ -448,14 +448,14 @@ export default function IngestSection(): JSX.Element {
                  Matching Section 1's anchor keeps the leftover box height in the same
                  place both times, which is what the marquee's overlap margin below is
                  actually calibrated against. */}
-            <div ref={section2Ref} className="absolute inset-0 z-30 will-change-transform">
-              <div className="absolute top-[3.4%] left-1/2 -translate-x-1/2 w-[54%] text-center pointer-events-none">
-                <RevealHeading
-                  title="Deliver clean data to every downstream initiative"
-                  description="Analytics-ready and AI-ready output to every system in your stack—powering every payer initiative"
-                />
-              </div>
+          <div ref={section2Ref} className="absolute inset-0 z-30 will-change-transform">
+            <div className="absolute top-[3.4%] left-1/2 -translate-x-1/2 w-[54%] text-center pointer-events-none">
+              <RevealHeading
+                title="Deliver clean data to every downstream initiative"
+                description="Analytics-ready and AI-ready output to every system in your stack—powering every payer initiative"
+              />
             </div>
+          </div>
 
         </div>
       </div>
@@ -480,7 +480,7 @@ export default function IngestSection(): JSX.Element {
       </div>
 
       {/* ── TAG CLOUD (all screens) — marquee rows ── */}
-      <div className="overflow-hidden -mt-[55%]">
+      <div className="overflow-hidden mt-10 md:-mt-[55%]">
         {TAG_ROWS.map((row, rowIdx) => {
           const animation = rowIdx % 2 === 0 ? "animate-marquee" : "animate-marqueeReverse";
           return (
