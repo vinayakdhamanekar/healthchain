@@ -101,15 +101,15 @@ export default function Footer(): JSX.Element {
           </svg> */}
 
            <Image
-                      src="/logo.png"
+                      src="/hclogo.png"
                       alt="Health Chain Logo"
-                      width={62}
+                      width={400}
                       height={62}
                       className="object-contain"
                     />
-          <span className="text-[36px] md:text-[62px] font-normal tracking-[-0.02em] text-[#34332C]">
+          {/* <span className="text-[36px] md:text-[62px] font-normal tracking-[-0.02em] text-[#34332C]">
             Health Chain
-          </span>
+          </span> */}
         </div>
         <p className="text-[16px] md:text-[18px] leading-[1.45] text-[#57534C] md:text-right max-w-[280px]">
           The data readiness layer healthcare has been missing.
