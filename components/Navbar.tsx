@@ -312,15 +312,15 @@ export default function Navbar(): JSX.Element {
           <Link href="/">
             <div className="flex items-center gap-[5px]">
               <Image
-                src="/hclogo.png"
+                src="/logo.png"
                 alt="Health Chain Logo"
-                width={200}
+                width={32}
                 height={32}
                 className="object-contain"
               />
-              {/* <span className="text-[17px] sm:text-[20px] font-semibold tracking-[-0.01em] text-[#34332C]">
+              <span className="text-[17px] sm:text-[20px] font-semibold tracking-[-0.01em] text-[#34332C]">
                 Health Chain
-              </span> */}
+              </span>
             </div>
           </Link>
 
