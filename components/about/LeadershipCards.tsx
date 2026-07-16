@@ -33,13 +33,13 @@ const LEADERS: Leader[] = [
     linkedin: "https://www.linkedin.com/in/vinaysolapurkar/",
     image: "/team/VinaySolapurkar.jpg",
   },
-  {
-    name: "Scott Rich",
-    title: "Vice President of Finance",
-    bio: "Oversees finance and operations, scaling the business alongside customer growth.",
-    linkedin: "https://www.linkedin.com/in/scott-rich-a420052/",
-    image: "/team/ScottRich.jpg",
-  },
+  // {
+  //   name: "Scott Rich",
+  //   title: "Vice President of Finance",
+  //   bio: "Oversees finance and operations, scaling the business alongside customer growth.",
+  //   linkedin: "https://www.linkedin.com/in/scott-rich-a420052/",
+  //   image: "/team/ScottRich.jpg",
+  // },
   {
     name: "Nikita Ravindran",
     title: "Vice President of Product",
