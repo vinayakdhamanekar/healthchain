@@ -36,7 +36,7 @@ const PARAGRAPHS: Para[] = [
     activeWeight: "font-normal",
   },
   {
-    text: "To build the data infrastructure that health systems run on—unifying clinical, financial, and regulatory data so the organizations responsible for care can operate with the speed and clarity that the people they serve deserve.",
+    text: "To build the data infrastructure that health systems run on-unifying clinical, financial, and regulatory data so the organizations responsible for care can operate with the speed and clarity that the people they serve deserve.",
     activeColor: "text-[#57534C]",
     activeWeight: "font-normal",
   },
@@ -166,9 +166,9 @@ export default function AboutMission(): JSX.Element {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F7F3EF] px-7 md:px-14 py-[80px] overflow-hidden"
+      className="relative bg-[#F7F3EF] px-7 md:px-14 py-[40px] md:py-[80px] overflow-hidden"
     >
-      {/* Decorative warm circles — top right */}
+      {/* Decorative warm circles - top right */}
       {/* Decorative image */}
       <div className="absolute top-0 right-0 pointer-events-none select-none">
         <Image
@@ -186,7 +186,7 @@ export default function AboutMission(): JSX.Element {
         Our Origins
       </p>
 
-      {/* Headline — always dark, no animation */}
+      {/* Headline - always dark, no animation */}
       <h2 className="text-[32px] md:text-[42px] font-semibold tracking-[-0.03em] leading-[1.08] text-[#1A1A1A] max-w-[680px] mb-12">
         The path to trustworthy data foundations.
       </h2>
@@ -194,7 +194,7 @@ export default function AboutMission(): JSX.Element {
       {/* Two-column animated body copy */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-14 gap-y-6">
 
-        {/* Left column — paragraphs 0, 1 */}
+        {/* Left column - paragraphs 0, 1 */}
         <div className="space-y-6">
           <AnimatedPara
             para={PARAGRAPHS[0]}
@@ -210,7 +210,7 @@ export default function AboutMission(): JSX.Element {
           />
         </div>
 
-        {/* Right column — paragraphs 2, 3, 4 */}
+        {/* Right column - paragraphs 2, 3, 4 */}
         <div className="space-y-6">
           <AnimatedPara
             para={PARAGRAPHS[2]}

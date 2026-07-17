@@ -29,7 +29,7 @@ const ROWS: SolutionRow[] = [
     categoryIcon: "/icons/Technology-Privacy-Consent-Profile-Browser-Shield--Streamline-Ultimate.svg",
     title: "Interoperability & Compliance",
     description:
-      "Automate FHIR, HL7, and X12 exchange across your network with built-in compliance for TEFCA, state mandates, and CMS-0057-F—ahead of Jan 2027 deadlines.",
+      "Automate FHIR, HL7, and X12 exchange across your network with built-in compliance for TEFCA, state mandates, and CMS-0057-F-ahead of Jan 2027 deadlines.",
     chips: ["FHIR R4", "HL7 / X12", "TEFCA", "CMS-0057-F"],
     chipClass: "bg-[#D2E3AC] text-[#51602F]",
   },
@@ -40,7 +40,7 @@ const ROWS: SolutionRow[] = [
     categoryIcon: "/icons/Merge-Account--Streamline-Ultimate.svg",
     title: "Longitudinal data enablement",
     description:
-      "One trustworthy longitudinal health record from claims, clinical, pharmacy, lab, and SDOH—ready for the tools your teams already use.",
+      "One trustworthy longitudinal health record from claims, clinical, pharmacy, lab, and SDOH-ready for the tools your teams already use.",
     chips: ["Clinical", "Claims", "Pharmacy", "SDOH"],
     chipClass: "bg-[#CBCDF1] text-[#3C3E8C]",
   },
@@ -135,14 +135,14 @@ function PinnedRows(): JSX.Element {
 
   // Scroll distance (px) dedicated to EACH crossfade transition between two
   // rows. With N rows there are (N - 1) transitions, so the pin holds for
-  // TRANSITION_SCROLL * (N - 1) px total — GSAP's `pin: true` inserts its own
+  // TRANSITION_SCROLL * (N - 1) px total - GSAP's `pin: true` inserts its own
   // spacer sized to exactly that, so no manual height math is needed.
   const TRANSITION_SCROLL = 700;
 
   useLayoutEffect(() => {
     const mm = gsap.matchMedia();
 
-    // Scoped to md+ only — mobile uses the separate whileInView list below.
+    // Scoped to md+ only - mobile uses the separate whileInView list below.
     mm.add("(min-width: 768px)", () => {
       const ctx = gsap.context(() => {
         const panels = panelRefs.current;
@@ -170,7 +170,7 @@ function PinnedRows(): JSX.Element {
         });
 
         // One crossfade per pair of adjacent rows, evenly spaced across the
-        // timeline (position `i` to `i + 1`) — outgoing row fades down/out
+        // timeline (position `i` to `i + 1`) - outgoing row fades down/out
         // while the incoming one fades up/in, at the same scroll position.
         for (let i = 0; i < totalTransitions; i++) {
           tl.to(panels[i], { opacity: 0, y: -24, duration: 1, ease: "power1.inOut" }, i);
@@ -187,7 +187,7 @@ function PinnedRows(): JSX.Element {
   return (
     // Grid stack: every row occupies the same cell (grid-area 1/1) so they
     // overlap for the crossfade while the container sizes itself to the
-    // tallest row — no `h-screen`/sticky-offset hacks needed. `md:grid` (not
+    // tallest row - no `h-screen`/sticky-offset hacks needed. `md:grid` (not
     // `md:block`) is what actually enables the stacking layout.
     <div ref={pinRef} className="hidden md:grid relative">
       {ROWS.map((row, idx) => (

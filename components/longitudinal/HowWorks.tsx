@@ -95,7 +95,7 @@ function PinnedSteps(): JSX.Element {
 
   // Scroll distance (px) dedicated to EACH crossfade transition between two
   // steps. With N steps there are (N - 1) transitions, so the pin holds for
-  // TRANSITION_SCROLL * (N - 1) px total — GSAP's `pin: true` inserts its own
+  // TRANSITION_SCROLL * (N - 1) px total - GSAP's `pin: true` inserts its own
   // spacer sized to exactly that, so no manual height math is needed.
   const TRANSITION_SCROLL = 700;
 
@@ -105,7 +105,7 @@ function PinnedSteps(): JSX.Element {
   useLayoutEffect(() => {
     const mm = gsap.matchMedia();
 
-    // Scoped to md+ only — mobile uses the separate whileInView list below.
+    // Scoped to md+ only - mobile uses the separate whileInView list below.
     mm.add("(min-width: 768px)", () => {
       const ctx = gsap.context(() => {
         const panels = panelRefs.current;
@@ -133,7 +133,7 @@ function PinnedSteps(): JSX.Element {
         });
 
         // One crossfade per pair of adjacent steps, evenly spaced across the
-        // timeline (position `i` to `i + 1`) — outgoing step slides up/out
+        // timeline (position `i` to `i + 1`) - outgoing step slides up/out
         // while the incoming one slides in from below, at the same scroll
         // position.
         for (let i = 0; i < totalTransitions; i++) {
@@ -151,7 +151,7 @@ function PinnedSteps(): JSX.Element {
   return (
     // Grid stack: every step occupies the same cell (grid-area 1/1) so they
     // overlap for the crossfade while the container sizes itself to the
-    // tallest step — no `h-screen`/sticky-offset hacks needed. `md:grid` (not
+    // tallest step - no `h-screen`/sticky-offset hacks needed. `md:grid` (not
     // `md:block`) is what actually enables the stacking layout.
     <div ref={pinRef} className="hidden md:grid relative">
       {steps.map((step, idx) => (

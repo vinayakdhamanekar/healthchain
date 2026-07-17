@@ -30,7 +30,7 @@ const BADGES: Badge[] = [
     code: "CMS-0057-F",
     label: "Jan 2027 Ready",
     chipClass: "bg-[#fff] text-[#3C3E8C]",
-    description: "Pre-built compliance for the CMS Interoperability and Prior Authorization final rule—automated reporting and data exchange.",
+    description: "Pre-built compliance for the CMS Interoperability and Prior Authorization final rule-automated reporting and data exchange.",
   },
 ];
 

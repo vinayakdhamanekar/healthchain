@@ -28,7 +28,7 @@ const FIELD_CLASS =
 const FIELD_ERROR_CLASS = "border-red-400 focus:border-red-500";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Accepts numbers, spaces, +, -, () — at least 7 digits total
+// Accepts numbers, spaces, +, -, () - at least 7 digits total
 const PHONE_REGEX = /^[+()\-\s\d]{7,}$/;
 
 function Label({ text, required }: { text: string; required?: boolean }): JSX.Element {
@@ -303,7 +303,7 @@ export default function ContactSection(): JSX.Element {
             </span>
           </button>
 
-          {/* Status message — auto-hides after 10s */}
+          {/* Status message - auto-hides after 10s */}
           {status === "success" && (
             <p className="mt-4 text-[14px] font-medium text-green-700">
               Thank you! Someone from our team will reach out within one business day.

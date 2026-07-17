@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function SolutionsCTA(): JSX.Element {
   return (
-    <section className="px-7 md:px-14 py-[90px] border-t border-[#E5DECF] bg-[#F7F3EF]">
+    <section className="px-7 md:px-14 py-[90px]  border-t border-[#E5DECF] bg-[#F7F3EF]">
       <div className="max-w-[900px] mx-auto text-center">
 
         {/* Headline */}
@@ -23,7 +23,7 @@ export default function SolutionsCTA(): JSX.Element {
 
         {/* Description */}
         <p className="text-[17px] leading-[1.6] text-[#57534C] mt-8 max-w-[620px] mx-auto">
-          See how Health Chain can unify member data, automate CMS-0057-F compliance, and get you AI-ready—in weeks, not quarters.
+          See how Health Chain can unify member data, automate CMS-0057-F compliance, and get you AI-ready-in weeks, not quarters.
         </p>
 
         {/* Buttons */}

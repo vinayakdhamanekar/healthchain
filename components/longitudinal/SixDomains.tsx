@@ -189,7 +189,7 @@ export default function SixDomains(): JSX.Element {
           })}
         </div>
 
-        {/* Right column (mobile — shown below left) */}
+        {/* Right column (mobile - shown below left) */}
         <div className="md:hidden">
           {rightDomains.map((domain) => {
             const globalIndex = DOMAINS.indexOf(domain);

@@ -322,7 +322,7 @@ export default function PlatformSteps(): JSX.Element {
 
           <p className="text-[17px] leading-[1.5] text-[#6B665D] mt-[22px] max-w-[540px]">
             A three-stage pipeline that transforms fragmented payer data into
-            clean, actionable intelligence—in days, not months.
+            clean, actionable intelligence-in days, not months.
           </p>
         </div>
 

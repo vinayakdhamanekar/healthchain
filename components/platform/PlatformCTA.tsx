@@ -24,7 +24,7 @@ export default function PlatformCTA(): JSX.Element {
         {/* Description */}
         <p className="text-[17px] leading-[1.6] text-[#57534C] mt-8 max-w-[620px] mx-auto">
           See how Health Chain turns fragmented payer data into clean,
-          actionable intelligence—in days, not months.
+          actionable intelligence-in days, not months.
         </p>
 
         {/* Buttons */}

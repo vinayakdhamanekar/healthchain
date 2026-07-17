@@ -67,7 +67,7 @@ export default function Hero(): JSX.Element {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/Home_banner.png"
-              alt="Health Chain — healthcare team reviewing member data"
+              alt="Health Chain - healthcare team reviewing member data"
               className="w-full h-full object-cover object-top"
             />
           </div>

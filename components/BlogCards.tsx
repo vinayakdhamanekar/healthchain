@@ -17,7 +17,7 @@ const CARDS: BlogCard[] = [
     category: "Case Study",
     title: "How a Regional Blue Plan unified member data in days.",
     description:
-      "From 12-18 month integration timelines to production-ready pipelines—without rip-and-replace.",
+      "From 12-18 month integration timelines to production-ready pipelines-without rip-and-replace.",
   },
   {
     category: "Whitepaper",

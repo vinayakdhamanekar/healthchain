@@ -240,7 +240,7 @@ export default function MandatesTimeline(): JSX.Element {
             Mandates aren't slowing down.
           </h2>
           <p className="mt-4 text-[17px] leading-[1.65] text-[#57534C]">
-            TEFCA, CMS-0057-F, USCDI—new rules keep landing. Health Chain makes sure you're already covered.
+            TEFCA, CMS-0057-F, USCDI-new rules keep landing. Health Chain makes sure you're already covered.
           </p>
         </div>
 
@@ -286,7 +286,7 @@ export default function MandatesTimeline(): JSX.Element {
         </div>
       </div>
 
-      {/* Timeline — scrollable on mobile */}
+      {/* Timeline - scrollable on mobile */}
       <div className="overflow-x-auto pb-2 mb-10">
         <div className="relative min-w-[600px] h-[110px]">
           {/* Year labels */}

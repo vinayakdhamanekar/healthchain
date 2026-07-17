@@ -151,7 +151,7 @@ export default function TrustedData(): JSX.Element {
             Trusted data for every initiative.
           </h2>
           <p className="max-w-[600px] text-[17px] md:text-[19px] leading-[1.55] text-[#57534C] mt-[20px]">
-            Our approach to data readiness fills the gap between data access and usability. We normalize at the platform level for 50+ pre-built data sources—including clinical, claims, administrative, and SDOHs.
+            Our approach to data readiness fills the gap between data access and usability. We normalize at the platform level for 50+ pre-built data sources-including clinical, claims, administrative, and SDOHs.
           </p>
         </div>
 

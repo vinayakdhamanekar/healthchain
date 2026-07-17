@@ -28,7 +28,7 @@ export default function ReadyCTA(): JSX.Element {
 
           <p className="max-w-[430px] text-[16px] md:text-[17px] leading-[1.6] text-[#57534C] mt-6">
             See how Health Chain turns fragmented payer data into clean,
-            actionable intelligence—in days, not months.
+            actionable intelligence-in days, not months.
           </p>
 
           <a

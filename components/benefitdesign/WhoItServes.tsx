@@ -28,7 +28,7 @@ const CARDS: ActivationCard[] = [
     title: "Try out plan designs in hours",
     titleColor: "#A15549",
     description:
-      "Line up three plans or thirty against the same members and see cost, member friction, and Stars impact side by side—before you file.",
+      "Line up three plans or thirty against the same members and see cost, member friction, and Stars impact side by side-before you file.",
     iconSrc: "/icons/Analytics-Bars--Streamline-Ultimate.svg",
     iconColor: "#A15549",
     labelColorClass: "text-[#A15549]",

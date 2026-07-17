@@ -144,7 +144,7 @@ export default function FiveAPIs(): JSX.Element {
 
       {/* Card grid */}
       <div className="mt-10  rounded-[18px] overflow-hidden">
-        {/* Top row — 2 cards */}
+        {/* Top row - 2 cards */}
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="border-b md:border-b-0 md:border-r border-[#928b86]">
             <CardContent card={CARDS[0]} />
@@ -154,7 +154,7 @@ export default function FiveAPIs(): JSX.Element {
           </div>
         </div>
 
-        {/* Bottom row — 3 cards */}
+        {/* Bottom row - 3 cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[#928b86]">
           <div className="border-b md:border-r border-[#928b86]">
             <CardContent card={CARDS[2]} />

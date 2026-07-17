@@ -381,7 +381,7 @@ export default function IngestSection(): JSX.Element {
             <div className="absolute top-[3.4%] left-1/2 -translate-x-1/2 w-[54%] text-center pointer-events-none">
               <RevealHeading
                 title="Ingest from 50+ sources into one normalized model"
-                description="Claims, clinical, pharmacy, and SDOH data—captured from any source, transformed into a single longitudinal record."
+                description="Claims, clinical, pharmacy, and SDOH data-captured from any source, transformed into a single longitudinal record."
               />
             </div>
 
@@ -452,7 +452,7 @@ export default function IngestSection(): JSX.Element {
             <div className="absolute top-[3.4%] left-1/2 -translate-x-1/2 w-[54%] text-center pointer-events-none">
               <RevealHeading
                 title="Deliver clean data to every downstream initiative"
-                description="Analytics-ready and AI-ready output to every system in your stack—powering every payer initiative"
+                description="Analytics-ready and AI-ready output to every system in your stack-powering every payer initiative"
               />
             </div>
           </div>
@@ -464,7 +464,7 @@ export default function IngestSection(): JSX.Element {
       <div className="md:hidden px-7 text-center">
         <RevealHeading
           title="Ingest from 50+ sources into one normalized model"
-          description="Claims, clinical, pharmacy, and SDOH data—captured from any source, transformed into a single longitudinal record."
+          description="Claims, clinical, pharmacy, and SDOH data-captured from any source, transformed into a single longitudinal record."
         />
         <div className="flex flex-wrap justify-center gap-2 my-8">
           {(["CLAIMS DATA", "FLAT FILES", "SDOH SOURCES", "PHARMACY DATA", "LAB RESULTS", "EHR / HIE"] as const).map(
@@ -475,7 +475,7 @@ export default function IngestSection(): JSX.Element {
         </div>
         <RevealHeading
           title="Deliver clean data to every downstream initiative"
-          description="Analytics-ready and AI-ready output to every system in your stack—powering every payer initiative"
+          description="Analytics-ready and AI-ready output to every system in your stack-powering every payer initiative"
         />
       </div>
 

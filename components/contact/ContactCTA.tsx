@@ -23,7 +23,7 @@ export default function ContactCTA(): JSX.Element {
 
         {/* Description */}
         <p className="text-[17px] leading-[1.6] text-[#57534C] mt-8 max-w-[620px] mx-auto">
-           See how Health Chain can unify member data, automate CMS-0057-F compliance, and get you AI-ready—in weeks, not quarters. 
+           See how Health Chain can unify member data, automate CMS-0057-F compliance, and get you AI-ready-in weeks, not quarters. 
         </p>
 
         {/* Buttons */}

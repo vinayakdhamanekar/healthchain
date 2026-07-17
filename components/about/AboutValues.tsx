@@ -83,22 +83,22 @@ export default function AboutValues(): JSX.Element {
           </p>
         </div>
 
-        {/* ── Value 01 — col 2, row 1 ── */}
+        {/* ── Value 01 - col 2, row 1 ── */}
         <ValueCell
           value={VALUES[0]}
           className="border-b border-[#928b86]"
         />
 
-        {/* ── Value 02 — col 3, row 1 ── */}
+        {/* ── Value 02 - col 3, row 1 ── */}
         <ValueCell
           value={VALUES[1]}
           className="border-b border-[#928b86] md:border-l md:border-l-[#928b86]"
         />
 
-        {/* ── Value 03 — col 2, row 2 ── */}
+        {/* ── Value 03 - col 2, row 2 ── */}
         <ValueCell value={VALUES[2]} className="border-b md:border-b-0 border-[#928b86]" />
 
-        {/* ── Value 04 — col 3, row 2 ── */}
+        {/* ── Value 04 - col 3, row 2 ── */}
         <ValueCell
           value={VALUES[3]}
           className="md:border-l md:border-l-[#928b86]"

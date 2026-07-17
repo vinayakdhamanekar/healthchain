@@ -91,7 +91,7 @@ const FEATURES: Feature[] = [
   {
     icon: "/icons/Medical-Data-Clipboard-Cross--Streamline-Ultimate.svg",
     title: "One member, one record",
-    description: "Match the same member across every system—even when names, IDs, and addresses don't line up.",
+    description: "Match the same member across every system-even when names, IDs, and addresses don't line up.",
   },
   {
     icon: "/icons/Network-And-Content-Delivery--Streamline-Ultimate.svg",
@@ -116,7 +116,7 @@ const FEATURES: Feature[] = [
   {
     icon: "/icons/Help-Question-Network--Streamline-Ultimate.svg",
     title: "Ask in plain English",
-    description: "Business teams query in natural language with shared definitions baked in—so two teams pulling the same number get the same answer.",
+    description: "Business teams query in natural language with shared definitions baked in-so two teams pulling the same number get the same answer.",
   },
 ];
 

@@ -196,7 +196,7 @@ export default function MiddlewareSlot(): JSX.Element {
               activeCards[1] ? "text-[#34332C]" : "text-[#8A857A]"
             }`}
           >
-            Health Chain — the data readiness layer
+            Health Chain - the data readiness layer
           </h3>
           <div className="flex flex-col gap-[7px]">
             {CENTER_FEATURES.map((feature, index) => (

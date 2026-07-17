@@ -26,7 +26,7 @@ const SOLUTIONS: Solution[] = [
     categoryColorClass: "text-[#6E7A3A]",
     title: "Connect every system. Meet every mandate.",
     description:
-      "Automate FHIR, HL7, and X12 data exchange across your network with built-in compliance for TEFCA, CMS-0057-F, and state-level regulations—so you're ready for Jan 2027 deadlines.",
+      "Automate FHIR, HL7, and X12 data exchange across your network with built-in compliance for TEFCA, CMS-0057-F, and state-level regulations-so you're ready for Jan 2027 deadlines.",
     chips: ["FHIR R4", "HL7 / X12", "TEFCA", "CMS-0057-F"],
     chipClass: "bg-[#D2E3AC] text-[#51602F]",
   },
@@ -36,7 +36,7 @@ const SOLUTIONS: Solution[] = [
     categoryColorClass: "text-[#4346A0]",
     title: "From fragments to full member stories.",
     description:
-      "Aggregate clinical, claims, pharmacy, and SDOH data into a single longitudinal record—powering population health, risk adjustment, and care coordination at scale.",
+      "Aggregate clinical, claims, pharmacy, and SDOH data into a single longitudinal record-powering population health, risk adjustment, and care coordination at scale.",
     chips: ["Clinical", "Claims", "Pharmacy", "SDOH"],
     chipClass: "bg-[#CBCDF1] text-[#3C3E8C]",
   },
@@ -153,14 +153,14 @@ function PinnedSolutions(): JSX.Element {
 
   // Scroll distance (px) dedicated to EACH crossfade transition between two
   // panels. With N panels there are (N - 1) transitions, so the pin holds for
-  // TRANSITION_SCROLL * (N - 1) px total — same "GSAP pin reserves its own
+  // TRANSITION_SCROLL * (N - 1) px total - same "GSAP pin reserves its own
   // spacer" approach used in IngestSection, no manual height math needed.
   const TRANSITION_SCROLL = 700;
 
   useLayoutEffect(() => {
     const mm = gsap.matchMedia();
 
-    // Scoped to md+ only — mobile uses the separate whileInView list below.
+    // Scoped to md+ only - mobile uses the separate whileInView list below.
     mm.add("(min-width: 768px)", () => {
       const ctx = gsap.context(() => {
         const panels = panelRefs.current;
@@ -188,7 +188,7 @@ function PinnedSolutions(): JSX.Element {
         });
 
         // One crossfade per pair of adjacent panels, evenly spaced across the
-        // timeline (position `i` to `i + 1`) — outgoing panel fades down/out
+        // timeline (position `i` to `i + 1`) - outgoing panel fades down/out
         // while the incoming one fades up/in, at the same scroll position.
         for (let i = 0; i < totalTransitions; i++) {
           tl.to(panels[i], { opacity: 0, y: -24, duration: 1, ease: "power1.inOut" }, i);
@@ -205,7 +205,7 @@ function PinnedSolutions(): JSX.Element {
   return (
     // Grid stack: every panel occupies the same cell (grid-area 1/1) so they
     // overlap for the crossfade while the container sizes itself to the tallest
-    // panel — no `h-screen`, so no empty band above/below the content. `md:grid`
+    // panel - no `h-screen`, so no empty band above/below the content. `md:grid`
     // (not `md:block`) is what actually enables the stacking layout.
     <div ref={pinRef} className="hidden md:grid relative">
       {SOLUTIONS.map((solution, idx) => (
