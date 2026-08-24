@@ -106,12 +106,12 @@ const MANDATES: Mandate[] = [
   },
   {
     id: "cms-0057-f",
-    name: "CMS-0057-F",
+    name: "CMS - 0057 - F",
     position: 74,
     above: true,
     enforcementDate: "Jan 1, 2027",
     status: "upcoming",
-    ruleId: "CMS-0057-F",
+    ruleId: "CMS - 0057 - F",
     badge: "Enforcement coming",
     title: "Trusted exchange framework",
     description:
@@ -240,7 +240,7 @@ export default function MandatesTimeline(): JSX.Element {
             Mandates aren't slowing down.
           </h2>
           <p className="mt-4 text-[17px] leading-[1.65] text-[#57534C]">
-            TEFCA, CMS-0057-F, USCDI-new rules keep landing. Health Chain makes sure you're already covered.
+            TEFCA, CMS - 0057 - F, USCDI - new rules keep landing. Health Chain makes sure you're already covered.
           </p>
         </div>
 
@@ -255,7 +255,7 @@ export default function MandatesTimeline(): JSX.Element {
               className="shrink-0"
             />
             <span className="text-[13px] font-semibold tracking-[0.1em] uppercase text-[#1A1A1A]">
-              CMS-0057-F Enforcement In
+              CMS - 0057 - F Enforcement In
             </span>
           </div>
 

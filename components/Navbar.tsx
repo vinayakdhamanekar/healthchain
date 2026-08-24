@@ -71,7 +71,7 @@ const SOLUTIONS_ITEMS: DropdownItem[] = [
   {
     label: "Interoperability & Compliance",
     description: "A real compliance foundation.",
-    href: "/solutions",
+    href: "/interoperability-and-compliance",
     icon: IconTarget,
   },
   {
@@ -83,14 +83,14 @@ const SOLUTIONS_ITEMS: DropdownItem[] = [
   {
     label: "Benefit Design & Intelligence",
     description: "Design benefits with evidence, not guesswork.",
-    href: "/benefit-design-and-intelligence",
+    href: "/benefit-intelligence-and-design",
     icon: IconNetwork,
   }
 ];
 
 const NAV_LINKS: NavItemProps[] = [
-  { label: "Platform", href: "/hch-platform" },
-  { label: "Solutions", href: "/solutions", hasDropdown: true, dropdownItems: SOLUTIONS_ITEMS },
+  { label: "Platform", href: "/platform" },
+  { label: "Solutions", href: "/interoperability-and-compliance", hasDropdown: true, dropdownItems: SOLUTIONS_ITEMS },
   { label: "Resources", href: "#" },
   { label: "Company", href: "/about" },
 ];

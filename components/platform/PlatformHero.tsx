@@ -55,7 +55,7 @@ export default function PlatformHero(): JSX.Element {
               </span>
             </Link>
             <a
-              href="#"
+              href="/platform"
               className="inline-flex items-center bg-transparent border border-[#CFC7B8] text-[#34332C] text-[16px] py-[15px] px-7 rounded-[42px] hover:bg-white transition-colors duration-300"
             >
               Explore Platform

@@ -44,8 +44,8 @@ export default function LongitudinalHero(): JSX.Element {
           </span>
         </Link>
         <a
-          href="#"
-          className="inline-flex items-center bg-transparent border border-[#CFC7B8] text-[#fff] text-[16px] py-[15px] px-7 rounded-[42px] hover:bg-white transition-colors duration-300"
+          href="/platform"
+          className="inline-flex items-center bg-transparent border border-[#CFC7B8] text-[#fff] text-[16px] py-[15px] px-7 rounded-[42px] hover:bg-white hover:text-[#A8543C] transition-colors duration-300"
         >
           Explore Platform
         </a>

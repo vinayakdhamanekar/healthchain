@@ -18,20 +18,20 @@ interface TestimonialData {
 const TESTIMONIALS: TestimonialData[] = [
   {
     name: "Sarah L.",
-    title: "VP of Data & Analytics at Regional Blue Plan",
+    title: "VP of Data & Analytics at Integrated System",
     quote:
       "Health Chain took integrations that used to take 12–18 months and delivered them in days. We finally have a single source of truth for our member data.",
   },
   {
     name: "Michael T.",
-    title: "Director of IT at Coastal Health Network",
+    title: "Director of IT at Integrated System",
     quote:
       "What used to take a team of engineers months to map now happens automatically. Health Chain gave us back the time to focus on our members instead of our pipelines.",
     // TODO: placeholder testimonial — replace with real customer quote
   },
   {
     name: "Priya R.",
-    title: "Chief Medical Information Officer at Midwest Care Alliance",
+    title: "Chief Medical Information Officer at Mid Size Payer",
     quote:
       "We went from fragmented, siloed records to a longitudinal view of every member in weeks, not years. It's changed how our clinical teams make decisions.",
     // TODO: placeholder testimonial — replace with real customer quote

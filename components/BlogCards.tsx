@@ -9,7 +9,7 @@ interface BlogCard {
 const CARDS: BlogCard[] = [
   {
     category: "Regulatory Brief",
-    title: "CMS-0057-F: What payers need to know before Jan 2027.",
+    title: "CMS - 0057 - F: What payers need to know before Jan 2027.",
     description:
       "A practical breakdown of the new interoperability mandate and how to prepare your data infrastructure.",
   },

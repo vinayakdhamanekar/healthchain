@@ -15,7 +15,7 @@ const BADGES: Badge[] = [
     iconColor: "#6E7A3A",
   },
   {
-    code: "CMS-0057-F",
+    code: "CMS - 0057 - F",
     label: "Jan 2027 Ready",
     chipClass: "bg-[#E9C5BC] text-[#9C4A37]",
     iconColor: "#A8543C",
@@ -27,7 +27,7 @@ const BADGES: Badge[] = [
     iconColor: "#4346A0",
   },
   {
-    code: "VINCI",
+    code: "DA VINCI",
     label: "Certified Data Partner",
     chipClass: "bg-[#E9C5BC] text-[#9C4A37]",
     iconColor: "#A8543C",
@@ -69,12 +69,12 @@ function BadgePill({ badge }: { badge: Badge }): JSX.Element {
 export default function StatsBadges(): JSX.Element {
   return (
     <section className="bg-[#f7f3EF] border-y border-[#E5DECF]">
-  <div className="flex flex-col md:flex-row md:items-center md:justify-center px-7 md:px-7 py-6 gap-4 md:gap-10">
-    <div className="text-[16px] font-medium text-[#3A352E] md:pr-[38px] md:border-r md:border-[#E5DECF]">
+  <div className="flex flex-col md:flex-row md:items-center md:justify-center px-7 md:px-7 py-6 gap-3 md:gap-6">
+    <div className="text-[16px] font-medium text-[#3A352E] md:pr-[30px] md:border-r md:border-[#E5DECF]">
       Credentials
     </div>
 
-    <div className="flex flex-wrap items-center gap-x-7 gap-y-4">
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
       {BADGES.map((badge) => (
         <BadgePill key={badge.code} badge={badge} />
       ))}

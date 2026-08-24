@@ -43,7 +43,7 @@ const CARDS: APICard[] = [
     labelColor: "text-[#3A65A8]",
     title: "Payer-to-Payer",
     description:
-      "When members opt-in, their data automatically follows them when they switch plans.",
+      "When members opt-in, their data automatically flows with them when they switch plans.",
     chips: ["Member matching", "Full history transfer", "Asynchronous bulk handoff"],
     chipBg: "bg-[#E5EEF8]",
     chipText: "text-[#2E5CA0]",
@@ -127,7 +127,7 @@ export default function FiveAPIs(): JSX.Element {
     <section className="bg-[#F7F3EF] px-7 md:px-14 py-[42px]">
       {/* Section label */}
       <p className="text-[13px] font-bold tracking-[0.14em] uppercase text-[#A8543C] mb-4">
-        Full CMS-0057-F Compliance
+        Full CMS - 0057 - F Compliance
       </p>
 
       {/* Headline */}

@@ -29,8 +29,8 @@ const ROWS: SolutionRow[] = [
     categoryIcon: "/icons/Technology-Privacy-Consent-Profile-Browser-Shield--Streamline-Ultimate.svg",
     title: "Interoperability & Compliance",
     description:
-      "Automate FHIR, HL7, and X12 exchange across your network with built-in compliance for TEFCA, state mandates, and CMS-0057-F-ahead of Jan 2027 deadlines.",
-    chips: ["FHIR R4", "HL7 / X12", "TEFCA", "CMS-0057-F"],
+      "Automate FHIR, HL7, and X12 exchange across your network with built-in compliance for TEFCA, state mandates, and CMS - 0057 - F -ahead of Jan 2027 deadlines.",
+    chips: ["FHIR R4", "HL7 / X12", "TEFCA", "CMS - 0057 - F"],
     chipClass: "bg-[#D2E3AC] text-[#51602F]",
   },
   {

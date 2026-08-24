@@ -23,7 +23,7 @@ export default function PlatformCTA(): JSX.Element {
 
         {/* Description */}
         <p className="text-[17px] leading-[1.6] text-[#57534C] mt-8 max-w-[620px] mx-auto">
-          See how Health Chain can unify member data, automate CMS-0057-F compliance, and get you AI-ready-in weeks, not quarters.
+          See how Health Chain can unify member data, automate CMS - 0057 - F compliance, and get you AI-ready-in weeks, not quarters.
         </p>
 
         {/* Buttons */}
@@ -40,7 +40,7 @@ export default function PlatformCTA(): JSX.Element {
               </span>
             </Link>
             <a
-              href="#"
+              href="/platform"
               className="inline-flex items-center bg-transparent border border-[#CFC7B8] text-[#34332C] text-[16px] py-[15px] px-7 rounded-[42px] hover:bg-white transition-colors duration-300"
             >
               Explore Platform

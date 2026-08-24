@@ -67,7 +67,10 @@ function LayerSection({
   layer: Layer;
 }): JSX.Element {
   return (
-    <div className="mb-5">
+    <div
+      id={layer.label.toLowerCase()}
+      className="mb-5 scroll-mt-[100px]"
+    >
 
       <div className="grid lg:grid-cols-[340px_1fr] gap-10 items-start">
 

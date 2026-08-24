@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, type JSX } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,6 +18,7 @@ interface Solution {
   description: string;
   chips: string[];
   chipClass: string;
+  href: string; // <-- link target for this solution
 }
 
 const SOLUTIONS: Solution[] = [
@@ -26,9 +28,10 @@ const SOLUTIONS: Solution[] = [
     categoryColorClass: "text-[#6E7A3A]",
     title: "Connect every system. Meet every mandate.",
     description:
-      "Automate FHIR, HL7, and X12 data exchange across your network with built-in compliance for TEFCA, CMS-0057-F, and state-level regulations-so you're ready for Jan 2027 deadlines.",
-    chips: ["FHIR R4", "HL7 / X12", "TEFCA", "CMS-0057-F"],
+      "Automate FHIR, HL7, and X12 data exchange across your network with built-in compliance for TEFCA, CMS - 0057 - F, and state-level regulations-so you're ready for Jan 2027 deadlines.",
+    chips: ["FHIR R4", "HL7 / X12", "TEFCA", "CMS - 0057 - F"],
     chipClass: "bg-[#D2E3AC] text-[#51602F]",
+    href: "/interoperability-and-compliance",
   },
   {
     number: "02",
@@ -39,16 +42,18 @@ const SOLUTIONS: Solution[] = [
       "Aggregate clinical, claims, pharmacy, and SDOH data into a single longitudinal record-powering population health, risk adjustment, and care coordination at scale.",
     chips: ["Clinical", "Claims", "Pharmacy", "SDOH"],
     chipClass: "bg-[#CBCDF1] text-[#3C3E8C]",
+    href: "/longitudinal-data-enablement",
   },
   {
     number: "03",
-    category: "Benefit Design & Intelligence",
+    category: "Benefit Intelligence & Design ",
     categoryColorClass: "text-[#A8543C]",
     title: "Smarter benefits, powered by real data.",
     description:
       "Leverage real-world utilization patterns and outcomes data to design, price, and optimize benefit structures that reduce waste and improve member health outcomes.",
     chips: ["Utilization", "Outcomes", "Cost Modeling", "Optimization"],
     chipClass: "bg-[#E9C5BC] text-[#9C4A37]",
+    href: "/benefit-intelligence-and-design",
   },
 ];
 
@@ -90,12 +95,12 @@ function SolutionDesktopContent({
       </div>
 
       {/* Explore link */}
-      <a
-        href="#"
+      <Link
+        href={solution.href}
         className="inline-block text-[15px] text-[#34332C] no-underline whitespace-nowrap border-b border-dotted border-transparent hover:border-[#34332C] transition-all duration-300"
       >
         Explore →
-      </a>
+      </Link>
     </div>
   );
 }
@@ -115,12 +120,12 @@ function SolutionMobileContent({
         <div className="text-[48px] font-medium text-[#E3DCCD] leading-[0.8] tracking-[-0.02em]">
           {solution.number}
         </div>
-        <a
-          href="#"
+        <Link
+          href={solution.href}
           className="text-[15px] text-[#34332C] no-underline whitespace-nowrap hover:opacity-60 transition-opacity mt-1"
         >
           Explore →
-        </a>
+        </Link>
       </div>
       <div
         className={`font-mono text-[13px] tracking-[1.2px] uppercase mb-3 ${solution.categoryColorClass}`}
@@ -258,7 +263,7 @@ export default function Solutions(): JSX.Element {
           One partner. Every payer<br className="hidden md:block" /> initiative. Solved.
         </h2>
         <a
-          href="#"
+          href="/platform"
           className="self-start md:self-auto whitespace-nowrap inline-flex items-center bg-transparent border border-[#CFC7B8] text-[#34332C] text-[15px] py-[13px] px-6 rounded-[40px] hover:bg-black/5 transition-colors"
         >
           Explore Platform

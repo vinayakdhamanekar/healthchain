@@ -32,7 +32,7 @@ export default function ReadyCTA(): JSX.Element {
           </p>
 
           <a
-            href="#"
+            href="/contact"
             className="group inline-flex items-center gap-[14px] bg-[#A8543C] text-[#FBF9F4] text-[16px] font-medium py-[15px] pl-[26px] pr-[15px] rounded-[42px] transition-colors duration-300 mt-9 w-fit"
           >
             Request a Demo

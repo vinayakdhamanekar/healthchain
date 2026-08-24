@@ -36,7 +36,7 @@ const PARAGRAPHS: Para[] = [
     activeWeight: "font-normal",
   },
   {
-    text: "To build the data infrastructure that health systems run on-unifying clinical, financial, and regulatory data so the organizations responsible for care can operate with the speed and clarity that the people they serve deserve.",
+    text: "To build the data infrastructure that health systems run on - unifying clinical, financial, and regulatory data so the organizations responsible for care can operate with the speed and clarity that the people they serve deserve.",
     activeColor: "text-[#57534C]",
     activeWeight: "font-normal",
   },

@@ -15,10 +15,10 @@ const BADGES: Badge[] = [
     description: "Nationally recognized certification for health data aggregation quality, accuracy, and security standards.",
   },
   {
-    code: "VINCI",
+    code: "DA VINCI",
     label: "Certified Data Partner",
     chipClass: "bg-[#fff] text-[#3C3E8C]",
-    description: "Validated integration capabilities with the VA's VINCI research data ecosystem for clinical data exchange.",
+    description: "Validated integration capabilities with the VA's DA VINCI research data ecosystem for clinical data exchange.",
   },
   {
     code: "HIPAA",
@@ -27,7 +27,7 @@ const BADGES: Badge[] = [
     description: "End-to-end encryption, access controls, audit logging, and BAA coverage across all data handling processes.",
   },
   {
-    code: "CMS-0057-F",
+    code: "CMS - 0057 - F",
     label: "Jan 2027 Ready",
     chipClass: "bg-[#fff] text-[#3C3E8C]",
     description: "Pre-built compliance for the CMS Interoperability and Prior Authorization final rule-automated reporting and data exchange.",

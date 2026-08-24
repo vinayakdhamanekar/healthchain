@@ -182,7 +182,7 @@ healthchain-website/
 ### BlogCards.tsx ✅
 - Header: "Latest thinking." + "View All Resources →"
 - Three cards grid:
-  Card 1: Solution Brief (red) — CMS-0057-F article
+  Card 1: Solution Brief (red) — CMS - 0057 - F article
   Card 2: Case Study (green) — Regional Blue Plan story
   Card 3: Whitepaper (blue) — CTO guide
 - Each card: image placeholder, category, title,
@@ -220,10 +220,10 @@ healthchain-website/
 
 ## Pages
 - / → app/page.tsx (Home page) ✅ DONE
-- /hch-platform → app/hch-platform/page.tsx (Platform page) ⬜ IN PROGRESS
+- /platform → app/platform/page.tsx (Platform page) ⬜ IN PROGRESS
 
 ## HCH-Platform Page Notes
-- Design reference: design-reference/HCH-Platform.png
+- Design reference: design-reference/platform.png
 - No HTML reference for this page (image only)
 - Reuse existing Header (Navbar.tsx) and Footer.tsx — do not modify them
 - Reuse existing design tokens, button styles, card styles from Home page

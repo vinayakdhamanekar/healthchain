@@ -16,9 +16,9 @@ const COLUMNS: FooterColumn[] = [
   {
     heading: "PLATFORM",
      links: [
-      { label: "Capture", href: "#" },
-      { label: "Curate", href: "#" },
-      { label: "Consume", href: "#" },
+      { label: "Capture", href: "/platform#capture" },
+      { label: "Curate", href: "/platform#curate" },
+      { label: "Consume", href: "/platform#consume" },
     ],
   },
   {
@@ -26,15 +26,15 @@ const COLUMNS: FooterColumn[] = [
      links: [
       {
         label: "Interoperability & Compliance",
-        href: "/solutions",
+        href: "/interoperability-and-compliance",
       },
       {
         label: "Longitudinal Data Enablement",
         href: "/longitudinal-data-enablement",
       },
       {
-        label: "Benefit Design & Intelligence",
-        href: "/benefit-design-and-intelligence",
+        label: "Benefit Intelligence & Design",
+        href: "/benefit-intelligence-and-design",
       },
     ],
   },
