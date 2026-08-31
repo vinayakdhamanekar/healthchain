@@ -1,7 +1,17 @@
-import type { JSX } from "react";
+"use client";
+
+import { useEffect, useState, type JSX } from "react";
 import Link from "next/link";
 
 export default function CareersHero(): JSX.Element {
+  const [showNoPositions, setShowNoPositions] = useState(false);
+
+  useEffect(() => {
+    if (!showNoPositions) return;
+    const timer = setTimeout(() => setShowNoPositions(false), 6000);
+    return () => clearTimeout(timer);
+  }, [showNoPositions]);
+
   return (
     <>
     <section className="relative px-7 md:px-14 pt-[100px] md:pt-[110px] pb-[20px] bg-[#F7F3EF]">
@@ -43,14 +53,25 @@ export default function CareersHero(): JSX.Element {
               </p>
     
               <div className="flex flex-wrap gap-[14px] mt-[42px]">
-                
-                <a
-                  href="#"
+
+                <button
+                  type="button"
+                  onClick={() => setShowNoPositions(true)}
                   className="inline-flex items-center bg-transparent border border-[#CFC7B8] text-[#34332C] text-[16px] py-[15px] px-7 rounded-[42px] hover:bg-white transition-colors duration-300"
                 >
                   Explore Open Positions
-                </a>
+                </button>
               </div>
+
+              {showNoPositions && (
+                <p className="mt-4 text-[16px] text-[#57534C]">
+                  No open positions listed at this time. Check back soon, or{" "}
+                  <Link href="/contact" className="underline hover:opacity-70 transition-opacity">
+                    reach out
+                  </Link>{" "}
+                  and we&apos;ll keep you in mind.
+                </p>
+              )}
             </div>
           </div>
         </section>

@@ -141,7 +141,9 @@ const RESOURCES_ITEMS: DropdownItem[] = [
 const NAV_LINKS: NavItemProps[] = [
   { label: "Platform", href: "/platform" },
   { label: "Solutions", href: "/interoperability-and-compliance", hasDropdown: true, dropdownItems: SOLUTIONS_ITEMS },
-  { label: "Resources", href: "/resources", hasDropdown: true, dropdownItems: RESOURCES_ITEMS },
+  // { label: "Resources", href: "/resources", hasDropdown: true, dropdownItems: RESOURCES_ITEMS },
+  { label: "Resources", href: "/resources" },
+  
   { label: "Company", href: "/about" },
 ];
 
