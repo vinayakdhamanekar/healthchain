@@ -41,10 +41,10 @@ const COLUMNS: FooterColumn[] = [
   {
     heading: "RESOURCES",
      links: [
-      { label: "Regulatory Briefs", href: "#" },
-      { label: "Case Studies", href: "#" },
-      { label: "Whitepapers", href: "#" },
-      { label: "Documentation", href: "#" },
+      { label: "Regulatory Briefs", href: "/resources#regulatory-briefs" },
+      { label: "Case Studies", href: "/resources#case-studies" },
+      { label: "Whitepapers", href: "/resources#whitepapers" },
+      // { label: "Documentation", href: "#" },
     ],
   },
   {
@@ -57,7 +57,11 @@ const COLUMNS: FooterColumn[] = [
   },
 ];
 
-const LEGAL_LINKS = ["Privacy", "Terms", "Security"];
+const LEGAL_LINKS: FooterLink[] = [
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms-of-use" },
+  // { label: "Security", href: "#" },
+];
 
 function LinkColumn({ column }: { column: FooterColumn }): JSX.Element {
   return (
@@ -126,13 +130,13 @@ export default function Footer(): JSX.Element {
           </div>
           <div className="flex gap-[26px]">
             {LEGAL_LINKS.map((link) => (
-              <a
-                key={link}
-                href="#"
+              <Link
+                key={link.label}
+                href={link.href}
                 className="text-[15px] text-[#3A352E] no-underline hover:opacity-60 transition-opacity"
               >
-                {link}
-              </a>
+                {link.label}
+              </Link>
             ))}
           </div>
         </div>

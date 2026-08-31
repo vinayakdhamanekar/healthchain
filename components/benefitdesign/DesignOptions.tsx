@@ -12,62 +12,62 @@ interface Domain {
 const DOMAINS: Domain[] = [
   {
     number: "01",
-    title: "Cost share",
+    title: "Membership & Enrollment",
     items: [
-      "Copays & coinsurance",
-      "Deductibles",
-      "Out-of-pocket max",
-      "Tier shifts",
+      // "Copays & coinsurance",
+      // "Deductibles",
+      // "Out-of-pocket max",
+      // "Tier shifts",
     ],
   },
   {
     number: "02",
-    title: "Pharmacy",
+    title: "Claims",
     items: [
-       "Member identifiers",
-      "Eligibility history",
-      "PCP attribution",
-      "Address history",
+      //  "Member identifiers",
+      // "Eligibility history",
+      // "PCP attribution",
+      // "Address history",
     ],
   },
   {
     number: "03",
-    title: "Supplemental benefits",
+    title: "Risk Adjustment",
     items: [
-       "Member identifiers",
-      "Eligibility history",
-      "PCP attribution",
-      "Address history",
+      //  "Member identifiers",
+      // "Eligibility history",
+      // "PCP attribution",
+      // "Address history",
     ],
   },
   {
     number: "04",
-    title: "Network",
+    title: "Capitation",
     items: [
-       "Member identifiers",
-      "Eligibility history",
-      "PCP attribution",
-      "Address history",
+      //  "Member identifiers",
+      // "Eligibility history",
+      // "PCP attribution",
+      // "Address history",
     ],
   },
   {
     number: "05",
-    title: "Care & quality",
+    title: "General Ledger / Finance",
     items: [
-       "Member identifiers",
-      "Eligibility history",
-      "PCP attribution",
-      "Address history",
+      //  "Member identifiers",
+      // "Eligibility history",
+      // "PCP attribution",
+      // "Address history",
     ],
   },
   {
     number: "06",
-    title: "Member experience",
+    title: "Revenue",
     items: [
-       "Member identifiers",
-      "Eligibility history",
-      "PCP attribution",
-      "Address history",
+      //  "Member identifiers",
+      // "Eligibility history",
+      // "PCP attribution",
+      // "Address history",
     ],
   },
 ];
@@ -85,8 +85,8 @@ function DomainRow({
     <div className="border-b border-[#928b86] last:border-b-0">
       <button
         className="w-full flex items-center gap-4 py-5 text-left group focus:outline-none"
-        onClick={onToggle}
-        aria-expanded={isOpen}
+       // onClick={onToggle}
+        // aria-expanded={isOpen}
       >
         {/* Number */}
         <span className="text-[18px] font-semibold text-[#A8543C] w-7 shrink-0">

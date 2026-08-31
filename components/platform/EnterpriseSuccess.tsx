@@ -49,7 +49,7 @@ const ROWS: SolutionRow[] = [
     category: "Solution 03",
     categoryColorClass: "text-[#A8543C]",
     categoryIcon: "/icons/Analytics-Graph-Bar--Streamline-Ultimate.svg",
-    title: "Benefit design & intelligence",
+    title: "Benefit intelligence & design",
     description:
       "Run scenarios on your real member data so actuarial, product, and network can land every benefit decision with evidence.",
     chips: ["Utilization", "Outcomes", "Cost Modeling", "Optimization"],

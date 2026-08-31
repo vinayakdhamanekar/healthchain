@@ -3,7 +3,7 @@ import type { JSX } from "react";
 interface Benefit {
   iconColor: string;
   iconStroke: string;
-  // TODO: Replace title and description with real content
+  icon: string;
   title: string;
   description: string;
 }
@@ -12,54 +12,63 @@ const BENEFITS: Benefit[] = [
   {
     iconColor: "#FDECEA",
     iconStroke: "#C05A3A",
-    // TODO: Replace with real benefit title
-    title: "Lorem ipsum dolor sit amet.",
-    // TODO: Replace with real benefit description
+    icon: "/icons/Give-Medical--Streamline-Ultimate.svg",
+    title: "Comprehensive health coverage",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Ut felis eget praesent duis elit. Dolor sit aliquet orci orbi nullam pulvinar nec.",
+      "Medical, dental, and vision plans for you and your family, plus a wellness stipend to support your wellbeing outside of work.",
   },
   {
     iconColor: "#FEF3E8",
     iconStroke: "#C47820",
-    // TODO: Replace with real benefit title
-    title: "Lorem ipsum dolor sit amet.",
-    // TODO: Replace with real benefit description
+    icon: "/icons/Calendar--Streamline-Ultimate.svg",
+    title: "Flexible time off",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Ut felis eget praesent duis elit. Dolor sit aliquet orci orbi nullam pulvinar nec.",
+      "Take the time you need to rest and recharge with a flexible PTO policy, plus paid company holidays throughout the year.",
   },
   {
     iconColor: "#EAF0FD",
     iconStroke: "#3A62C0",
-    // TODO: Replace with real benefit title
-    title: "Lorem ipsum dolor sit amet.",
-    // TODO: Replace with real benefit description
+    icon: "/icons/Network-And-Content-Delivery--Streamline-Ultimate.svg",
+    title: "Remote-first culture",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Ut felis eget praesent duis elit. Dolor sit aliquet orci orbi nullam pulvinar nec.",
+      "Work from wherever you do your best work. We're a distributed team that comes together in person a few times a year.",
   },
   {
     iconColor: "#EAF5EC",
     iconStroke: "#3A8C50",
-    // TODO: Replace with real benefit title
-    title: "Lorem ipsum dolor sit amet.",
-    // TODO: Replace with real benefit description
+    icon: "/icons/Accounting-Calculator-1--Streamline-Ultimate.svg",
+    title: "Real equity and ownership",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Ut felis eget praesent duis elit. Dolor sit aliquet orci orbi nullam pulvinar nec.",
+      "Every employee holds equity in the company, because you should share in the value you help create.",
   },
 ];
 
-function BenefitIcon({ color, stroke }: { color: string; stroke: string }): JSX.Element {
+// SVG-as-CSS-mask: lets one monochrome icon file be recolored per card via
+// `backgroundColor`, instead of a browser painting the file's own colors.
+function BenefitIcon({ icon, color, stroke }: { icon: string; color: string; stroke: string }): JSX.Element {
   return (
     <div
       className="w-10 h-10 rounded-[8px] flex items-center justify-center mb-5 shrink-0"
       style={{ backgroundColor: color }}
     >
-      {/* TODO: Replace with real benefit icon SVG */}
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <rect x="3" y="3" width="6" height="6" rx="1" stroke={stroke} strokeWidth="1.5" />
-        <rect x="11" y="3" width="6" height="6" rx="1" stroke={stroke} strokeWidth="1.5" />
-        <rect x="3" y="11" width="6" height="6" rx="1" stroke={stroke} strokeWidth="1.5" />
-        <rect x="11" y="11" width="6" height="6" rx="1" stroke={stroke} strokeWidth="1.5" />
-      </svg>
+      <span
+        role="img"
+        aria-hidden="true"
+        style={{
+          display: "inline-block",
+          width: 20,
+          height: 20,
+          backgroundColor: stroke,
+          WebkitMaskImage: `url(${icon})`,
+          maskImage: `url(${icon})`,
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+        }}
+      />
     </div>
   );
 }
@@ -73,15 +82,13 @@ export default function CultureBenefits(): JSX.Element {
           Culture, Benefits
         </p>
 
-        {/* TODO: Replace with real headline */}
         <h2 className="text-[32px] md:text-[42px] font-semibold tracking-[-0.03em] leading-[1.08] text-[#1A1A1A] max-w-[640px] mb-5">
-          Lorem ipsum dolor sit amet consectetur.
+          Built by people who care about getting this right.
         </h2>
 
-        {/* TODO: Replace with real subtext */}
         <p className="text-[15px] md:text-[17px] leading-[1.72] text-[#6B6B6B] max-w-[580px]">
-          Lorem ipsum dolor sit amet consectetur. Ut felis eget praesent duis elit praesent
-          duis elit. Dolor sit aliquet orci orbi nullam pulvinar nec.
+          We're a small, senior team solving one of the hardest data problems in
+          healthcare. Here's what that comes with.
         </p>
       </div>
 
@@ -112,12 +119,10 @@ export default function CultureBenefits(): JSX.Element {
                 .filter(Boolean)
                 .join(" ")}
             >
-              <BenefitIcon color={benefit.iconColor} stroke={benefit.iconStroke} />
-              {/* TODO: Replace with real benefit title */}
+              <BenefitIcon icon={benefit.icon} color={benefit.iconColor} stroke={benefit.iconStroke} />
               <h3 className="text-[17px] font-semibold text-[#1A1A1A] leading-snug mb-3">
                 {benefit.title}
               </h3>
-              {/* TODO: Replace with real benefit description */}
               <p className="text-[14px] leading-[1.72] text-[#6B6B6B]">
                 {benefit.description}
               </p>

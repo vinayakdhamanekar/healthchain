@@ -1,9 +1,11 @@
 import type { JSX } from "react";
+import Link from "next/link";
 
 interface BlogCard {
   category: string;
   title: string;
   description: string;
+  href: string;
 }
 
 const CARDS: BlogCard[] = [
@@ -12,18 +14,21 @@ const CARDS: BlogCard[] = [
     title: "CMS - 0057 - F: What payers need to know before Jan 2027.",
     description:
       "A practical breakdown of the new interoperability mandate and how to prepare your data infrastructure.",
+    href: "/resources/cms-0057-f-payer-guide",
   },
   {
     category: "Case Study",
     title: "How a Regional Blue Plan unified member data in days.",
     description:
       "From 12-18 month integration timelines to production-ready pipelines-without rip-and-replace.",
+    href: "/resources/regional-blue-plan-unified-member-data",
   },
   {
     category: "Whitepaper",
     title: "The payer CTO's guide to data readiness",
     description:
       "Why clean longitudinal data is the foundation for AI, analytics, and value-based care.",
+    href: "/resources/payer-cto-guide-data-readiness",
   },
 ];
 
@@ -54,12 +59,12 @@ function Card({ card, idx }: { card: BlogCard; idx: number }): JSX.Element {
       </p>
 
       {/* Read more link */}
-      <a
-        href="#"
+      <Link
+        href={card.href}
         className="font-mono text-[13px] text-[#34332C] no-underline hover:opacity-60 transition-opacity"
       >
         Read More →
-      </a>
+      </Link>
     </div>
   );
 }
@@ -78,12 +83,12 @@ export default function BlogCards(): JSX.Element {
         <h2 className="text-[32px] md:text-[42px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#34332C]">
           Latest thinking.
         </h2>
-        <a
-          href="#"
+        <Link
+          href="/resources"
           className="self-start md:self-auto whitespace-nowrap inline-flex items-center bg-transparent border border-[#CFC7B8] text-[#34332C] text-[15px] py-[13px] px-6 rounded-[40px] hover:bg-black/5 transition-colors"
         >
           View All Resources
-        </a>
+        </Link>
       </div>
 
       {/* Cards grid */}

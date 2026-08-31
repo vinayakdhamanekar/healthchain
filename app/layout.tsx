@@ -4,6 +4,7 @@ import { Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
 
 import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
+import { SITE_URL, SITE_NAME } from "@/lib/seo";
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted",
@@ -18,8 +19,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Health Chain",
-  description: "The data readiness layer healthcare has been missing.",
+  metadataBase: new URL(SITE_URL),
+  title: "Health Chain | Payer Data Readiness Platform",
+  description:
+    "Health Chain captures, curates, and delivers clean longitudinal member data so payers can act on FHIR-ready data, not wrestle with it.",
+  keywords: [
+    "healthcare data interoperability",
+    "payer data integration",
+    "health plan data platform",
+    "longitudinal member data",
+    "FHIR data platform",
+  ],
+  openGraph: {
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
+    images: [{ url: "/hclogo.png", width: 1800, height: 500, alt: SITE_NAME }],
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

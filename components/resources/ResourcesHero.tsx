@@ -1,32 +1,30 @@
 import type { JSX } from "react";
 import Link from "next/link";
 
-export default function BenefitdesignHero(): JSX.Element {
+export default function ResourcesHero(): JSX.Element {
   return (
     <section
       className="relative px-7 md:px-14 pt-[60px] pb-[72px] text-center"
       style={{
-        backgroundImage: "url('/Patterns/pattern8.png')", // change filename
+        backgroundImage: "url('/Patterns/pattern8.png')",
         backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",       // or "contain"
+        backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       {/* Category breadcrumb */}
       <div className="mt-16 md:mt-16 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] font-semibold tracking-[0.1em] uppercase text-white mb-6">
-         <span>Solution</span>
-        <span className="text-[#fff]">→</span>
-        <span>Benefit Intelligence & Design</span>
+        <span></span>
       </div>
 
       {/* Headline */}
-      <h1 className="text-[38px] md:text-[56px] lg:text-[68px] max-w-[880px]  font-semibold tracking-[-0.03em] leading-[1.05] text-[#fff] mx-auto">
-        Design benefits with evidence, not guesswork.
+      <h1 className="text-[38px] md:text-[56px] lg:text-[68px] max-w-[900px] font-semibold tracking-[-0.03em] leading-[1.05] text-[#fff] mx-auto">
+        Insights for payers navigating data and compliance.
       </h1>
 
       {/* Subtext */}
       <p className="mt-6 text-[17px] md:text-[19px] leading-[1.6] text-[#fff] max-w-[700px] mx-auto">
-        MA and Medicaid bid windows are tight. Health Chain primes your member data for benefit design scenarios, so every decision is made with data-backed evidence.
+        Regulatory briefs, case studies, and whitepapers on building the data infrastructure health plans need to stay compliant, connected, and ready for what&apos;s next.
       </p>
 
       {/* CTA buttons */}

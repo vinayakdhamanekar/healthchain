@@ -17,7 +17,7 @@ type FormErrors = Partial<Record<keyof FormState, string>>;
 const AREAS_OF_INTEREST = [
   "Interoperability & Compliance",
   "Longitudinal Data Enablement",
-  "Benefit Design & Intelligence",
+  "Benefit Intelligence & Design",
   "Platform & Data Infrastructure",
   "Other",
 ];

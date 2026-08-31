@@ -49,6 +49,35 @@ function IconPulse(): JSX.Element {
   );
 }
 
+function IconDocument(): JSX.Element {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 2.5h9l4 4V21a1 1 0 01-1 1H6a1 1 0 01-1-1V3.5a1 1 0 011-1z" />
+      <path d="M15 2.5V6.5a1 1 0 001 1H20" />
+      <path d="M8.5 12.5h7M8.5 16h7" />
+    </svg>
+  );
+}
+
+function IconChartUp(): JSX.Element {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 20h16" />
+      <path d="M6.5 16l4-4.5 3 3 5.5-6.5" />
+      <path d="M15.5 8h3.5v3.5" />
+    </svg>
+  );
+}
+
+function IconBook(): JSX.Element {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 6.2C10.6 5 8.6 4.3 5.8 4.2A1 1 0 004.7 5.2v13.4c0 .6.5 1 1.1.9 2.6.1 4.5.8 6.2 2 1.7-1.2 3.6-1.9 6.2-2 .6 0 1.1-.4 1.1-1V5.2a1 1 0 00-1.1-1c-2.8.1-4.8.8-6.2 2z" />
+      <path d="M12 6.2V20.5" />
+    </svg>
+  );
+}
+
 /* ────────────────────────────────────────────────────────────────────────
    Data
 ──────────────────────────────────────────────────────────────────────── */
@@ -81,17 +110,38 @@ const SOLUTIONS_ITEMS: DropdownItem[] = [
     icon: IconStar,
   },
   {
-    label: "Benefit Design & Intelligence",
+    label: "Benefit Intelligence & Design ",
     description: "Design benefits with evidence, not guesswork.",
     href: "/benefit-intelligence-and-design",
     icon: IconNetwork,
   }
 ];
 
+const RESOURCES_ITEMS: DropdownItem[] = [
+  {
+    label: "Regulatory Briefs",
+    description: "Mandates and compliance deadlines, decoded.",
+    href: "/resources#regulatory-briefs",
+    icon: IconDocument,
+  },
+  {
+    label: "Case Studies",
+    description: "How payers put Health Chain to work.",
+    href: "/resources#case-studies",
+    icon: IconChartUp,
+  },
+  {
+    label: "Whitepapers",
+    description: "Frameworks for data readiness and integration.",
+    href: "/resources#whitepapers",
+    icon: IconBook,
+  },
+];
+
 const NAV_LINKS: NavItemProps[] = [
   { label: "Platform", href: "/platform" },
   { label: "Solutions", href: "/interoperability-and-compliance", hasDropdown: true, dropdownItems: SOLUTIONS_ITEMS },
-  { label: "Resources", href: "#" },
+  { label: "Resources", href: "/resources", hasDropdown: true, dropdownItems: RESOURCES_ITEMS },
   { label: "Company", href: "/about" },
 ];
 
