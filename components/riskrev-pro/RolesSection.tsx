@@ -11,31 +11,31 @@ const ROLES: RoleCard[] = [
   {
     role: "For the program leader",
     description:
-      "See the whole book of work at a glance: charts in, HCCs identified, codes accepted, RAF secured, and exactly which members still have open opportunity and no chart to back it up. No more waiting for a Friday spreadsheet — the number is live, every day.",
+      "See the whole book of work at a glance: charts in, HCCs identified, codes accepted, RAF secured, and exactly which members still have open opportunity and no chart to back it up. No more waiting for a Friday spreadsheet - the number is live, every day.",
     icon: "/icons/Analytics-Graph-Bar--Streamline-Ultimate.svg",
   },
   {
     role: "For the coding manager",
     description:
-      "Stop hand-assigning charts by gut feel. RiskRev Pro routes work automatically to the right coder based on provider coverage and workload, flags the members most worth working next, and shows you — in real time — who's fast, who's accurate, and where coaching will actually move the needle.",
+      "Stop hand-assigning charts by gut feel. RiskRev Pro routes work automatically to the right coder based on provider coverage and workload, flags the members most worth working next, and shows you - in real time - who's fast, who's accurate, and where coaching will actually move the needle.",
     icon: "/icons/Settings-Horizontal--Streamline-Ultimate.svg",
   },
   {
     role: "For the certified coder",
     description:
-      "Open a chart and RiskRev Pro has already read it. Every diagnosis comes with an AI-suggested code and the evidence behind it, side by side with what's already been billed or accepted by CMS, so you're never coding something that's already been paid. You review, confirm, or override — the final call is always yours, but you're never starting from a blank page again.",
+      "Open a chart and RiskRev Pro has already read it. Every diagnosis comes with an AI-suggested code and the evidence behind it, side by side with what's already been billed or accepted by CMS, so you're never coding something that's already been paid. You review, confirm, or override - the final call is always yours, but you're never starting from a blank page again.",
     icon: "/icons/Medical-Data-Clipboard-Cross--Streamline-Ultimate.svg",
   },
   {
     role: "For the QA reviewer",
     description:
-      "Every submitted chart flows through a clear, trackable review lane. You see agreement rates, overturn rates, and exactly which HCCs are getting reworked most — so quality isn't a gut feeling, it's a number you can defend.",
+      "Every submitted chart flows through a clear, trackable review lane. You see agreement rates, overturn rates, and exactly which HCCs are getting reworked most - so quality isn't a gut feeling, it's a number you can defend.",
     icon: "/icons/Certified-Ribbon--Streamline-Ultimate.svg",
   },
   {
     role: "For the RADV auditor / compliance lead",
     description:
-      "Nothing reaches a claim without a full paper trail behind it: where every diagnosis came from, who touched it, and when. When an auditor — internal or CMS — asks \"prove it,\" RiskRev Pro already has the answer built in, not bolted on after the fact.",
+      "Nothing reaches a claim without a full paper trail behind it: where every diagnosis came from, who touched it, and when. When an auditor - internal or CMS - asks \"prove it,\" RiskRev Pro already has the answer built in, not bolted on after the fact.",
     icon: "/icons/Shield-Unlock--Streamline-Ultimate.svg",
   },
 ];

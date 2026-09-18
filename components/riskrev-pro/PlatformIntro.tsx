@@ -19,7 +19,7 @@ export default function PlatformIntro(): JSX.Element {
           The moment a member roster lands, RiskRev Pro quietly does the
           unglamorous work that used to eat your team&apos;s week. It matches
           every member across rosters, claims, CMS return files, and
-          retrieved charts into a single longitudinal record — so instead of
+          retrieved charts into a single longitudinal record - so instead of
           eleven disconnected documents, your team sees one member with one
           clear picture: what&apos;s been captured, what CMS has accepted, and
           what&apos;s sitting on the table as pure, uncaptured RAF
@@ -29,7 +29,7 @@ export default function PlatformIntro(): JSX.Element {
           That distinction matters more than almost anything else in this
           business. RiskRev Pro doesn&apos;t just tell you &quot;here&apos;s a
           diagnosis.&quot; It tells you whether that diagnosis is already
-          paid or genuinely new revenue — separating restatement from real,
+          paid or genuinely new revenue - separating restatement from real,
           net-new lift, so your leadership can trust the number they&apos;re
           reporting up.
         </p>

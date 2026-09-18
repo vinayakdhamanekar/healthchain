@@ -9,7 +9,7 @@ export default function ClosingCTA(): JSX.Element {
       <div className="max-w-[820px] mx-auto text-center">
         {/* Pull statement */}
         <p className="text-[24px] md:text-[32px] font-semibold tracking-[-0.02em] leading-[1.3] text-[#34332C]">
-          Your members&apos; full risk picture is already out there — in
+          Your members&apos; full risk picture is already out there - in
           charts, claims, and CMS files that don&apos;t talk to each other
           yet.
         </p>

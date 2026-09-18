@@ -26,8 +26,8 @@ export default function ProblemSection(): JSX.Element {
         <p className="text-[15px] md:text-[17px] leading-[1.7] text-[#57534C]">
           RiskRev Pro was built by people who watched this happen and decided
           the fix wasn&apos;t &quot;hire more coders.&quot; The fix was giving
-          every person in the workflow — from the manager assigning work to
-          the auditor signing off — one shared, living picture of the member,
+          every person in the workflow - from the manager assigning work to
+          the auditor signing off - one shared, living picture of the member,
           so nothing gets recaptured twice, nothing gets missed, and nothing
           goes out the door unchecked.
         </p>

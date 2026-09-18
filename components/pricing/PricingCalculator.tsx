@@ -134,7 +134,7 @@ function EmailEstimateForm({
   if (status === "success") {
     return (
       <p className="text-[13.5px] font-medium text-green-700 text-center py-[14px]">
-        Sent — check your inbox for a copy of this estimate.
+        Sent - check your inbox for a copy of this estimate.
       </p>
     );
   }

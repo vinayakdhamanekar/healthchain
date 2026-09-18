@@ -19,14 +19,14 @@ const SERVICES: ScopedService[] = [
     icon: "/icons/Merge-Account--Streamline-Ultimate.svg",
   },
   {
-    title: "Benefit Intelligence and Design — Medicare Advantage",
+    title: "Benefit Intelligence and Design - Medicare Advantage",
     description: "Financial proof, scoped to one contract or region.",
     timeline: "4 to 6 weeks",
     href: "/benefit-intelligence-and-design",
     icon: "/icons/Accounting-Calculator-1--Streamline-Ultimate.svg",
   },
   {
-    title: "Benefit Intelligence and Design — Medicaid",
+    title: "Benefit Intelligence and Design - Medicaid",
     description: "Forecasting proof, scoped to one state and population.",
     timeline: "4 to 6 weeks",
     href: "/benefit-intelligence-and-design",

@@ -28,7 +28,7 @@ export default function RiskRevProHero(): JSX.Element {
       <p className="mt-6 text-[17px] md:text-[19px] leading-[1.6] text-white max-w-[720px] mx-auto">
         RiskRev Pro is the risk adjustment platform that turns scattered
         charts, claims, and CMS files into confirmed, submission-ready
-        diagnoses — automatically matched, AI-coded, and quality-checked
+        diagnoses - automatically matched, AI-coded, and quality-checked
         before a human ever has to chase a record again.
       </p>
 

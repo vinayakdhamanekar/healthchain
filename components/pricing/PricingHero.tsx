@@ -8,7 +8,7 @@ interface Note {
 const NOTES: Note[] = [
   {
     label: "APIs included",
-    text: "All four APIs due 1 January 2027 — Patient Access, Provider Access, Payer-to-Payer, and Prior Authorization — plus Provider Directory.",
+    text: "All four APIs due 1 January 2027 - Patient Access, Provider Access, Payer-to-Payer, and Prior Authorization - plus Provider Directory.",
   },
   {
     label: "Onboarding",

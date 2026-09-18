@@ -116,14 +116,14 @@ export function calculateEstimate(
 
   if (directConnectivity) {
     lineItems.push({
-      label: "Direct connectivity — base",
+      label: "Direct connectivity - base",
       detail: "One claims source plus one clinical or EMR source",
       amount: PRICING.connectivity.baseSetup,
       cadence: "one-time",
     });
     if (additionalConnectivityInstances > 0) {
       lineItems.push({
-        label: "Direct connectivity — additional instances",
+        label: "Direct connectivity - additional instances",
         detail: `${additionalConnectivityInstances} additional provider-specific clinical source instance${
           additionalConnectivityInstances > 1 ? "s" : ""
         }`,

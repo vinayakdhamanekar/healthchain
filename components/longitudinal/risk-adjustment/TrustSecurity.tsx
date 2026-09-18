@@ -32,14 +32,23 @@ const BADGES: TrustBadge[] = [
     linkHref: "/contact?interest=platform",
   },
   {
-    code: "CMS-0057-F",
-    label: "Jan 2027 Ready",
-    title: "Built for the four January 2027 APIs",
-    chips: ["Patient Access", "Provider Access", "Payer-to-Payer", "Prior Authorization"],
-    description: "Provider Directory supported under the existing requirement.",
-    linkLabel: "See the detail →",
-    linkHref: "/interoperability-and-compliance#applicability",
+    code: "Gartner",
+    label: "Peer Insights",
+    title: "Turning Data into Measurable Quality",
+    description: "Health Data Management - Now Listed on Gartner Marketplace.",
+    linkLabel: "Checkout Here →",
+    linkHref: "https://www.gartner.com/reviews/product/centaur-data-platform?marketSeoName=health-data-management-platforms",
+    external: true,
   },
+  // {
+  //   code: "CMS-0057-F",
+  //   label: "Jan 2027 Ready",
+  //   title: "Built for the four January 2027 APIs",
+  //   chips: ["Patient Access", "Provider Access", "Payer-to-Payer", "Prior Authorization"],
+  //   description: "Provider Directory supported under the existing requirement.",
+  //   linkLabel: "See the detail →",
+  //   linkHref: "/interoperability-and-compliance#applicability",
+  // },
 ];
 
 export default function TrustSecurity(): JSX.Element {

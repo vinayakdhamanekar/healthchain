@@ -11,25 +11,25 @@ const FEATURES: FeatureCard[] = [
   {
     title: "Never pay to retrieve what you already have.",
     description:
-      "Before your team requests a single record, RiskRev Pro checks what's already on file and tells you, in dollars, whether pulling a new chart is even worth it. Retrieval spend goes toward records you actually need — not duplicates.",
+      "Before your team requests a single record, RiskRev Pro checks what's already on file and tells you, in dollars, whether pulling a new chart is even worth it. Retrieval spend goes toward records you actually need - not duplicates.",
     icon: "/icons/Accounting-Calculator-1--Streamline-Ultimate.svg",
   },
   {
     title: "AI that codes like your best coder, at the speed of software.",
     description:
-      "Every chart gets read, coded, and scored automatically the moment it lands. Your coders spend their time confirming and refining — not typing from scratch.",
+      "Every chart gets read, coded, and scored automatically the moment it lands. Your coders spend their time confirming and refining - not typing from scratch.",
     icon: "/icons/Ai-Chip-Spark--Streamline-Ultimate.svg",
   },
   {
     title: "A safety net with more than one layer.",
     description:
-      "Coding, quality review, and final audit aren't three separate systems bolted together — they're one continuous chain of custody, and you decide how tight to make it: review everything, sample randomly, or target only the highest-risk charts.",
+      "Coding, quality review, and final audit aren't three separate systems bolted together - they're one continuous chain of custody, and you decide how tight to make it: review everything, sample randomly, or target only the highest-risk charts.",
     icon: "/icons/Technology-Privacy-Consent-Profile-Browser-Shield--Streamline-Ultimate.svg",
   },
   {
     title: "Submission-ready, not just \"coded.\"",
     description:
-      "When a chart is confirmed, RiskRev Pro prepares it for submission and tracks it all the way through acknowledgment — accepted, rejected, or resubmitted — so nothing quietly falls off a list.",
+      "When a chart is confirmed, RiskRev Pro prepares it for submission and tracks it all the way through acknowledgment - accepted, rejected, or resubmitted - so nothing quietly falls off a list.",
     icon: "/icons/Medical-File--Streamline-Ultimate.svg",
   },
   {

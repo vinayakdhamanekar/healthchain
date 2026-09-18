@@ -16,7 +16,7 @@ import RiskRevFAQ from "@/components/longitudinal/risk-adjustment/RiskRevFAQ";
 import RiskRevCTA from "@/components/longitudinal/risk-adjustment/RiskRevCTA";
 
 export const metadata: Metadata = pageMetadata({
-  title: "RiskRev Pro — Risk Adjustment",
+  title: "RiskRev Pro - Risk Adjustment",
   description:
     "AI assisted risk adjustment coding built on the longitudinal member record. Coders review chart evidence beside CMS-credited MAO-004 diagnoses. Now onboarding Medicare Advantage design partners.",
   path: "/longitudinal-data-enablement/risk-adjustment",
@@ -39,7 +39,7 @@ export default function RiskAdjustmentPage(): JSX.Element {
         <WhatCoderSees />
         <Workflow />
         <Evidence />
-        <Roadmap />
+        {/* <Roadmap /> */}
         <WhyNow />
         <DesignPartnership />
         <TrustSecurity />

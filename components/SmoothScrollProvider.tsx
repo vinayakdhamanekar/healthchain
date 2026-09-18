@@ -21,7 +21,7 @@ function resolveOffset(target: Element): number {
 }
 
 /**
- * Mount this ONCE, wrapping the page content in app/layout.tsx — not inside
+ * Mount this ONCE, wrapping the page content in app/layout.tsx - not inside
  * individual sections. Lenis hijacks the browser's native scroll globally; if
  * more than one component on the same page creates its own Lenis instance,
  * they fight each other and scrolling gets WORSE, not smoother (stutter,
@@ -44,7 +44,7 @@ function resolveOffset(target: Element): number {
  *   }
  *
  * If any individual section (e.g. an earlier version of IngestSection) still
- * creates its own `new Lenis(...)`, remove that — this provider replaces it.
+ * creates its own `new Lenis(...)`, remove that - this provider replaces it.
  */
 export default function SmoothScrollProvider({ children }: { children: ReactNode }): JSX.Element {
   const lenisRef = useRef<Lenis | null>(null);
@@ -70,7 +70,7 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
     };
   }, []);
 
-  // Lenis owns scroll position independently of the browser — it re-asserts
+  // Lenis owns scroll position independently of the browser - it re-asserts
   // its own animatedScroll value on every raf tick, which silently undoes a
   // plain window.scrollTo() (or the browser's native hash-jump) on the very
   // next frame. Every scroll reset on route change has to go through
@@ -97,7 +97,7 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
     isFirstRender.current = false;
 
     if (firstRender) {
-      // page loaded directly on a URL with a hash — jump straight there,
+      // page loaded directly on a URL with a hash - jump straight there,
       // no animation, so it doesn't visibly scroll from top on refresh
       if (window.location.hash) scrollToHash(window.location.hash, true);
       return;
@@ -113,7 +113,7 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
   // Smooth-scroll same-page anchor clicks (href="#id" or "/current-path#id")
   // through Lenis instead of the browser's instant native jump. Cross-page
   // anchor links (e.g. "/resources#whitepapers" clicked from another page)
-  // are left to Next's normal navigation — the pathname effect above picks
+  // are left to Next's normal navigation - the pathname effect above picks
   // up the hash once the destination page has mounted. Runs in the capture
   // phase so it fires before Next's own Link click handler.
   useEffect(() => {

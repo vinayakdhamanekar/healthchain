@@ -14,7 +14,7 @@ import ClosingCTA from "@/components/riskrev-pro/ClosingCTA";
 export const metadata: Metadata = pageMetadata({
   title: "RiskRev Pro",
   description:
-    "RiskRev Pro turns scattered charts, claims, and CMS files into confirmed, submission-ready diagnoses — automatically matched, AI-coded, and quality-checked before a human ever has to chase a record again.",
+    "RiskRev Pro turns scattered charts, claims, and CMS files into confirmed, submission-ready diagnoses - automatically matched, AI-coded, and quality-checked before a human ever has to chase a record again.",
   path: "/riskrev-pro",
   keywords: [
     "risk adjustment platform",
