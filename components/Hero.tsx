@@ -46,7 +46,7 @@ export default function Hero(): JSX.Element {
         <div className="relative hidden md:block self-start w-full max-w-[440px] ml-auto">
 
           {/*
-           * LAYER 1 — Pattern image (furthest back).
+           * LAYER 1 —  Pattern image (furthest back).
            * -top-[110px] cancels the section's md:pt-[110px] so this layer
            * starts flush with the top of the page, behind the fixed Navbar,
            * matching the design where the striped pattern peeks out above
