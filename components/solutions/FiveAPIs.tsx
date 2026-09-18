@@ -124,7 +124,7 @@ function CardContent({ card }: { card: APICard }): JSX.Element {
 
 export default function FiveAPIs(): JSX.Element {
   return (
-    <section className="bg-[#F7F3EF] px-7 md:px-14 py-[42px]">
+    <section id="applicability" className="bg-[#F7F3EF] px-7 md:px-14 py-[42px] scroll-mt-24">
       {/* Section label */}
       <p className="text-[13px] font-bold tracking-[0.14em] uppercase text-[#A8543C] mb-4">
         Full CMS - 0057 - F Compliance

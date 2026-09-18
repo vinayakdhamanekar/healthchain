@@ -14,60 +14,61 @@ const DOMAINS: Domain[] = [
     number: "01",
     title: "Membership & Enrollment",
     items: [
-      // "Copays & coinsurance",
-      // "Deductibles",
-      // "Out-of-pocket max",
-      // "Tier shifts",
+      "Enrollment/disenrollment transaction accept-reject status (DTRR/TRR)",
+      "LIS/LEP subsidy level per member",
+      "Per-member prospective risk score (MMR)",
+      "Per-member prospective payment amount (MMR)",
+     
     ],
   },
   {
     number: "02",
     title: "Claims",
     items: [
-      //  "Member identifiers",
-      // "Eligibility history",
-      // "PCP attribution",
-      // "Address history",
+        "Adjudicated claim line paid amount",
+        "Professional vs. institutional claim type",
+        "Internal delivery cost / internal pricing allocation",
+        "Supplemental benefit expense category",
     ],
   },
   {
     number: "03",
     title: "Risk Adjustment",
     items: [
-      //  "Member identifiers",
-      // "Eligibility history",
-      // "PCP attribution",
-      // "Address history",
+          "Member HCC (Hierarchical Condition Category) code",
+          "Part C model risk score",
+          "RxHCC (Part D) model risk score",
+          "Risk-adjustment-eligible diagnosis flag",
     ],
   },
   {
     number: "04",
     title: "Capitation",
     items: [
-      //  "Member identifiers",
-      // "Eligibility history",
-      // "PCP attribution",
-      // "Address history",
+          "Capitation payment amount by contract/population",
+          "Delegated payment category",
+          "Contract/population grain identifier",
+          "Capitation & delegated medical expense classification",
     ],
   },
   {
     number: "05",
     title: "General Ledger / Finance",
     items: [
-      //  "Member identifiers",
-      // "Eligibility history",
-      // "PCP attribution",
-      // "Address history",
+          "Budget vs. actual variance by category/period",
+          "GL account / cost-centre code",
+          "Provider settlement & withhold amount",
+          "Legal-entity level expense total",
     ],
   },
   {
     number: "06",
     title: "Revenue",
     items: [
-      //  "Member identifiers",
-      // "Eligibility history",
-      // "PCP attribution",
-      // "Address history",
+       "Contract-level CMS payment summary",
+        "Member payment reconciliation to MMR",
+        "Booked revenue accrual amount",
+        "Plan-to-CMS payment variance",
     ],
   },
 ];
@@ -85,8 +86,8 @@ function DomainRow({
     <div className="border-b border-[#928b86] last:border-b-0">
       <button
         className="w-full flex items-center gap-4 py-5 text-left group focus:outline-none"
-       // onClick={onToggle}
-        // aria-expanded={isOpen}
+       onClick={onToggle}
+        aria-expanded={isOpen}
       >
         {/* Number */}
         <span className="text-[18px] font-semibold text-[#A8543C] w-7 shrink-0">
@@ -120,9 +121,9 @@ function DomainRow({
       {isOpen && (
         <div className="pl-11 pb-5 grid grid-cols-2 gap-x-6 gap-y-2">
           {domain.items.map((item) => (
-            <div key={item} className="flex items-center gap-2">
+            <div key={item} className="flex items-baseline  gap-2">
               <span className="w-1 h-1 rounded-full bg-[#C05A3A] shrink-0" />
-              <span className="text-[13px] text-[#57534C]">{item}</span>
+              <span className="text-[13px] text-left text-[#57534C]">{item}</span>
             </div>
           ))}
         </div>

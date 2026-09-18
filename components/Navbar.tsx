@@ -30,6 +30,16 @@ function IconStar(): JSX.Element {
   );
 }
 
+function IconClipboardCheck(): JSX.Element {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8.5 3.5h7a1 1 0 011 1V6h1.5a1 1 0 011 1v13a1 1 0 01-1 1H6a1 1 0 01-1-1V7a1 1 0 011-1h1.5V4.5a1 1 0 011-1z" />
+      <path d="M9 6.5h6" />
+      <path d="M8.5 13l2.2 2.2L15.5 11" />
+    </svg>
+  );
+}
+
 function IconNetwork(): JSX.Element {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -110,6 +120,12 @@ const SOLUTIONS_ITEMS: DropdownItem[] = [
     icon: IconStar,
   },
   {
+    label: "RiskRev Pro",
+    description: "AI assisted risk adjustment coding, evidence included.",
+    href: "/longitudinal-data-enablement/risk-adjustment",
+    icon: IconClipboardCheck,
+  },
+  {
     label: "Benefit Intelligence & Design ",
     description: "Design benefits with evidence, not guesswork.",
     href: "/benefit-intelligence-and-design",
@@ -143,7 +159,7 @@ const NAV_LINKS: NavItemProps[] = [
   { label: "Solutions", href: "/interoperability-and-compliance", hasDropdown: true, dropdownItems: SOLUTIONS_ITEMS },
   // { label: "Resources", href: "/resources", hasDropdown: true, dropdownItems: RESOURCES_ITEMS },
   { label: "Resources", href: "/resources" },
-  
+  { label: "Pricing", href: "/pricing" },
   { label: "Company", href: "/about" },
 ];
 

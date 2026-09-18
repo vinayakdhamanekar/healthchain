@@ -19,6 +19,7 @@ const COLUMNS: FooterColumn[] = [
       { label: "Capture", href: "/platform#capture" },
       { label: "Curate", href: "/platform#curate" },
       { label: "Consume", href: "/platform#consume" },
+      { label: "Pricing", href: "/pricing" },
     ],
   },
   {
@@ -31,6 +32,10 @@ const COLUMNS: FooterColumn[] = [
       {
         label: "Longitudinal Data Enablement",
         href: "/longitudinal-data-enablement",
+      },
+      {
+        label: "RiskRev Pro",
+        href: "/longitudinal-data-enablement/risk-adjustment",
       },
       {
         label: "Benefit Intelligence & Design",

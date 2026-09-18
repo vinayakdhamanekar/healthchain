@@ -13,11 +13,11 @@ export default function ContactCTA(): JSX.Element {
           </span>
 
           <span className="inline-block bg-[#F1D9D1] text-[#AE5740] px-[18px] pb-[6px] rounded-[10px] text-[36px] md:text-[51px] font-semibold tracking-[-0.03em]">
-            your data
+            join
           </span>
 
           <span className="text-[36px] md:text-[51px] font-semibold tracking-[-0.03em] text-[#34332C]">
-            {" "}work?
+            {" "}the team?
           </span>
         </div>
 
