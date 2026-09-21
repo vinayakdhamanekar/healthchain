@@ -40,13 +40,13 @@ const LEADERS: Leader[] = [
   //   linkedin: "https://www.linkedin.com/in/scott-rich-a420052/",
   //   image: "/team/ScottRich.jpg",
   // },
-  {
-    name: "Nikita Ravindran",
-    title: "Vice President of Product",
-    bio: "Leads product strategy and execution across the Health Chain platform.",
-    linkedin: "https://www.linkedin.com/in/nikita-ravi/",
-   image: "/team/nikitar.jpg",
-  },
+  // {
+  //   name: "Nikita Ravindran",
+  //   title: "Vice President of Product",
+  //   bio: "Leads product strategy and execution across the Health Chain platform.",
+  //   linkedin: "https://www.linkedin.com/in/nikita-ravi/",
+  //  image: "/team/nikitar.jpg",
+  // },
   {
     name: "Mason Burr",
     title: "Vice President of Strategic Accounts",
