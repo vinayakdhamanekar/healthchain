@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PricingHero from "@/components/pricing/PricingHero";
+// import PricingHero from "@/components/pricing/PricingHero";
 import PricingCalculator from "@/components/pricing/PricingCalculator";
 import ScopedServices from "@/components/pricing/ScopedServices";
 import PricingFAQ from "@/components/pricing/PricingFAQ";
@@ -28,7 +28,7 @@ export default function PricingPage(): JSX.Element {
     <div className="min-h-screen bg-[#F7F3EF]">
       <div className="max-w-[1280px] mx-auto border-x border-[#E5DECF] bg-[#F4EFE8]">
         <Navbar />
-        <PricingHero />
+        {/* <PricingHero /> */}
         <PricingCalculator />
         <ScopedServices />
         <PricingFAQ />

@@ -5,9 +5,9 @@ interface PricingEstimatePayload {
   email: string;
   payerType: string;
   members: number;
-  effectivePMPM: number;
+  effectivePMPM: number | null;
   recurringAnnual: number;
-  connectivityOneTime: number;
+  connectivityAnnual: number;
 }
 
 const SALES_EMAIL = "vinayakd@healthchain.com";
@@ -30,7 +30,6 @@ export async function POST(req: Request) {
     }
 
     const payerLabel = PAYER_LABELS[data.payerType] ?? data.payerType;
-    const totalFirstYear = data.recurringAnnual + data.connectivityOneTime;
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -42,13 +41,17 @@ export async function POST(req: Request) {
       },
     });
 
+    const pmpmText =
+      data.effectivePMPM === null ? "Fixed (annual minimum through 10,000 members)" : data.effectivePMPM.toFixed(3);
+
     const summaryText = [
       `Payer type: ${payerLabel}`,
       `Covered members: ${data.members.toLocaleString()}`,
-      `Effective PMPM: ${data.effectivePMPM.toFixed(3)}`,
-      `Annual recurring: ${formatCurrency(data.recurringAnnual)}`,
-      `Direct connectivity (one-time): ${formatCurrency(data.connectivityOneTime)}`,
-      `Total first-year investment: ${formatCurrency(totalFirstYear)}`,
+      `Effective PMPM: ${pmpmText}`,
+      `Annual recurring (total): ${formatCurrency(data.recurringAnnual)}`,
+      ...(data.connectivityAnnual > 0
+        ? [`Includes direct connectivity (annual): ${formatCurrency(data.connectivityAnnual)}`]
+        : []),
     ].join("\n");
 
     await transporter.sendMail({
@@ -67,10 +70,13 @@ export async function POST(req: Request) {
         <h2>Your Health Chain interoperability pricing estimate</h2>
         <p><strong>Payer type:</strong> ${payerLabel}</p>
         <p><strong>Covered members:</strong> ${data.members.toLocaleString()}</p>
-        <p><strong>Effective PMPM:</strong> ${data.effectivePMPM.toFixed(3)}</p>
-        <p><strong>Annual recurring:</strong> ${formatCurrency(data.recurringAnnual)}</p>
-        <p><strong>Direct connectivity (one-time):</strong> ${formatCurrency(data.connectivityOneTime)}</p>
-        <p><strong>Total first-year investment:</strong> ${formatCurrency(totalFirstYear)}</p>
+        <p><strong>Effective PMPM:</strong> ${pmpmText}</p>
+        <p><strong>Annual recurring (total):</strong> ${formatCurrency(data.recurringAnnual)}</p>
+        ${
+          data.connectivityAnnual > 0
+            ? `<p><strong>Includes direct connectivity (annual):</strong> ${formatCurrency(data.connectivityAnnual)}</p>`
+            : ""
+        }
         <p style="color:#57534C;font-size:13px;margin-top:24px;">This estimate reflects the selected scope and stated pricing assumptions. Final scope, source readiness, service limits and contract terms are confirmed in your proposal.</p>
       `,
     });

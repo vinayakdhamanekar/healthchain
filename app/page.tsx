@@ -4,6 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import StatsBadges from "@/components/StatsBadges";
+import TrustedCredentials from "@/components/TrustedCredentials";
 import IngestSection from "@/components/IngestSection";
 import PlatformSteps from "@/components/PlatformSteps";
 import StatsBanner from "@/components/StatsBanner";
@@ -35,6 +36,7 @@ export default function Home(): JSX.Element {
         <Navbar />
         <Hero />
         <StatsBadges />
+        <TrustedCredentials />
         <IngestSection />
         <PlatformSteps />
         <StatsBanner />

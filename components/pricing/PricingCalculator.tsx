@@ -6,11 +6,15 @@ import Link from "next/link";
 import {
   PAYER_TYPES,
   DATA_PREP_OPTIONS,
+  CLINICAL_SOURCES,
+  EMPTY_ADDITIONAL_INSTANCES,
   PRICING,
   calculateEstimate,
   formatCurrency,
   type PayerType,
   type DataPrepSelection,
+  type ClinicalSource,
+  type AdditionalInstances,
 } from "@/lib/pricing";
 
 const DEFAULT_MEMBERS = 10000;
@@ -75,9 +79,10 @@ function Checkbox({
 interface EmailEstimateFormProps {
   members: number;
   payerType: PayerType;
-  effectivePMPM: number;
+  effectivePMPM: number | null;
   recurringAnnual: number;
-  connectivityOneTime: number;
+  connectivityAnnual: number;
+  disabled?: boolean;
 }
 
 function EmailEstimateForm({
@@ -85,7 +90,8 @@ function EmailEstimateForm({
   payerType,
   effectivePMPM,
   recurringAnnual,
-  connectivityOneTime,
+  connectivityAnnual,
+  disabled,
 }: EmailEstimateFormProps): JSX.Element {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -106,7 +112,7 @@ function EmailEstimateForm({
           members,
           effectivePMPM,
           recurringAnnual,
-          connectivityOneTime,
+          connectivityAnnual,
         }),
       });
       if (!res.ok) throw new Error("Request failed");
@@ -121,7 +127,8 @@ function EmailEstimateForm({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group w-full inline-flex items-center justify-center gap-[14px] bg-[#A8543C] text-white text-[15px] font-medium py-[14px] pl-[24px] pr-[14px] rounded-[42px] transition-colors duration-300 hover:bg-[#97492F]"
+        disabled={disabled}
+        className="group w-full inline-flex items-center justify-center gap-[14px] bg-[#A8543C] text-white text-[15px] font-medium py-[14px] pl-[24px] pr-[14px] rounded-[42px] transition-colors duration-300 hover:bg-[#97492F] disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Email my estimate
         <span className="w-[36px] h-[28px] rounded-full border border-white/40 inline-flex items-center justify-center text-[13px] shrink-0 transition-all duration-300 group-hover:bg-white group-hover:text-[#A8543C]">
@@ -174,14 +181,20 @@ export default function PricingCalculator(): JSX.Element {
     matchIdentities: false,
   });
   const [directConnectivity, setDirectConnectivity] = useState(false);
-  const [additionalInstances, setAdditionalInstances] = useState(0);
+  const [includedClinicalSource, setIncludedClinicalSource] = useState<ClinicalSource | "">("");
+  const [additionalInstances, setAdditionalInstances] = useState<AdditionalInstances>(EMPTY_ADDITIONAL_INSTANCES);
 
   const estimate = useMemo(
-    () => calculateEstimate(members, dataPrep, directConnectivity, additionalInstances),
+    () =>
+      calculateEstimate(members, dataPrep, {
+        enabled: directConnectivity,
+        additionalInstances,
+      }),
     [members, dataPrep, directConnectivity, additionalInstances]
   );
 
   const payerLabel = PAYER_TYPES.find((p) => p.value === payerType)?.label ?? "";
+  const connectivityRequiresSource = directConnectivity && !includedClinicalSource;
 
   const handleMembersInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
@@ -189,17 +202,25 @@ export default function PricingCalculator(): JSX.Element {
     setMembers(value);
   };
 
-  const handleMembersBlur = () => {
-    const clamped = Math.min(Math.max(members, PRICING.memberRange.min), PRICING.memberRange.max);
-    setMembers(clamped);
-  };
-
   const toggleDataPrep = (key: keyof DataPrepSelection) => {
     setDataPrep((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const handleDirectConnectivityToggle = () => {
+    setDirectConnectivity((prev) => !prev);
+  };
+
+  const handleAdditionalInstanceChange = (source: ClinicalSource, e: ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(0, parseInt(e.target.value || "0", 10) || 0);
+    setAdditionalInstances((prev) => ({ ...prev, [source]: value }));
+  };
+
   return (
-    <section className="bg-[#F7F3EF] px-7 mt-10 md:px-14 pb-[72px]">
+    <section className="bg-[#F7F3EF] px-7 pt-28 md:px-14 pb-[72px]">
+      <h1 className="text-[38px] md:text-[54px] font-semibold tracking-[-0.03em] leading-[1.08] text-[#1A1A1A] max-w-[760px] mb-10">
+        Estimate your interoperability cost
+      </h1>
+
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-8 items-start">
         {/* ── Inputs ─────────────────────────────────────────── */}
         <div className="min-w-0 rounded-[18px] border border-[#E5DECF] bg-white p-6 pt-8 md:p-8 md:pt-10">
@@ -244,10 +265,14 @@ export default function PricingCalculator(): JSX.Element {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <input
                 type="range"
-                min={PRICING.memberRange.min}
+                // min is 0 (not PRICING.memberRange.min) purely so the step
+                // size divides evenly into the range - otherwise the browser
+                // floors the last step short of max and 50,000 is unreachable
+                // by dragging. The number field still enforces the real min.
+                min={0}
                 max={PRICING.memberRange.max}
                 step={100}
-                value={members}
+                value={Math.min(members, PRICING.memberRange.max)}
                 onChange={handleMembersInput}
                 className="w-full sm:flex-1 min-w-0 accent-[#A8543C]"
                 aria-label="Covered members slider"
@@ -255,18 +280,22 @@ export default function PricingCalculator(): JSX.Element {
               <input
                 id="members"
                 type="number"
+                inputMode="numeric"
                 min={PRICING.memberRange.min}
-                max={PRICING.memberRange.max}
                 value={members}
                 onChange={handleMembersInput}
-                onBlur={handleMembersBlur}
+                aria-describedby="members-help"
+                aria-invalid={!estimate.eligible && !estimate.overLimit}
                 className={`${FIELD_CLASS} w-full sm:w-[120px] shrink-0 text-right`}
               />
             </div>
-            <p className="mt-3 text-[13px] text-[#57534C]">
+            <p id="members-help" className="mt-3 text-[13px] text-[#57534C]">
               Whole number from {PRICING.memberRange.min.toLocaleString()} to{" "}
               {PRICING.memberRange.max.toLocaleString()}.
             </p>
+            {!estimate.eligible && !estimate.overLimit && estimate.invalidReason && (
+              <p className="mt-2 text-[12.5px] font-medium text-[#A8543C]">{estimate.invalidReason}</p>
+            )}
           </div>
 
           {/* Data preparation */}
@@ -297,42 +326,69 @@ export default function PricingCalculator(): JSX.Element {
               Direct connectivity
             </label>
             <p className="text-[13px] text-[#57534C] mb-3">
-              One-time. One claims source plus one clinical or EMR source.
+              Annual. One claims source plus one clinical or EMR source.
             </p>
             <Checkbox
               checked={directConnectivity}
-              onChange={() => setDirectConnectivity((prev) => !prev)}
-              label="Add direct connectivity"
-              description="Additional provider-specific clinical source instances $10,000 each."
+              onChange={handleDirectConnectivityToggle}
+              label="Connect directly to our data sources"
+              description={`One claims source plus one clinical or EMR source, ${formatCurrency(
+                PRICING.connectivity.baseSetup
+              )}. Additional provider specific clinical source instances ${formatCurrency(
+                PRICING.connectivity.additionalInstance
+              )} each.`}
               priceLabel={formatCurrency(PRICING.connectivity.baseSetup)}
             />
 
             {directConnectivity && (
-              <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-[12px] border border-[#E5DECF] bg-[#FBF9F4] px-4 py-3.5">
-                <span className="text-[14px] text-[#3A352E] min-w-0">
-                  Additional provider-specific clinical source instances
-                </span>
-                <div className="flex items-center gap-3 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setAdditionalInstances((n) => Math.max(0, n - 1))}
-                    aria-label="Decrease additional instances"
-                    className="w-8 h-8 rounded-full border border-[#CFC7B8] flex items-center justify-center text-[16px] text-[#3A352E] hover:border-[#A8543C] transition-colors"
+              <div className="mt-4 flex flex-col gap-4 rounded-[12px] border border-[#E5DECF] bg-[#FBF9F4] px-4 py-4">
+                <div>
+                  <label
+                    htmlFor="included-clinical"
+                    className="block text-[13px] font-medium text-[#1A1A1A] mb-1"
                   >
-                    −
-                  </button>
-                  <span className="w-6 text-center text-[15px] font-medium text-[#1A1A1A]">
-                    {additionalInstances}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setAdditionalInstances((n) => Math.min(20, n + 1))}
-                    aria-label="Increase additional instances"
-                    className="w-8 h-8 rounded-full border border-[#CFC7B8] flex items-center justify-center text-[16px] text-[#3A352E] hover:border-[#A8543C] transition-colors"
+                    Included clinical source <span className="text-[#A8543C]">*</span>
+                  </label>
+                  <select
+                    id="included-clinical"
+                    value={includedClinicalSource}
+                    onChange={(e) => setIncludedClinicalSource(e.target.value as ClinicalSource | "")}
+                    required
+                    className={`${FIELD_CLASS} sm:w-[220px]`}
                   >
-                    +
-                  </button>
+                    <option value="">Choose one</option>
+                    {CLINICAL_SOURCES.map((source) => (
+                      <option key={source} value={source}>
+                        {source}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {CLINICAL_SOURCES.map((source) => (
+                    <label
+                      key={source}
+                      className="flex items-center justify-between gap-3 text-[13.5px] text-[#3A352E]"
+                    >
+                      Additional {source} instances
+                      <input
+                        type="number"
+                        min={0}
+                        step={1}
+                        value={additionalInstances[source]}
+                        onChange={(e) => handleAdditionalInstanceChange(source, e)}
+                        className={`${FIELD_CLASS} w-20 py-1.5 text-center`}
+                      />
+                    </label>
+                  ))}
+                </div>
+
+                <p className="text-[12px] leading-[1.5] text-[#57534C]">
+                  Connection scope depends on source access, interface availability and agreed delivery
+                  requirements. Connectivity transports data; it does not automatically include mapping,
+                  merging or identity matching.
+                </p>
               </div>
             )}
           </div>
@@ -344,71 +400,112 @@ export default function PricingCalculator(): JSX.Element {
             {members.toLocaleString()} covered members · {payerLabel}
           </p>
 
-          <div className="flex items-baseline gap-2 mb-1 flex-wrap">
-            <span className="text-[32px] md:text-[38px] font-semibold tracking-[-0.02em] text-[#1A1A1A]">
-              {formatCurrency(estimate.effectivePMPM, 3)}
-            </span>
-            <span className="text-[14px] text-[#57534C]">effective PMPM</span>
-          </div>
-
-          <p className="text-[15px] text-[#3A352E] mb-6">
-            {formatCurrency(estimate.recurringAnnual)}{" "}
-            <span className="text-[#57534C]">annual recurring</span>
-          </p>
-
-          {estimate.minimumApplied && (
-            <p className="text-[12.5px] text-[#A8543C] bg-[#FCEAE7] rounded-[8px] px-3 py-2 mb-6">
-              Annual minimum through 10,000 members applied.
+          {estimate.overLimit ? (
+            <>
+              <p className="text-[15px] leading-[1.65] text-[#3A352E] mt-4 mb-6">
+                Yes, through a scoped enterprise discussion. This calculator
+                is limited to Medicare Advantage and Medicaid managed care
+                plans up to {PRICING.memberRange.max.toLocaleString()} members.
+              </p>
+              <Link
+                href="/contact"
+                className="w-full inline-flex items-center justify-center bg-[#A8543C] text-white text-[14.5px] font-medium py-[13px] rounded-[42px] hover:bg-[#97492F] transition-colors duration-300"
+              >
+                Discuss your scope
+              </Link>
+            </>
+          ) : !estimate.eligible ? (
+            <p className="text-[13.5px] font-medium text-[#A8543C] mt-4">
+              Enter a valid membership to see an estimate.
             </p>
-          )}
-
-          <div className="flex flex-col gap-3 pb-6 mb-6 border-b border-[#E5DECF]">
-            {estimate.lineItems.map((item) => (
-              <div key={item.label} className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="text-[13.5px] font-medium text-[#1A1A1A]">{item.label}</p>
-                  <p className="text-[12px] text-[#57534C] mt-[2px]">{item.detail}</p>
-                </div>
-                <p className="text-[13.5px] font-semibold text-[#1A1A1A] whitespace-nowrap shrink-0">
-                  {formatCurrency(item.amount)}
-                  <span className="block text-[11px] font-normal text-[#57534C] text-right">
-                    {item.cadence === "annual" ? "/ year" : "one-time"}
+          ) : (
+            <>
+              {estimate.effectivePMPM !== null ? (
+                <>
+                  <div className="flex items-baseline gap-2 mb-1 flex-wrap">
+                    <span className="text-[32px] md:text-[38px] font-semibold tracking-[-0.02em] text-[#1A1A1A]">
+                      {formatCurrency(estimate.recurringAnnual)}
+                    </span>
+                    <span className="text-[14px] text-[#57534C]">annual recurring</span>
+                  </div>
+                  <p className="text-[15px] text-[#3A352E] mb-6">
+                    {formatCurrency(estimate.effectivePMPM, 3)}{" "}
+                    <span className="text-[#57534C]">effective PMPM</span>
+                  </p>
+                </>
+              ) : (
+                <div className="flex items-baseline gap-2 mb-6 flex-wrap">
+                  <span className="text-[32px] md:text-[38px] font-semibold tracking-[-0.02em] text-[#1A1A1A]">
+                    {formatCurrency(estimate.recurringAnnual)}
                   </span>
+                  <span className="text-[14px] text-[#57534C]">annual recurring</span>
+                </div>
+              )}
+
+              {estimate.minimumApplied && (
+                <p className="text-[12.5px] text-[#A8543C] bg-[#FCEAE7] rounded-[8px] px-3 py-2 mb-6">
+                  Annual minimum through 10,000 members applied.
                 </p>
+              )}
+
+              <div className="flex flex-col gap-3 pb-6 mb-6 border-b border-[#E5DECF]">
+                {estimate.lineItems.map((item) => (
+                  <div key={item.label} className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="text-[13.5px] font-medium text-[#1A1A1A]">{item.label}</p>
+                      <p className="text-[12px] text-[#57534C] mt-[2px]">{item.detail}</p>
+                    </div>
+                    <p className="text-[13.5px] font-semibold text-[#1A1A1A] whitespace-nowrap shrink-0">
+                      {formatCurrency(item.amount)}
+                      <span className="block text-[11px] font-normal text-[#57534C] text-right">
+                        {item.cadence === "annual" ? "/ year" : "one-time"}
+                      </span>
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <div className="flex items-center justify-between gap-3 mb-8">
-            <span className="text-[14px] font-medium text-[#1A1A1A]">Total first-year investment</span>
-            <span className="text-[20px] font-semibold text-[#1A1A1A] whitespace-nowrap shrink-0">
-              {formatCurrency(estimate.totalFirstYear)}
-            </span>
-          </div>
+              <div className="flex items-center justify-between gap-3 mb-8">
+                <span className="text-[14px] font-medium text-[#1A1A1A]">Total first-year investment</span>
+                <span className="text-[20px] font-semibold text-[#1A1A1A] whitespace-nowrap shrink-0">
+                  {formatCurrency(estimate.totalFirstYear)}
+                </span>
+              </div>
 
-          <div className="flex flex-col gap-3">
-            <EmailEstimateForm
-              members={members}
-              payerType={payerType}
-              effectivePMPM={estimate.effectivePMPM}
-              recurringAnnual={estimate.recurringAnnual}
-              connectivityOneTime={estimate.connectivityOneTime}
-            />
-            <Link
-              href="/contact"
-              className="w-full inline-flex items-center justify-center bg-transparent border border-[#CFC7B8] text-[#3A352E] text-[14.5px] py-[13px] rounded-[42px] hover:border-[#A8543C] hover:text-[#A8543C] transition-colors duration-300"
-            >
-              Request a scoped proposal
-            </Link>
-          </div>
+              <div className="flex flex-col gap-3">
+                <EmailEstimateForm
+                  members={members}
+                  payerType={payerType}
+                  effectivePMPM={estimate.effectivePMPM}
+                  recurringAnnual={estimate.recurringAnnual}
+                  connectivityAnnual={estimate.connectivityAnnual}
+                />
+                <Link
+                  href="/contact"
+                  aria-disabled={connectivityRequiresSource}
+                  onClick={(e) => {
+                    if (connectivityRequiresSource) e.preventDefault();
+                  }}
+                  className={`w-full inline-flex items-center justify-center bg-transparent border border-[#CFC7B8] text-[#3A352E] text-[14.5px] py-[13px] rounded-[42px] transition-colors duration-300 ${
+                    connectivityRequiresSource
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:border-[#A8543C] hover:text-[#A8543C]"
+                  }`}
+                >
+                  Request a scoped proposal
+                </Link>
+              </div>
 
-          <p className="mt-6 text-[11.5px] leading-[1.55] text-[#928b86]">
-            This estimate reflects the selected scope and stated pricing
-            assumptions. Final scope, source readiness, service limits and
-            contract terms are confirmed in your proposal. Additional work is
-            identified before agreement. Customer-prepared data required
-            unless data preparation is selected above.
-          </p>
+              <p className="mt-6 text-[11.5px] leading-[1.55] text-[#928b86]">
+                This estimate reflects the selected scope and stated pricing
+                assumptions. Final scope, source readiness, service limits and
+                contract terms are confirmed in your proposal. Additional work is
+                identified before agreement. Customer-prepared data required
+                unless data preparation is selected above.
+                {connectivityRequiresSource && " Choose an included clinical source to complete the estimate."}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </section>
