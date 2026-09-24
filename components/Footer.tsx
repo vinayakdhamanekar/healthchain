@@ -20,6 +20,9 @@ const COLUMNS: FooterColumn[] = [
       { label: "Curate", href: "/platform#curate" },
       { label: "Consume", href: "/platform#consume" },
       { label: "Pricing", href: "/pricing" },
+      // TODO: replace with the real Download and Support URLs.
+      { label: "Download", href: "#" },
+      { label: "Support", href: "#" },
     ],
   },
   {

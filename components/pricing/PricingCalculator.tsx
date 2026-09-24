@@ -262,33 +262,18 @@ export default function PricingCalculator(): JSX.Element {
             >
               How many covered members should we price?
             </label>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <input
-                type="range"
-                // min is 0 (not PRICING.memberRange.min) purely so the step
-                // size divides evenly into the range - otherwise the browser
-                // floors the last step short of max and 50,000 is unreachable
-                // by dragging. The number field still enforces the real min.
-                min={0}
-                max={PRICING.memberRange.max}
-                step={100}
-                value={Math.min(members, PRICING.memberRange.max)}
-                onChange={handleMembersInput}
-                className="w-full sm:flex-1 min-w-0 accent-[#A8543C]"
-                aria-label="Covered members slider"
-              />
-              <input
-                id="members"
-                type="number"
-                inputMode="numeric"
-                min={PRICING.memberRange.min}
-                value={members}
-                onChange={handleMembersInput}
-                aria-describedby="members-help"
-                aria-invalid={!estimate.eligible && !estimate.overLimit}
-                className={`${FIELD_CLASS} w-full sm:w-[120px] shrink-0 text-right`}
-              />
-            </div>
+            <input
+              id="members"
+              type="number"
+              inputMode="numeric"
+              min={PRICING.memberRange.min}
+              step={1}
+              value={members}
+              onChange={handleMembersInput}
+              aria-describedby="members-help"
+              aria-invalid={!estimate.eligible && !estimate.overLimit}
+              className={`${FIELD_CLASS} sm:max-w-[240px]`}
+            />
             <p id="members-help" className="mt-3 text-[13px] text-[#57534C]">
               Whole number from {PRICING.memberRange.min.toLocaleString()} to{" "}
               {PRICING.memberRange.max.toLocaleString()}.
@@ -402,6 +387,9 @@ export default function PricingCalculator(): JSX.Element {
 
           {estimate.overLimit ? (
             <>
+              <p className="text-[32px] md:text-[38px] font-semibold tracking-[-0.02em] text-[#1A1A1A] mt-4">
+                Enterprise pricing
+              </p>
               <p className="text-[15px] leading-[1.65] text-[#3A352E] mt-4 mb-6">
                 Yes, through a scoped enterprise discussion. This calculator
                 is limited to Medicare Advantage and Medicaid managed care
@@ -411,7 +399,7 @@ export default function PricingCalculator(): JSX.Element {
                 href="/contact"
                 className="w-full inline-flex items-center justify-center bg-[#A8543C] text-white text-[14.5px] font-medium py-[13px] rounded-[42px] hover:bg-[#97492F] transition-colors duration-300"
               >
-                Discuss your scope
+                Contact Health Chain
               </Link>
             </>
           ) : !estimate.eligible ? (

@@ -88,9 +88,23 @@ function IconBook(): JSX.Element {
   );
 }
 
+function IconDownload(): JSX.Element {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 4v11" />
+      <path d="M7.5 10.5L12 15l4.5-4.5" />
+      <path d="M5 19.5h14" />
+    </svg>
+  );
+}
+
 /* ────────────────────────────────────────────────────────────────────────
    Data
 ──────────────────────────────────────────────────────────────────────── */
+
+// TODO: replace with the real Support and Download URLs.
+const SUPPORT_HREF = "#";
+const DOWNLOAD_HREF = "#";
 
 interface DropdownItem {
   label: string;
@@ -121,8 +135,8 @@ const SOLUTIONS_ITEMS: DropdownItem[] = [
   },
   {
     label: "RiskRev Pro",
-    description: "AI assisted risk adjustment coding, evidence included.",
-    href: "/longitudinal-data-enablement/risk-adjustment",
+    description: "Make every risk adjustment coding decision easier to support.",
+    href: "/risk-adjustment",
     icon: IconClipboardCheck,
   },
   {
@@ -161,6 +175,7 @@ const NAV_LINKS: NavItemProps[] = [
   { label: "Resources", href: "/resources" },
   { label: "Pricing", href: "/pricing" },
   { label: "Company", href: "/about" },
+  { label: "Support", href: "https://support.healthchain.com/" },
 ];
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -396,11 +411,23 @@ export default function Navbar(): JSX.Element {
           <div className="flex items-center gap-3 md:gap-8">
             {/* Desktop nav links + CTA — hidden below md */}
             <div className="hidden md:flex items-center gap-8">
-              <nav className="flex items-center gap-[34px]" aria-label="Main navigation">
+              <nav className="flex items-center gap-[24px]" aria-label="Main navigation">
                 {NAV_LINKS.map((link) => (
                   <NavDropdown key={link.label} link={link} />
                 ))}
               </nav>
+
+              {/* Support + Download — shown from xl up, where there is room beside the CTA */}
+              <div className="hidden xl:flex items-center gap-2">
+                
+                <Link
+                  href={DOWNLOAD_HREF}
+                  className="inline-flex items-center gap-2 border border-[#A8543C]/40 text-[#A8543C] text-[15px] font-medium py-[10px] px-[18px] rounded-[40px] hover:bg-[#F4EFE8] hover:border-[#A8543C] transition-colors duration-300"
+                >
+                  <IconDownload />
+                  Download
+                </Link>
+              
 
               <Link
                 href="/contact"
@@ -411,6 +438,7 @@ export default function Navbar(): JSX.Element {
                   →
                 </span>
               </Link>
+              </div>
             </div>
 
             {/* Mobile hamburger — visible only below md; now a sibling, not nested in the hidden div */}
@@ -453,6 +481,18 @@ export default function Navbar(): JSX.Element {
               {NAV_LINKS.map((link) => (
                 <MobileNavRow key={link.label} link={link} onNavigate={() => setMobileOpen(false)} />
               ))}
+              <MobileNavRow
+                link={{ label: "Support", href: SUPPORT_HREF }}
+                onNavigate={() => setMobileOpen(false)}
+              />
+              <Link
+                href={DOWNLOAD_HREF}
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex items-center justify-center gap-2 border border-[#A8543C]/40 text-[#A8543C] text-[15px] font-medium py-[11px] px-[22px] rounded-[40px] hover:bg-[#F4EFE8] hover:border-[#A8543C] transition-colors duration-300 mt-2"
+              >
+                <IconDownload />
+                Download
+              </Link>
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}

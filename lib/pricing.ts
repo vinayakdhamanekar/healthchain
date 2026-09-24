@@ -64,7 +64,7 @@ export const PRICING = {
   // Marginal PMPM applied only to the slice of members inside each band.
   bands: [
     { above: 10000, upTo: 25000, marginalPmpm: 0.55 },
-    { above: 25000, upTo: 50000, marginalPmpm: 0.33 },
+    { above: 25000, upTo: 50000, marginalPmpm: 0.35 },
   ],
   addOnPMPM: 0.275,
   connectivity: {
