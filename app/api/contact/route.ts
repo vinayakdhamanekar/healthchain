@@ -10,6 +10,7 @@ interface ContactPayload {
   message?: string;
 }
 
+// Same recipient the WordPress contact form used.
 const TO_EMAIL = "vinayakd@healthchain.com";
 
 export async function POST(req: Request) {
@@ -24,15 +25,30 @@ export async function POST(req: Request) {
       );
     }
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT ?? 587),
-      secure: process.env.SMTP_SECURE === "true", // true for port 465
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+    // Prefer Gmail OAuth2 (same credentials the WordPress site used) when
+    // configured; fall back to plain SMTP password auth otherwise.
+    const transporter = process.env.GMAIL_CLIENT_ID
+      ? nodemailer.createTransport({
+          host: "smtp.gmail.com",
+	       port: 465,
+          secure: true,
+          auth: {
+            type: "OAuth2",
+            user: process.env.SMTP_USER,
+            clientId: process.env.GMAIL_CLIENT_ID,
+            clientSecret: process.env.GMAIL_CLIENT_SECRET,
+            refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+          },
+        })
+      : nodemailer.createTransport({
+          host: process.env.SMTP_HOST,
+          port: Number(process.env.SMTP_PORT ?? 587),
+          secure: process.env.SMTP_SECURE === "true", // true for port 465
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+          },
+        });
 
     await transporter.sendMail({
       from: `"Website Contact Form" <${process.env.SMTP_USER}>`,
@@ -42,7 +58,7 @@ export async function POST(req: Request) {
       text: [
         `Name: ${data.name}`,
         `Email: ${data.email}`,
-        `Phone: ${data.phone}`,
+         `Phone: ${data.phone}`,
         `Company: ${data.company || "-"}`,
         `Area of interest: ${data.interest}`,
         `Message: ${data.message || "-"}`,
